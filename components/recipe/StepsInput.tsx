@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Plus, X } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Textarea } from '@/components/ui/Textarea'
@@ -13,6 +13,12 @@ export interface StepsInputProps {
 }
 
 export function StepsInput({ steps, onChange, disabled }: StepsInputProps) {
+  useEffect(() => {
+    if (steps.length === 0) {
+      onChange([''])
+    }
+  }, [steps.length, onChange])
+
   const addStep = () => {
     onChange([...steps, ''])
   }
@@ -25,10 +31,6 @@ export function StepsInput({ steps, onChange, disabled }: StepsInputProps) {
 
   const removeStep = (index: number) => {
     onChange(steps.filter((_, i) => i !== index))
-  }
-
-  if (steps.length === 0) {
-    onChange([''])
   }
 
   return (
