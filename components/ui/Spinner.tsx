@@ -17,7 +17,7 @@ export function Spinner({ size = 'md', className }: SpinnerProps) {
     <div className="flex items-center justify-center">
       <div
         className={cn(
-          'border-ios-blue border-t-transparent corner-round animate-spin',
+          'border-ios-pink border-t-transparent corner-round animate-spin',
           sizeStyles[size],
           className
         )}

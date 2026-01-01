@@ -105,7 +105,7 @@ export function Autocomplete({
         placeholder={placeholder}
         className={cn(
           'w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label placeholder:text-ios-label-tertiary',
-          'focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-blue transition-all duration-ios-fast outline-none',
+          'focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none',
           error && 'ring-2 ring-ios-red focus:ring-ios-red'
         )}
       />
@@ -117,7 +117,7 @@ export function Autocomplete({
               key={item.id}
               className={cn(
                 'px-4 py-3 cursor-pointer transition-colors',
-                index === highlightedIndex ? 'bg-ios-blue text-white' : 'hover:bg-ios-bg-tertiary',
+                index === highlightedIndex ? 'bg-ios-pink text-white' : 'hover:bg-ios-bg-tertiary',
                 index !== suggestions.length - 1 && 'border-b border-ios-separator'
               )}
               onClick={() => handleSelect(item)}

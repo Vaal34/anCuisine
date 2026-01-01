@@ -45,12 +45,12 @@ export function RecipeCard({ recipe, onClick }: RecipeCardProps) {
         {/* Infos */}
         <div className="flex items-center gap-4 text-sm text-ios-label-secondary">
           <div className="flex items-center gap-1">
-            <Clock className="w-4 h-4" />
-            <span>{recipe.prep_time + recipe.cook_time} min</span>
+            <Clock className="w-4 h-4 text-ios-pink" />
+            <span className="text-ios-pink">{recipe.prep_time + recipe.cook_time} min</span>
           </div>
           <div className="flex items-center gap-1">
-            <Users className="w-4 h-4" />
-            <span>{recipe.servings} pers.</span>
+            <Users className="w-4 h-4 text-ios-pink" />
+            <span className="text-ios-pink">{recipe.servings} pers.</span>
           </div>
         </div>
 

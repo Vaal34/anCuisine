@@ -10,7 +10,7 @@ export interface BadgeProps {
 export function Badge({ children, variant = 'recipe', className }: BadgeProps) {
   const variantStyles = {
     recipe: 'bg-recipe-primary text-white',
-    blue: 'bg-ios-blue text-white',
+    blue: 'bg-ios-pink text-white',
     green: 'bg-ios-green text-white',
     orange: 'bg-ios-orange text-white',
     red: 'bg-ios-red text-white',
@@ -20,7 +20,7 @@ export function Badge({ children, variant = 'recipe', className }: BadgeProps) {
   return (
     <span
       className={cn(
-        'inline-flex items-center px-2 py-1 rounded-lg corner-squircle text-xs font-semibold',
+        'inline-flex items-center px-2 py-1 rounded-xl corner-squircle text-xs font-semibold',
         variantStyles[variant],
         className
       )}

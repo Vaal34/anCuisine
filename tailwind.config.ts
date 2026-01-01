@@ -37,9 +37,9 @@ const config: Config = {
         'ios-separator-opaque': '#C6C6C8',
 
         // Couleurs spécifiques app "Recettes"
-        'recipe-primary': '#FF6B35',
-        'recipe-secondary': '#F7931E',
-        'recipe-accent': '#FFA400',
+        'recipe-primary': '#ff2d55',
+        'recipe-secondary': '#FF686B',
+        'recipe-accent': '#ffa69e',
       },
       fontFamily: {
         sans: [

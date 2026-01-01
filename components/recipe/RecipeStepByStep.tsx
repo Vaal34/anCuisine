@@ -37,7 +37,7 @@ export function RecipeStepByStep({ recipe, currentStep, onStepChange, onExit }: 
       <div className="flex-1 flex items-center justify-center p-4 sm:p-8">
         <Card className="max-w-3xl w-full p-8 sm:p-12">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-ios-blue text-white rounded-3xl corner-squircle text-2xl font-bold mb-4">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-ios-pink text-white rounded-3xl corner-squircle text-2xl font-bold mb-4">
               {currentStep + 1}
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold text-ios-label mb-4">
