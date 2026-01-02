@@ -117,6 +117,7 @@ export default function HomePage() {
                   key={recipe.id}
                   recipe={recipe}
                   onClick={() => router.push(`/recettes/${recipe.id}`)}
+                  onStartCooking={() => router.push(`/recettes/${recipe.id}?mode=stepbystep`)}
                 />
               ))}
             </div>

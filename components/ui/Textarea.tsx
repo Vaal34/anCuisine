@@ -22,6 +22,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           className={cn(
             'w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label placeholder:text-ios-label-tertiary',
             'focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none resize-none',
+            'text-base', // Prevent zoom on iOS
             error && 'ring-2 ring-ios-red focus:ring-ios-red',
             className
           )}

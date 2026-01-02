@@ -1,4 +1,5 @@
 import React from 'react'
+import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import { cn } from '@/lib/utils'
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -33,9 +34,9 @@ export function Button({
   }
 
   const sizeStyles = {
-    sm: 'px-4 py-2 text-sm rounded-3xl corner-squircle',
-    md: 'px-6 py-3 text-base rounded-3xl corner-squircle',
-    lg: 'px-8 py-4 text-lg rounded-3xl corner-squircle',
+    sm: 'px-4 py-2.5 text-sm rounded-3xl corner-squircle min-h-[44px]', // Ensure 44px minimum for iOS touch target
+    md: 'px-6 py-3 text-base rounded-3xl corner-squircle min-h-[48px]',
+    lg: 'px-8 py-4 text-lg rounded-3xl corner-squircle min-h-[52px]',
   }
 
   return (
@@ -51,7 +52,15 @@ export function Button({
       {...props}
     >
       {isLoading ? (
-        <div className="w-5 h-5 border-2 border-current border-t-transparent corner-round animate-spin" />
+        <div className="w-6 h-6 flex items-center justify-center">
+          <div className="scale-[4]">
+            <DotLottieReact
+              src="/loading.lottie"
+              loop
+              autoplay
+            />
+          </div>
+        </div>
       ) : (
         <>
           {leftIcon && <span className="flex-shrink-0">{leftIcon}</span>}

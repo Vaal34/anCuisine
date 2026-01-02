@@ -19,7 +19,8 @@ export function IngredientsInput({ ingredients, onChange, disabled }: Ingredient
   const { searchIngredients, ingredients: allIngredients } = useIngredients()
   const [showDropdown, setShowDropdown] = useState<number | null>(null)
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 })
-  const inputRefs = useRef<(HTMLInputElement | null)[]>([])
+  const desktopInputRefs = useRef<(HTMLInputElement | null)[]>([])
+  const mobileInputRefs = useRef<(HTMLInputElement | null)[]>([])
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   // Initialiser avec un ingrédient vide si nécessaire
@@ -29,18 +30,42 @@ export function IngredientsInput({ ingredients, onChange, disabled }: Ingredient
     }
   }, [])
 
-  // Calculer la position du dropdown
+  // Calculer et recalculer la position du dropdown
   useEffect(() => {
-    if (showDropdown !== null && inputRefs.current[showDropdown]) {
-      const inputElement = inputRefs.current[showDropdown]
-      if (inputElement) {
-        const rect = inputElement.getBoundingClientRect()
-        setDropdownPosition({
-          top: rect.bottom + window.scrollY + 4,
-          left: rect.left + window.scrollX,
-          width: rect.width
-        })
+    const updatePosition = () => {
+      if (showDropdown !== null) {
+        // Trouver l'input visible (desktop ou mobile)
+        const desktopInput = desktopInputRefs.current[showDropdown]
+        const mobileInput = mobileInputRefs.current[showDropdown]
+
+        // Utiliser celui qui est visible (offsetParent !== null signifie que l'élément est visible)
+        let inputElement: HTMLInputElement | null = null
+        if (desktopInput && desktopInput.offsetParent !== null) {
+          inputElement = desktopInput
+        } else if (mobileInput && mobileInput.offsetParent !== null) {
+          inputElement = mobileInput
+        }
+
+        if (inputElement) {
+          const rect = inputElement.getBoundingClientRect()
+          setDropdownPosition({
+            top: rect.bottom + window.scrollY + 4,
+            left: rect.left + window.scrollX,
+            width: rect.width
+          })
+        }
       }
+    }
+
+    updatePosition()
+
+    // Recalculer lors du scroll ou resize
+    window.addEventListener('scroll', updatePosition, true)
+    window.addEventListener('resize', updatePosition)
+
+    return () => {
+      window.removeEventListener('scroll', updatePosition, true)
+      window.removeEventListener('resize', updatePosition)
     }
   }, [showDropdown])
 
@@ -48,12 +73,17 @@ export function IngredientsInput({ ingredients, onChange, disabled }: Ingredient
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (showDropdown !== null) {
-        const input = inputRefs.current[showDropdown]
+        const desktopInput = desktopInputRefs.current[showDropdown]
+        const mobileInput = mobileInputRefs.current[showDropdown]
         const dropdown = dropdownRef.current
-        if (
-          input && !input.contains(e.target as Node) &&
-          dropdown && !dropdown.contains(e.target as Node)
-        ) {
+
+        const clickedInsideInput =
+          (desktopInput && desktopInput.contains(e.target as Node)) ||
+          (mobileInput && mobileInput.contains(e.target as Node))
+
+        const clickedInsideDropdown = dropdown && dropdown.contains(e.target as Node)
+
+        if (!clickedInsideInput && !clickedInsideDropdown) {
           setShowDropdown(null)
         }
       }
@@ -136,90 +166,176 @@ export function IngredientsInput({ ingredients, onChange, disabled }: Ingredient
 
   return (
     <>
-      <div className="space-y-3">
+      <div className="space-y-4 sm:space-y-3">
         {ingredients.map((ingredient, index) => {
           const suggestions = getSuggestions(index)
           const isDropdownVisible = showDropdown === index && suggestions.length > 0
 
           return (
-            <div key={index} className="flex gap-2 items-start">
-              {/* Badge numéro */}
-              <div className="mt-2 flex-shrink-0">
-                <Badge variant="recipe">
-                  {index + 1}
-                </Badge>
-              </div>
+            <div key={index} className="space-y-2 pb-4 sm:pb-0 border-b sm:border-b-0 border-ios-separator last:border-b-0 last:pb-0">
+              {/* Desktop/Tablet Layout - horizontal */}
+              <div className="hidden sm:flex gap-2 items-start">
+                {/* Badge numéro */}
+                <div className="mt-2 flex-shrink-0">
+                  <Badge variant="recipe">
+                    {index + 1}
+                  </Badge>
+                </div>
 
-              {/* Quantité */}
-              <div className="w-24 flex-shrink-0">
-                <input
-                  type="number"
-                  value={ingredient.quantity || ''}
-                  onChange={(e) => handleQuantityChange(index, e.target.value)}
-                  placeholder="200"
-                  min={0}
-                  step={0.1}
-                  disabled={disabled}
-                  className="w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none"
-                />
-              </div>
+                {/* Quantité */}
+                <div className="w-20 md:w-24 flex-shrink-0">
+                  <input
+                    type="number"
+                    value={ingredient.quantity || ''}
+                    onChange={(e) => handleQuantityChange(index, e.target.value)}
+                    placeholder="200"
+                    min={0}
+                    step={0.1}
+                    disabled={disabled}
+                    className="w-full px-3 md:px-4 py-3 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none text-sm md:text-base"
+                  />
+                </div>
 
-              {/* Unité */}
-              <div className="w-32 flex-shrink-0">
-                <select
-                  value={ingredient.unit || 'g'}
-                  onChange={(e) => handleUnitChange(index, e.target.value)}
-                  disabled={disabled}
-                  className="w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none appearance-none cursor-pointer"
-                >
-                  {UNITS.map((unit) => (
-                    <option key={unit.value} value={unit.value}>
-                      {unit.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Nom de l'ingrédient */}
-              <div className="flex-1 relative">
-                <input
-                  ref={(el) => { inputRefs.current[index] = el }}
-                  type="text"
-                  value={ingredient.name}
-                  onChange={(e) => handleNameChange(index, e.target.value)}
-                  onFocus={() => {
-                    if (ingredient.name.length > 0 && suggestions.length > 0) {
-                      setShowDropdown(index)
-                    }
-                  }}
-                  placeholder="Ex: Farine, Œuf, Tomate..."
-                  disabled={disabled}
-                  className="w-full px-4 py-3 pr-10 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none"
-                />
-                {/* Bouton dropdown */}
-                {ingredient.name.length > 0 && suggestions.length > 0 && (
-                  <button
-                    type="button"
-                    onClick={() => setShowDropdown(isDropdownVisible ? null : index)}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-ios-label-tertiary hover:text-ios-label transition-colors"
+                {/* Unité */}
+                <div className="w-24 md:w-32 flex-shrink-0">
+                  <select
+                    value={ingredient.unit || 'g'}
+                    onChange={(e) => handleUnitChange(index, e.target.value)}
+                    disabled={disabled}
+                    className="w-full px-3 md:px-4 py-3 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none appearance-none cursor-pointer text-sm md:text-base"
                   >
-                    <ChevronDown className={`w-5 h-5 transition-transform ${isDropdownVisible ? 'rotate-180' : ''}`} />
-                  </button>
+                    {UNITS.map((unit) => (
+                      <option key={unit.value} value={unit.value}>
+                        {unit.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Nom de l'ingrédient */}
+                <div className="flex-1 relative">
+                  <input
+                    ref={(el) => { desktopInputRefs.current[index] = el }}
+                    type="text"
+                    value={ingredient.name}
+                    onChange={(e) => handleNameChange(index, e.target.value)}
+                    onFocus={() => {
+                      if (ingredient.name.length > 0 && suggestions.length > 0) {
+                        setShowDropdown(index)
+                      }
+                    }}
+                    placeholder="Ex: Farine, Œuf, Tomate..."
+                    disabled={disabled}
+                    className="w-full px-4 py-3 pr-10 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none"
+                  />
+                  {/* Bouton dropdown */}
+                  {ingredient.name.length > 0 && suggestions.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setShowDropdown(isDropdownVisible ? null : index)}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-ios-label-tertiary hover:text-ios-label transition-colors"
+                    >
+                      <ChevronDown className={`w-5 h-5 transition-transform ${isDropdownVisible ? 'rotate-180' : ''}`} />
+                    </button>
+                  )}
+                </div>
+
+                {/* Bouton supprimer */}
+                {ingredients.length > 1 && !disabled && (
+                  <div className="mt-1 flex-shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => removeIngredient(index)}
+                      className="p-2 text-ios-label-secondary hover:text-ios-red transition-colors"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
                 )}
               </div>
 
-              {/* Bouton supprimer */}
-              {ingredients.length > 1 && !disabled && (
-                <div className="mt-1 flex-shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => removeIngredient(index)}
-                    className="p-2 text-ios-label-secondary hover:text-ios-red transition-colors"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
+              {/* Mobile Layout - vertical stacked */}
+              <div className="sm:hidden space-y-2">
+                {/* Badge and delete button row */}
+                <div className="flex items-center justify-between">
+                  <Badge variant="recipe">
+                    Ingrédient {index + 1}
+                  </Badge>
+                  {ingredients.length > 1 && !disabled && (
+                    <button
+                      type="button"
+                      onClick={() => removeIngredient(index)}
+                      className="p-2 text-ios-label-secondary hover:text-ios-red transition-colors"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  )}
                 </div>
-              )}
+
+                {/* Nom de l'ingrédient - full width on mobile */}
+                <div className="relative">
+                  <input
+                    ref={(el) => { mobileInputRefs.current[index] = el }}
+                    type="text"
+                    value={ingredient.name}
+                    onChange={(e) => handleNameChange(index, e.target.value)}
+                    onFocus={() => {
+                      if (ingredient.name.length > 0 && suggestions.length > 0) {
+                        setShowDropdown(index)
+                      }
+                    }}
+                    placeholder="Ex: Farine, Œuf, Tomate..."
+                    disabled={disabled}
+                    className="w-full px-4 py-3 pr-10 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none"
+                  />
+                  {/* Bouton dropdown */}
+                  {ingredient.name.length > 0 && suggestions.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setShowDropdown(isDropdownVisible ? null : index)}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-ios-label-tertiary hover:text-ios-label transition-colors"
+                    >
+                      <ChevronDown className={`w-5 h-5 transition-transform ${isDropdownVisible ? 'rotate-180' : ''}`} />
+                    </button>
+                  )}
+                </div>
+
+                {/* Quantité et Unité - side by side on mobile */}
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="block text-ios-label text-xs font-medium mb-1 px-1">
+                      Quantité
+                    </label>
+                    <input
+                      type="number"
+                      value={ingredient.quantity || ''}
+                      onChange={(e) => handleQuantityChange(index, e.target.value)}
+                      placeholder="200"
+                      min={0}
+                      step={0.1}
+                      disabled={disabled}
+                      className="w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-ios-label text-xs font-medium mb-1 px-1">
+                      Unité
+                    </label>
+                    <select
+                      value={ingredient.unit || 'g'}
+                      onChange={(e) => handleUnitChange(index, e.target.value)}
+                      disabled={disabled}
+                      className="w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none appearance-none cursor-pointer"
+                    >
+                      {UNITS.map((unit) => (
+                        <option key={unit.value} value={unit.value}>
+                          {unit.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
           )
         })}

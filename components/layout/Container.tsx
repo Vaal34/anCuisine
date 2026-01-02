@@ -18,7 +18,7 @@ export function Container({ children, className, maxWidth = 'xl' }: ContainerPro
   }
 
   return (
-    <div className={cn('mx-auto px-4 sm:px-6 lg:px-8 py-6', maxWidthStyles[maxWidth], className)}>
+    <div className={cn('mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5 md:py-6', maxWidthStyles[maxWidth], className)}>
       {children}
     </div>
   )

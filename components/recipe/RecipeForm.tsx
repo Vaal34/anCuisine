@@ -64,10 +64,10 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-6">
       {/* Section 1: Informations générales */}
       <Card header="Informations générales">
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           <Input
             label="Titre de la recette"
             value={title}
@@ -88,7 +88,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
             ))}
           </Select>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             <Input
               type="number"
               label="Préparation (min)"
@@ -129,7 +129,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
 
       {/* Section 3: Étapes */}
       <Card header="Étapes de préparation">
-        <StepsInput steps={steps} onChange={setSteps} />
+        <StepsInput steps={steps} onChange={setSteps} ingredients={ingredients} />
       </Card>
 
       {/* Section 4: Notes */}
@@ -143,7 +143,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
       </Card>
 
       {/* Actions */}
-      <div className="flex gap-4">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
         <Button variant="secondary" onClick={onCancel} fullWidth type="button">
           Annuler
         </Button>

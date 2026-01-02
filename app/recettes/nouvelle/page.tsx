@@ -88,8 +88,8 @@ export default function NewRecipePage() {
 
       <Container maxWidth="lg">
         {error && (
-          <div className="mb-6 bg-ios-red/10 border border-ios-red rounded-3xl corner-squircle px-4 py-3">
-            <p className="text-ios-red text-sm">{error}</p>
+          <div className="mb-4 sm:mb-5 md:mb-6 bg-ios-red/10 border border-ios-red rounded-3xl corner-squircle px-4 py-3">
+            <p className="text-ios-red text-sm sm:text-base">{error}</p>
           </div>
         )}
 

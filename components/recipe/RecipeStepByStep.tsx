@@ -46,7 +46,9 @@ export function RecipeStepByStep({ recipe, currentStep, onStepChange, onExit }: 
           </div>
 
           <p className="text-xl sm:text-2xl text-ios-label text-center leading-relaxed">
-            {recipe.steps[currentStep]}
+            {typeof recipe.steps[currentStep] === 'string'
+              ? recipe.steps[currentStep]
+              : recipe.steps[currentStep].description}
           </p>
         </Card>
       </div>

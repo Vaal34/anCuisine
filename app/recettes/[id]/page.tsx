@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { ArrowLeft, Edit, Trash2, ChefHat } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/Button'
@@ -19,6 +19,7 @@ import type { Recipe } from '@/types'
 export default function RecipePage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = React.use(params)
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { user, loading: authLoading } = useAuth()
   const { getRecipe, deleteRecipe } = useRecipes()
   const [recipe, setRecipe] = useState<Recipe | null>(null)
@@ -46,6 +47,14 @@ export default function RecipePage({ params }: { params: Promise<{ id: string }>
       loadRecipe()
     }
   }, [resolvedParams.id, user, getRecipe])
+
+  // Démarrer en mode étape par étape si le paramètre mode=stepbystep est présent
+  useEffect(() => {
+    const mode = searchParams.get('mode')
+    if (mode === 'stepbystep' && !loading && recipe) {
+      setStepByStepMode(true)
+    }
+  }, [searchParams, loading, recipe])
 
   const handleDelete = async () => {
     setIsDeleting(true)
@@ -145,10 +154,10 @@ export default function RecipePage({ params }: { params: Promise<{ id: string }>
       </header>
 
       <Container maxWidth="lg">
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-5 md:space-y-6">
           {/* Image */}
           {recipe.image_url && (
-            <div className="w-full h-64 sm:h-96 overflow-hidden rounded-3xl corner-squircle">
+            <div className="w-full h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden rounded-2xl sm:rounded-3xl corner-squircle">
               <img
                 src={recipe.image_url}
                 alt={recipe.title}
@@ -166,9 +175,11 @@ export default function RecipePage({ params }: { params: Promise<{ id: string }>
             size="lg"
             fullWidth
             onClick={() => setStepByStepMode(true)}
-            leftIcon={<ChefHat className="w-6 h-6" />}
+            leftIcon={<ChefHat className="w-5 h-5 sm:w-6 sm:h-6" />}
+            className="text-sm sm:text-base"
           >
-            Commencer à cuisiner (mode étape par étape)
+            <span className="hidden sm:inline">Commencer à cuisiner</span>
+            <span className="sm:hidden">Commencer à cuisiner</span>
           </Button>
 
           {/* Ingrédients */}
@@ -178,13 +189,13 @@ export default function RecipePage({ params }: { params: Promise<{ id: string }>
 
           {/* Étapes */}
           <Card header="Préparation">
-            <StepsList steps={recipe.steps} numbered />
+            <StepsList steps={recipe.steps} numbered ingredients={recipe.ingredients} />
           </Card>
 
           {/* Notes */}
           {recipe.notes && (
             <Card header="Notes personnelles">
-              <p className="text-base text-ios-label whitespace-pre-wrap">{recipe.notes}</p>
+              <p className="text-sm sm:text-base text-ios-label whitespace-pre-wrap leading-relaxed">{recipe.notes}</p>
             </Card>
           )}
         </div>
@@ -202,7 +213,7 @@ export default function RecipePage({ params }: { params: Promise<{ id: string }>
               Annuler
             </Button>
             <Button
-              variant="destructive"
+              variant="primary"
               onClick={handleDelete}
               isLoading={isDeleting}
               fullWidth

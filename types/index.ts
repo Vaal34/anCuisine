@@ -22,6 +22,11 @@ export interface RecipeIngredient {
   unit: string | null  // 'g', 'kg', 'l', 'ml', 'unité', 'c. à soupe', 'c. à café', etc.
 }
 
+export interface RecipeStep {
+  description: string
+  ingredientIndices?: number[]  // Indices des ingrédients utilisés dans cette étape
+}
+
 export interface Recipe {
   id: string
   user_id: string
@@ -31,7 +36,7 @@ export interface Recipe {
   cook_time: number
   servings: number
   ingredients: RecipeIngredient[]
-  steps: string[]
+  steps: string[] | RecipeStep[]
   category: string
   notes: string | null
   created_at: string
@@ -45,7 +50,7 @@ export interface RecipeFormData {
   cookTime: number
   servings: number
   ingredients: RecipeIngredient[]
-  steps: string[]
+  steps: string[] | RecipeStep[]
   notes: string
   imageUrl: string
 }

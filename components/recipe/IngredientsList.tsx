@@ -1,36 +1,30 @@
 import React from 'react'
 import type { RecipeIngredient } from '@/types'
+import { Dot } from 'lucide-react'
 
 export interface IngredientsListProps {
   ingredients: RecipeIngredient[]
-  variant?: 'bullets' | 'simple'
 }
 
-export function IngredientsList({ ingredients, variant = 'bullets' }: IngredientsListProps) {
+export function IngredientsList({ ingredients }: IngredientsListProps) {
+
   return (
-    <ul className="space-y-3">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
       {ingredients.map((ingredient, index) => (
-        <li key={index} className="flex items-start gap-3">
-          {variant === 'bullets' && (
-            <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-recipe-primary text-white rounded-3xl corner-squircle text-sm font-bold">
-              •
+        <div
+          key={index}
+          className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 bg-ios-pink/10 border-2 border-ios-pink rounded-3xl corner-squircle shadow-sm"
+        >
+          <span className="text-sm sm:text-base font-medium text-ios-label truncate mr-2">
+            {ingredient.name}
+          </span>
+          {ingredient.quantity && ingredient.unit && (
+            <span className="px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm font-semibold bg-ios-pink text-white rounded-2xl corner-squircle whitespace-nowrap flex-shrink-0">
+              {ingredient.quantity} {ingredient.unit}
             </span>
           )}
-          <span className="text-base text-ios-label">
-            {ingredient.quantity && ingredient.unit ? (
-              <>
-                <strong className="font-semibold">
-                  {ingredient.quantity}
-                  {ingredient.unit}
-                </strong>{' '}
-                {ingredient.name}
-              </>
-            ) : (
-              ingredient.name
-            )}
-          </span>
-        </li>
+        </div>
       ))}
-    </ul>
+    </div>
   )
 }

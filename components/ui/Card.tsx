@@ -22,17 +22,17 @@ export function Card({ children, className, hoverable = false, onClick, header, 
       onClick={onClick}
     >
       {header && (
-        <div className="px-4 py-3 border-b border-ios-separator">
+        <div className="px-4 sm:px-5 md:px-6 py-3 sm:py-3.5 md:py-4 border-b border-ios-separator">
           {typeof header === 'string' ? (
-            <h3 className="text-lg font-semibold text-ios-label">{header}</h3>
+            <h3 className="text-base sm:text-lg font-semibold text-ios-label">{header}</h3>
           ) : (
             header
           )}
         </div>
       )}
-      <div className="p-4">{children}</div>
+      <div className="p-4 sm:p-5 md:p-6">{children}</div>
       {footer && (
-        <div className="px-4 py-3 border-t border-ios-separator bg-ios-bg-tertiary">
+        <div className="px-4 sm:px-5 md:px-6 py-3 sm:py-3.5 md:py-4 border-t border-ios-separator bg-ios-bg-tertiary">
           {footer}
         </div>
       )}
