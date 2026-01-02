@@ -14,7 +14,7 @@ export interface RecipeCardProps {
   variant?: 'default' | 'overlay' | 'compact' | 'horizontal' | 'minimal' | 'liquid-glass'
 }
 
-export function RecipeCard({ recipe, onClick, onStartCooking, variant = 'overlay' }: RecipeCardProps) {
+export function RecipeCard({ recipe, onClick, onStartCooking, variant = 'liquid-glass' }: RecipeCardProps) {
   const categoryLabel = CATEGORIES.find((c) => c.value === recipe.category)?.label || recipe.category
   const totalTime = recipe.prep_time + recipe.cook_time
 
