@@ -73,8 +73,8 @@ export function RecipeCard({ recipe, onClick, onStartCooking, variant = 'liquid-
           {/* Bottom section */}
           <div className="space-y-3">
             {/* Title container */}
-            <div className="bg-white/10 backdrop-blur-md rounded-3xl corner-squircle border border-white/20 shadow-lg px-5 py-4">
-              <h3 className="text-3xl font-bold text-white drop-shadow-lg tracking-tight line-clamp-2">
+            <div className="bg-white/10 backdrop-blur-md rounded-3xl corner-squircle border border-white/20 shadow-lg px-5 py-3">
+              <h3 className="text-2xl font-bold text-white drop-shadow-lg tracking-tight line-clamp-2">
                 {recipe.title}
               </h3>
             </div>
