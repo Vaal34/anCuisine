@@ -23,98 +23,76 @@ export function RecipeCard({ recipe, onClick, onStartCooking, variant = 'overlay
     onStartCooking?.()
   }
 
-  // Variant: Liquid Glass
+  // Variant: Liquid Glass (Performance Optimized)
   if (variant === 'liquid-glass') {
     return (
       <div
         onClick={onClick}
-        className="relative h-[340px] cursor-pointer group overflow-hidden rounded-[2.5rem] corner-squircle shadow-[0_8px_32px_rgba(0,0,0,0.12)]"
+        className="relative h-[340px] cursor-pointer group overflow-hidden rounded-[2.5rem] corner-squircle shadow-lg will-change-transform"
       >
         {/* Background image */}
         {recipe.image_url && (
           <img
             src={recipe.image_url}
             alt={recipe.title}
-            className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem] corner-squircle"
+            className="absolute inset-0 w-full h-full object-cover"
           />
         )}
 
-        {/* Liquid glass layers */}
-        <div className="absolute inset-0 rounded-[2.5rem] corner-squircle">
-          {/* Base gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/60 rounded-[2.5rem] corner-squircle" />
+        {/* Single optimized gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/70" />
 
-          {/* Animated gradient mesh (liquid effect) */}
-          <div className="absolute inset-0 bg-gradient-to-br from-ios-pink/20 via-transparent to-purple-500/10 opacity-60 group-hover:opacity-80 transition-opacity duration-700 rounded-[2.5rem] corner-squircle" />
-          <div className="absolute inset-0 bg-gradient-to-tl from-blue-500/10 via-transparent to-ios-pink/15 opacity-40 group-hover:opacity-60 transition-opacity duration-1000 rounded-[2.5rem] corner-squircle" />
+        {/* Subtle animated gradient - single layer */}
+        <div className="absolute inset-0 bg-gradient-to-br from-ios-pink/15 via-transparent to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-500" />
 
-          {/* Glass blur layer */}
-          <div className="absolute inset-0 backdrop-blur-[0.5px] group-hover:backdrop-blur-[1px] transition-all duration-700 rounded-[2.5rem] corner-squircle" />
-        </div>
+        {/* Single backdrop-blur layer */}
+        <div className="absolute inset-0 backdrop-blur-[0.3px] group-hover:backdrop-blur-[0.5px] transition-[backdrop-filter] duration-500" />
 
-        {/* Floating glass elements */}
+        {/* Content */}
         <div className="absolute inset-0 p-5 flex flex-col justify-between">
-          {/* Top section with glass morphism */}
+          {/* Top section */}
           <div className="flex items-start justify-between">
-            <div className="relative">
-              <div className="absolute inset-0 bg-white/10 blur-xl rounded-full" />
-              <Badge
-                variant="recipe"
-                className="relative bg-white/[0.15] backdrop-blur-2xl border border-white/[0.25] text-white shadow-[0_8px_32px_rgba(0,0,0,0.1)]"
-              >
-                {categoryLabel}
-              </Badge>
-            </div>
+            <Badge
+              variant="recipe"
+              className="bg-white/20 backdrop-blur-md border border-white/30 text-white shadow-lg"
+            >
+              {categoryLabel}
+            </Badge>
 
-            {/* Liquid glass button */}
+            {/* Glass button */}
             {onStartCooking && (
-              <button onClick={handleStartCooking} className="relative group/btn">
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-ios-pink/40 blur-xl rounded-xl corner-squircle opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
-
-                {/* Glass button */}
-                <div className="relative w-11 h-11 rounded-xl corner-squircle bg-white/[0.08] backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.15)] flex items-center justify-center transition-[background-color,border-color] duration-300 group-hover/btn:bg-white/[0.15] group-hover/btn:border-white/[0.25]">
-                  <ChefHat className="w-5 h-5 text-white drop-shadow-lg" />
-                </div>
+              <button
+                onClick={handleStartCooking}
+                className="w-11 h-11 rounded-xl corner-squircle bg-white/10 backdrop-blur-md border border-white/20 shadow-lg flex items-center justify-center transition-colors duration-200 hover:bg-white/20 hover:border-white/30"
+              >
+                <ChefHat className="w-5 h-5 text-white" />
               </button>
             )}
           </div>
 
-          {/* Bottom section with enhanced glass */}
+          {/* Bottom section */}
           <div className="space-y-3">
-            {/* Glass container for title */}
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-white/[0.08] to-white/[0.03] backdrop-blur-2xl rounded-3xl corner-squircle border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.2)]" />
-              <div className="relative px-5 py-4">
-                <h3 className="text-3xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] tracking-tight line-clamp-2">
-                  {recipe.title}
-                </h3>
-              </div>
+            {/* Title container */}
+            <div className="bg-white/10 backdrop-blur-md rounded-3xl corner-squircle border border-white/20 shadow-lg px-5 py-4">
+              <h3 className="text-3xl font-bold text-white drop-shadow-lg tracking-tight line-clamp-2">
+                {recipe.title}
+              </h3>
             </div>
 
-            {/* Glass pills for info */}
+            {/* Info pills */}
             <div className="flex items-center gap-2">
-              <div className="relative group/pill flex-1">
-                <div className="absolute inset-0 bg-white/5 blur-lg rounded-full" />
-                <div className="relative px-4 py-2 bg-white/[0.1] backdrop-blur-xl border border-white/[0.2] rounded-full flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,0,0,0.15)] transition-all duration-300 group-hover/pill:bg-white/[0.15] group-hover/pill:border-white/[0.3]">
-                  <Clock className="w-4 h-4 text-white/90" />
-                  <span className="text-sm font-semibold text-white drop-shadow-sm">{totalTime} min</span>
-                </div>
+              <div className="flex-1 px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center gap-2 shadow-md transition-colors duration-200 hover:bg-white/15 hover:border-white/30">
+                <Clock className="w-4 h-4 text-white/90" />
+                <span className="text-sm font-semibold text-white">{totalTime} min</span>
               </div>
 
-              <div className="relative group/pill flex-1">
-                <div className="absolute inset-0 bg-white/5 blur-lg rounded-full" />
-                <div className="relative px-4 py-2 bg-white/[0.1] backdrop-blur-xl border border-white/[0.2] rounded-full flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,0,0,0.15)] transition-all duration-300 group-hover/pill:bg-white/[0.15] group-hover/pill:border-white/[0.3]">
-                  <Users className="w-4 h-4 text-white/90" />
-                  <span className="text-sm font-semibold text-white drop-shadow-sm">{recipe.servings} pers.</span>
-                </div>
+              <div className="flex-1 px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center gap-2 shadow-md transition-colors duration-200 hover:bg-white/15 hover:border-white/30">
+                <Users className="w-4 h-4 text-white/90" />
+                <span className="text-sm font-semibold text-white">{recipe.servings} pers.</span>
               </div>
             </div>
           </div>
         </div>
-
-        {/* Edge glow effect */}
-        <div className="absolute inset-0 rounded-[2.5rem] corner-squircle ring-1 ring-inset ring-white/[0.05] pointer-events-none" />
       </div>
     )
   }
