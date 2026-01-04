@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { BookOpen } from 'lucide-react'
 import { Header } from '@/components/layout/Header'
 import { Container } from '@/components/layout/Container'
+import { Footer } from '@/components/layout/Footer'
 import { EmptyState } from '@/components/layout/EmptyState'
 import { Button } from '@/components/ui/Button'
 import { Spinner } from '@/components/ui/Spinner'
@@ -20,6 +21,7 @@ export default function HomePage() {
   const { recipes, loading: recipesLoading } = useRecipes()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
+  const [selectedCookingMethod, setSelectedCookingMethod] = useState('all')
 
   const debouncedSearchTerm = useDebounce(searchTerm, 300)
 
@@ -39,6 +41,13 @@ export default function HomePage() {
       filtered = filtered.filter((recipe) => recipe.category === selectedCategory)
     }
 
+    // Filtre par méthode de cuisson
+    if (selectedCookingMethod !== 'all') {
+      filtered = filtered.filter((recipe) =>
+        recipe.cooking_methods?.includes(selectedCookingMethod)
+      )
+    }
+
     // Filtre par recherche
     if (debouncedSearchTerm) {
       const lowerQuery = debouncedSearchTerm.toLowerCase()
@@ -52,7 +61,7 @@ export default function HomePage() {
     }
 
     return filtered
-  }, [recipes, selectedCategory, debouncedSearchTerm])
+  }, [recipes, selectedCategory, selectedCookingMethod, debouncedSearchTerm])
 
   const handleLogout = async () => {
     await signOut()
@@ -72,7 +81,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-ios-bg">
+    <div className="min-h-screen bg-ios-bg flex flex-col">
       <Header user={user} onLogout={handleLogout} />
 
       <Container>
@@ -83,6 +92,8 @@ export default function HomePage() {
             onSearchChange={setSearchTerm}
             selectedCategory={selectedCategory}
             onCategoryChange={setSelectedCategory}
+            selectedCookingMethod={selectedCookingMethod}
+            onCookingMethodChange={setSelectedCookingMethod}
           />
 
           {/* Contenu */}
@@ -111,7 +122,7 @@ export default function HomePage() {
               }
             />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
               {filteredRecipes.map((recipe) => (
                 <RecipeCard
                   key={recipe.id}
@@ -124,6 +135,8 @@ export default function HomePage() {
           )}
         </div>
       </Container>
+
+      <Footer />
     </div>
   )
 }
