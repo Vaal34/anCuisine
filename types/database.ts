@@ -48,7 +48,9 @@ export interface Database {
           ingredients: Json
           steps: Json
           category: string
+          cooking_methods: Json
           notes: string | null
+          time_calculation_mode: string
           created_at: string
           updated_at: string
         }
@@ -63,7 +65,9 @@ export interface Database {
           ingredients?: Json
           steps?: Json
           category?: string
+          cooking_methods?: Json
           notes?: string | null
+          time_calculation_mode?: string
           created_at?: string
           updated_at?: string
         }
@@ -78,7 +82,9 @@ export interface Database {
           ingredients?: Json
           steps?: Json
           category?: string
+          cooking_methods?: Json
           notes?: string | null
+          time_calculation_mode?: string
           created_at?: string
           updated_at?: string
         }

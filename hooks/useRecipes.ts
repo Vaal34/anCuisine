@@ -15,6 +15,7 @@ interface UseRecipesReturn {
   deleteRecipe: (id: string) => Promise<void>
   searchRecipes: (query: string) => Recipe[]
   filterByCategory: (category: string) => Recipe[]
+  filterByCookingMethod: (method: string) => Recipe[]
 }
 
 export function useRecipes(): UseRecipesReturn {
@@ -36,6 +37,7 @@ export function useRecipes(): UseRecipesReturn {
         ...recipe,
         ingredients: recipe.ingredients as unknown as RecipeIngredient[],
         steps: recipe.steps as unknown as string[],
+        cooking_methods: recipe.cooking_methods as unknown as string[] || [],
       }))
 
       setRecipes(recipesData)
@@ -65,6 +67,7 @@ export function useRecipes(): UseRecipesReturn {
         ...data,
         ingredients: (data.ingredients as any) || [],
         steps: (data.steps as any) || [],
+        cooking_methods: (data.cooking_methods as any) || [],
       }
 
       return recipe
@@ -90,8 +93,10 @@ export function useRecipes(): UseRecipesReturn {
           servings: formData.servings,
           ingredients: formData.ingredients as unknown as never,
           steps: formData.steps as unknown as never,
+          cooking_methods: formData.cookingMethods,
           notes: formData.notes,
           image_url: formData.imageUrl || null,
+          time_calculation_mode: formData.timeCalculationMode,
         })
         .select()
         .single()
@@ -118,8 +123,10 @@ export function useRecipes(): UseRecipesReturn {
           servings: formData.servings,
           ingredients: formData.ingredients as unknown as never,
           steps: formData.steps as unknown as never,
+          cooking_methods: formData.cookingMethods,
           notes: formData.notes,
           image_url: formData.imageUrl || null,
+          time_calculation_mode: formData.timeCalculationMode,
         })
         .eq('id', id)
 
@@ -165,6 +172,13 @@ export function useRecipes(): UseRecipesReturn {
     return recipes.filter((recipe) => recipe.category === category)
   }, [recipes])
 
+  const filterByCookingMethod = useCallback((method: string): Recipe[] => {
+    if (method === 'all') return recipes
+    return recipes.filter((recipe) =>
+      recipe.cooking_methods?.includes(method)
+    )
+  }, [recipes])
+
   return {
     recipes,
     loading,
@@ -176,5 +190,6 @@ export function useRecipes(): UseRecipesReturn {
     deleteRecipe,
     searchRecipes,
     filterByCategory,
+    filterByCookingMethod,
   }
 }
