@@ -5,8 +5,8 @@ import Link from 'next/link'
 
 export function Footer() {
   return (
-    <footer className="bg-ios-bg-secondary border-t border-ios-separator mt-auto">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+    <footer className="bg-ios-bg-secondary border-t border-ios-separator mt-auto w-full">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="text-center space-y-4">
           {/* Logo/Nom de l'app */}
           <div className="text-lg sm:text-xl font-bold text-ios-label">

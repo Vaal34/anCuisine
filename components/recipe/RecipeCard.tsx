@@ -41,7 +41,7 @@ export function RecipeCard({ recipe, onClick, onStartCooking, variant = 'premium
   return (
     <div
       onClick={onClick}
-      className="relative h-56 sm:h-80 rounded-[3rem] corner-squircle overflow-hidden group cursor-pointer shadow-[0_8px_32px_rgba(0,0,0,0.12)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.2)] transition-shadow duration-300"
+      className="relative h-64 sm:h-72 md:h-80 lg:h-96 rounded-[3rem] corner-squircle overflow-hidden group cursor-pointer shadow-[0_8px_32px_rgba(0,0,0,0.12)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.2)] transition-shadow duration-300 w-full"
     >
       {/* Background Image */}
       {recipe.image_url && (
@@ -56,33 +56,33 @@ export function RecipeCard({ recipe, onClick, onStartCooking, variant = 'premium
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10" />
 
       {/* Content */}
-      <div className="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end">
+      <div className="absolute inset-0 p-4 sm:p-5 md:p-6 flex flex-col justify-end">
         {/* Category Badge - iOS Pink */}
-        <span className="text-[#FF2D55] text-xs font-semibold uppercase tracking-widest mb-2">
+        <span className="text-[#FF2D55] text-[10px] sm:text-xs font-semibold uppercase tracking-widest mb-1 sm:mb-2">
           {categoryLabel}
         </span>
 
         {/* Title */}
-        <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 leading-tight line-clamp-2">
+        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 leading-tight line-clamp-2">
           {recipe.title}
         </h3>
 
         {/* Bottom Row - Info & Play Button */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           {/* Time & Servings Info */}
-          <div className="flex items-center gap-4 text-white/70 text-sm">
-            <div className="flex items-center gap-1.5">
-              <Clock className="w-4 h-4" />
-              <span>{totalTime} min</span>
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-4 text-white/70 text-xs sm:text-sm">
+            <div className="flex items-center gap-1 sm:gap-1.5">
+              <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="whitespace-nowrap">{totalTime} min</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <Users2 className="w-4 h-4" />
-              <span>{recipe.servings} pers.</span>
+            <div className="flex items-center gap-1 sm:gap-1.5">
+              <Users2 className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="whitespace-nowrap">{recipe.servings} pers.</span>
             </div>
             {CookingIcon && cookingMethodInfo && (
-              <div className="flex items-center gap-1.5">
-                <CookingIcon className="w-4 h-4" />
-                <span>{cookingMethodInfo.label}</span>
+              <div className="flex items-center gap-1 sm:gap-1.5">
+                <CookingIcon className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="whitespace-nowrap">{cookingMethodInfo.label}</span>
               </div>
             )}
           </div>
@@ -91,9 +91,9 @@ export function RecipeCard({ recipe, onClick, onStartCooking, variant = 'premium
           {onStartCooking && (
             <button
               onClick={handleStartCooking}
-              className="w-12 h-12 bg-ios-pink/40 border border-ios-pink rounded-full flex items-center justify-center hover:bg-ios-pink/50  hover:scale-105 active:scale-95 transition-all duration-500 shadow-lg shadow-ios-pink/30"
+              className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-ios-pink/40 border border-ios-pink rounded-full flex items-center justify-center hover:bg-ios-pink/50 hover:scale-105 active:scale-95 transition-all duration-500 shadow-lg shadow-ios-pink/30"
             >
-              <UtensilsCrossed className="w-5 h-5 text-ios-pink" />
+              <UtensilsCrossed className="w-4 h-4 sm:w-5 sm:h-5 text-ios-pink" />
             </button>
           )}
         </div>

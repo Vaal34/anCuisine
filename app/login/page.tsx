@@ -50,7 +50,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-ios-bg via-ios-bg-tertiary to-ios-bg-secondary">
-      <div className="flex-1 flex items-center justify-center p-4">
+      <div className="flex-1 flex items-center justify-center p-4 w-full">
         <Card className="max-w-md w-full p-8">
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-recipe-primary rounded-3xl corner-squircle mb-4">

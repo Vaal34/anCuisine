@@ -84,8 +84,9 @@ export default function HomePage() {
     <div className="min-h-screen bg-ios-bg flex flex-col">
       <Header user={user} onLogout={handleLogout} />
 
-      <Container>
-        <div className="space-y-6">
+      <div className="flex-1">
+        <Container>
+          <div className="space-y-6">
           {/* Filtres */}
           <RecipeFilters
             searchTerm={searchTerm}
@@ -133,8 +134,9 @@ export default function HomePage() {
               ))}
             </div>
           )}
-        </div>
-      </Container>
+          </div>
+        </Container>
+      </div>
 
       <Footer />
     </div>
