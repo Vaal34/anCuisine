@@ -48,8 +48,18 @@ export function IngredientsInput({ ingredients, onChange, disabled }: Ingredient
 
         if (inputElement) {
           const rect = inputElement.getBoundingClientRect()
+          const dropdownHeight = 256 // max-h-64 = 16rem = 256px
+          const viewportHeight = window.visualViewport?.height || window.innerHeight
+          const spaceBelow = viewportHeight - rect.bottom
+          const spaceAbove = rect.top
+
+          // Si pas assez d'espace en dessous et plus d'espace au-dessus, afficher au-dessus
+          const shouldShowAbove = spaceBelow < dropdownHeight && spaceAbove > spaceBelow
+
           setDropdownPosition({
-            top: rect.bottom + window.scrollY + 4,
+            top: shouldShowAbove
+              ? rect.top + window.scrollY - Math.min(dropdownHeight, spaceAbove) - 4
+              : rect.bottom + window.scrollY + 4,
             left: rect.left + window.scrollX,
             width: rect.width
           })
@@ -62,10 +72,15 @@ export function IngredientsInput({ ingredients, onChange, disabled }: Ingredient
     // Recalculer lors du scroll ou resize
     window.addEventListener('scroll', updatePosition, true)
     window.addEventListener('resize', updatePosition)
+    // Écouter les changements de visualViewport pour gérer le clavier mobile
+    window.visualViewport?.addEventListener('resize', updatePosition)
+    window.visualViewport?.addEventListener('scroll', updatePosition)
 
     return () => {
       window.removeEventListener('scroll', updatePosition, true)
       window.removeEventListener('resize', updatePosition)
+      window.visualViewport?.removeEventListener('resize', updatePosition)
+      window.visualViewport?.removeEventListener('scroll', updatePosition)
     }
   }, [showDropdown])
 

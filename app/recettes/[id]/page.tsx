@@ -15,6 +15,7 @@ import { RecipeStepByStep } from '@/components/recipe/RecipeStepByStep'
 import { useAuth } from '@/hooks/useAuth'
 import { useRecipes } from '@/hooks/useRecipes'
 import type { Recipe } from '@/types'
+import { CATEGORIES } from '@/types'
 
 export default function RecipePage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = React.use(params)
@@ -155,19 +156,27 @@ export default function RecipePage({ params }: { params: Promise<{ id: string }>
 
       <Container maxWidth="lg">
         <div className="space-y-4 sm:space-y-5 md:space-y-6">
-          {/* Image */}
+          {/* Image avec catégorie */}
           {recipe.image_url && (
-            <div className="w-full h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden rounded-2xl sm:rounded-3xl corner-squircle">
+            <div className="relative w-full h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden rounded-2xl sm:rounded-3xl corner-squircle">
               <img
                 src={recipe.image_url}
                 alt={recipe.title}
                 className="w-full h-full object-cover"
               />
+              {/* Gradient overlay pour meilleure lisibilité */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+              {/* Catégorie en bas à gauche */}
+              <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6">
+                <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-white bg-ios-pink rounded-lg shadow-lg">
+                  {CATEGORIES.find((c) => c.value === recipe.category)?.label || recipe.category}
+                </span>
+              </div>
             </div>
           )}
 
           {/* Infos */}
-          <RecipeInfo recipe={recipe} />
+          <RecipeInfo recipe={recipe} hideCategory />
 
           {/* Bouton principal */}
           <Button

@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { Plus, X, Tag } from 'lucide-react'
+import { Plus, X, Tag, Timer } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
-import { Textarea } from '@/components/ui/Textarea'
 import { Badge } from '@/components/ui/Badge'
+import { Input } from '@/components/ui/Input'
 import type { RecipeIngredient, RecipeStep } from '@/types'
 
 export interface StepsInputProps {
@@ -21,6 +21,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
   const [autocompleteSearch, setAutocompleteSearch] = useState('')
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 })
   const [autocompletePosition, setAutocompletePosition] = useState({ top: 0, left: 0 })
+  const [showTimerInput, setShowTimerInput] = useState<number | null>(null)
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([])
   const textareaRefs = useRef<(HTMLTextAreaElement | null)[]>([])
   const dropdownRef = useRef<HTMLDivElement>(null)
@@ -253,6 +254,24 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
     )
   }
 
+  const updateTimer = (stepIndex: number, minutes?: number, label?: string, type?: 'prep' | 'cook') => {
+    const updated = [...normalizedSteps]
+    updated[stepIndex] = {
+      ...updated[stepIndex],
+      timerMinutes: minutes,
+      timerLabel: label,
+      timerType: type
+    }
+    onChange(updated)
+  }
+
+  const removeTimer = (stepIndex: number) => {
+    const updated = [...normalizedSteps]
+    const { timerMinutes, timerLabel, timerType, ...rest } = updated[stepIndex]
+    updated[stepIndex] = rest
+    onChange(updated)
+  }
+
   return (
     <>
       <div className="space-y-3 sm:space-y-4">
@@ -265,7 +284,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
               <div className="sm:hidden space-y-2">
                 {/* Badge and delete button row */}
                 <div className="flex items-center justify-between">
-                  <Badge variant="blue">
+                  <Badge variant="recipe">
                     Étape {index + 1}
                   </Badge>
                   {normalizedSteps.length > 1 && !disabled && (
@@ -290,17 +309,50 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                   className="w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none resize-none"
                 />
 
-                {/* Bouton pour ajouter des ingrédients */}
-                {!disabled && ingredients.length > 0 && (
-                  <button
-                    ref={(el) => { buttonRefs.current[index] = el }}
-                    type="button"
-                    onClick={() => setShowIngredientPicker(showIngredientPicker === index ? null : index)}
-                    className="flex items-center gap-2 px-3 py-2 text-sm text-ios-pink hover:bg-ios-pink/10 rounded-2xl transition-colors"
-                  >
-                    <Tag className="w-4 h-4" />
-                    <span>Ingrédients utilisés</span>
-                  </button>
+                {/* Boutons Ingrédients et Minuteur sur la même ligne */}
+                {!disabled && (
+                  <div className="flex flex-wrap gap-2">
+                    {ingredients.length > 0 && (
+                      <button
+                        ref={(el) => { buttonRefs.current[index] = el }}
+                        type="button"
+                        onClick={() => setShowIngredientPicker(showIngredientPicker === index ? null : index)}
+                        className={`flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm rounded-2xl corner-squircle transition-colors flex-shrink-0 ${
+                          selectedIngredientIndices.length > 0
+                            ? 'text-white bg-black'
+                            : 'text-ios-label-secondary bg-ios-bg-secondary hover:bg-ios-bg-tertiary'
+                        }`}
+                      >
+                        <Tag className="w-4 h-4 flex-shrink-0" />
+                        <span className="whitespace-nowrap">Ingrédients</span>
+                        {selectedIngredientIndices.length > 0 && (
+                          <span className="px-1.5 py-0.5 bg-white/20 rounded-full text-xs font-semibold flex-shrink-0">
+                            {selectedIngredientIndices.length}
+                          </span>
+                        )}
+                      </button>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={() => setShowTimerInput(showTimerInput === index ? null : index)}
+                      className={`flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm rounded-2xl corner-squircle transition-colors flex-shrink-0 ${
+                        step.timerMinutes
+                          ? 'text-white bg-black'
+                          : 'text-ios-label-secondary bg-ios-bg-secondary hover:bg-ios-bg-tertiary'
+                      }`}
+                    >
+                      <Timer className="w-4 h-4 flex-shrink-0" />
+                      {step.timerMinutes ? (
+                        <>
+                          <span>{step.timerType === 'cook' ? '🔥' : '🥄'}</span>
+                          <span className="whitespace-nowrap">{step.timerMinutes} min</span>
+                        </>
+                      ) : (
+                        <span className="whitespace-nowrap">Minuteur</span>
+                      )}
+                    </button>
+                  </div>
                 )}
 
                 {/* Badges des ingrédients sélectionnés */}
@@ -313,14 +365,14 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                       return (
                         <div
                           key={ingredientIdx}
-                          className="inline-flex items-center gap-1 px-3 py-1.5 bg-ios-pink/10 text-ios-pink rounded-full text-sm"
+                          className="inline-flex items-center gap-1 px-3 py-1.5 bg-ios-bg-tertiary text-ios-label rounded-full corner-squircle text-sm"
                         >
                           <span className="font-medium">{ingredient.name}</span>
                           {!disabled && (
                             <button
                               type="button"
                               onClick={() => removeIngredientFromStep(index, ingredientIdx)}
-                              className="hover:text-ios-pink/80 transition-colors"
+                              className="hover:text-ios-red transition-colors"
                             >
                               <X className="w-3.5 h-3.5" />
                             </button>
@@ -330,13 +382,80 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                     })}
                   </div>
                 )}
+
+                {/* Configuration du minuteur */}
+                {showTimerInput === index && !disabled && (
+                  <div className="space-y-3 p-3 bg-ios-bg-secondary rounded-2xl">
+                    {/* Type de minuteur */}
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-medium text-ios-label-secondary">Type de minuteur</label>
+                      <div className="grid grid-cols-2 gap-2">
+                        <button
+                          type="button"
+                          onClick={() => updateTimer(index, step.timerMinutes, step.timerLabel, 'prep')}
+                          className={`px-3 py-2 rounded-xl corner-squircle text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${
+                            step.timerType === 'prep' || !step.timerType
+                              ? 'bg-ios-label text-white'
+                              : 'bg-ios-bg-tertiary text-ios-label-secondary hover:bg-ios-bg-secondary'
+                          }`}
+                        >
+                          <span>🥄</span>
+                          <span>Préparation</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => updateTimer(index, step.timerMinutes, step.timerLabel, 'cook')}
+                          className={`px-3 py-2 rounded-xl corner-squircle text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${
+                            step.timerType === 'cook'
+                              ? 'bg-ios-label text-white'
+                              : 'bg-ios-bg-tertiary text-ios-label-secondary hover:bg-ios-bg-secondary'
+                          }`}
+                        >
+                          <span>🔥</span>
+                          <span>Cuisson</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Durée et label */}
+                    <div className="grid grid-cols-2 gap-2">
+                      <Input
+                        type="number"
+                        label="Durée (min)"
+                        value={step.timerMinutes || ''}
+                        onChange={(e) => updateTimer(index, parseInt(e.target.value) || undefined, step.timerLabel, step.timerType)}
+                        min={1}
+                        placeholder="30"
+                      />
+                      <Input
+                        type="text"
+                        label="Label (optionnel)"
+                        value={step.timerLabel || ''}
+                        onChange={(e) => updateTimer(index, step.timerMinutes, e.target.value || undefined, step.timerType)}
+                        placeholder="Au frigo"
+                      />
+                    </div>
+                    {step.timerMinutes && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          removeTimer(index)
+                          setShowTimerInput(null)
+                        }}
+                        className="text-sm text-ios-pink hover:underline"
+                      >
+                        Supprimer le minuteur
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Desktop/Tablet Layout - horizontal */}
               <div className="hidden sm:block space-y-2">
                 <div className="flex gap-2 items-start">
                   {/* Numéro */}
-                  <Badge variant="blue" className="mt-2 flex-shrink-0">
+                  <Badge variant="recipe" className="mt-2 flex-shrink-0">
                     {index + 1}
                   </Badge>
 
@@ -365,18 +484,52 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                   )}
                 </div>
 
-                {/* Bouton pour ajouter des ingrédients et badges */}
-                <div className="flex items-center gap-2 ml-10">
-                  {!disabled && ingredients.length > 0 && (
-                    <button
-                      ref={(el) => { buttonRefs.current[index] = el }}
-                      type="button"
-                      onClick={() => setShowIngredientPicker(showIngredientPicker === index ? null : index)}
-                      className="flex items-center gap-2 px-3 py-1.5 text-sm text-ios-pink hover:bg-ios-pink/10 rounded-2xl transition-colors flex-shrink-0"
-                    >
-                      <Tag className="w-4 h-4" />
-                      <span>Ingrédients</span>
-                    </button>
+                {/* Boutons et badges regroupés */}
+                <div className="ml-10 space-y-2">
+                  {/* Boutons Ingrédients et Minuteur sur la même ligne */}
+                  {!disabled && (
+                    <div className="flex flex-wrap gap-2">
+                      {ingredients.length > 0 && (
+                        <button
+                          ref={(el) => { buttonRefs.current[index] = el }}
+                          type="button"
+                          onClick={() => setShowIngredientPicker(showIngredientPicker === index ? null : index)}
+                          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-2xl corner-squircle transition-colors flex-shrink-0 ${
+                            selectedIngredientIndices.length > 0
+                              ? 'text-white bg-black'
+                              : 'text-ios-label-secondary bg-ios-bg-secondary hover:bg-ios-bg-tertiary'
+                          }`}
+                        >
+                          <Tag className="w-4 h-4 flex-shrink-0" />
+                          <span className="whitespace-nowrap">Ingrédients</span>
+                          {selectedIngredientIndices.length > 0 && (
+                            <span className="px-1.5 py-0.5 bg-white/20 rounded-full text-xs font-semibold flex-shrink-0">
+                              {selectedIngredientIndices.length}
+                            </span>
+                          )}
+                        </button>
+                      )}
+
+                      <button
+                        type="button"
+                        onClick={() => setShowTimerInput(showTimerInput === index ? null : index)}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-2xl corner-squircle transition-colors flex-shrink-0 ${
+                          step.timerMinutes
+                            ? 'text-white bg-black'
+                            : 'text-ios-label-secondary bg-ios-bg-secondary hover:bg-ios-bg-tertiary'
+                        }`}
+                      >
+                        <Timer className="w-4 h-4 flex-shrink-0" />
+                        {step.timerMinutes ? (
+                          <>
+                            <span>{step.timerType === 'cook' ? '🔥' : '🥄'}</span>
+                            <span className="whitespace-nowrap">{step.timerMinutes} min</span>
+                          </>
+                        ) : (
+                          <span className="whitespace-nowrap">Minuteur</span>
+                        )}
+                      </button>
+                    </div>
                   )}
 
                   {/* Badges des ingrédients sélectionnés */}
@@ -389,14 +542,14 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                         return (
                           <div
                             key={ingredientIdx}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 bg-ios-pink/10 text-ios-pink rounded-full text-sm"
+                            className="inline-flex items-center gap-1 px-3 py-1.5 bg-ios-bg-tertiary text-ios-label rounded-full corner-squircle text-sm"
                           >
                             <span className="font-medium">{ingredient.name}</span>
                             {!disabled && (
                               <button
                                 type="button"
                                 onClick={() => removeIngredientFromStep(index, ingredientIdx)}
-                                className="hover:text-ios-pink/80 transition-colors"
+                                className="hover:text-ios-red transition-colors"
                               >
                                 <X className="w-3.5 h-3.5" />
                               </button>
@@ -404,6 +557,75 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                           </div>
                         )
                       })}
+                    </div>
+                  )}
+                </div>
+
+                {/* Configuration du minuteur */}
+                <div className="ml-10 space-y-2">
+                  {showTimerInput === index && !disabled && (
+                    <div className="space-y-3 p-3 bg-ios-bg-secondary rounded-2xl">
+                      {/* Type de minuteur */}
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-ios-label-secondary">Type de minuteur</label>
+                        <div className="grid grid-cols-2 gap-2 max-w-xs">
+                          <button
+                            type="button"
+                            onClick={() => updateTimer(index, step.timerMinutes, step.timerLabel, 'prep')}
+                            className={`px-3 py-2 rounded-xl corner-squircle text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${
+                              step.timerType === 'prep' || !step.timerType
+                                ? 'bg-ios-label text-white'
+                                : 'bg-ios-bg-tertiary text-ios-label-secondary hover:bg-ios-bg-secondary'
+                            }`}
+                          >
+                            <span>🥄</span>
+                            <span>Préparation</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => updateTimer(index, step.timerMinutes, step.timerLabel, 'cook')}
+                            className={`px-3 py-2 rounded-xl corner-squircle text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${
+                              step.timerType === 'cook'
+                                ? 'bg-ios-label text-white'
+                                : 'bg-ios-bg-tertiary text-ios-label-secondary hover:bg-ios-bg-secondary'
+                            }`}
+                          >
+                            <span>🔥</span>
+                            <span>Cuisson</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Durée et label */}
+                      <div className="grid grid-cols-2 gap-3 max-w-md">
+                        <Input
+                          type="number"
+                          label="Durée (min)"
+                          value={step.timerMinutes || ''}
+                          onChange={(e) => updateTimer(index, parseInt(e.target.value) || undefined, step.timerLabel, step.timerType)}
+                          min={1}
+                          placeholder="30"
+                        />
+                        <Input
+                          type="text"
+                          label="Label (optionnel)"
+                          value={step.timerLabel || ''}
+                          onChange={(e) => updateTimer(index, step.timerMinutes, e.target.value || undefined, step.timerType)}
+                          placeholder="Au frigo"
+                        />
+                      </div>
+                      {step.timerMinutes && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            removeTimer(index)
+                            setShowTimerInput(null)
+                          }}
+                          className="text-sm text-ios-pink hover:underline"
+                        >
+                          Supprimer le minuteur
+                        </button>
+                      )}
                     </div>
                   )}
                 </div>
