@@ -34,8 +34,11 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
   const [timeCalculationMode, setTimeCalculationMode] = useState<'manual' | 'auto-timers'>('manual')
 
   // Initialiser le formulaire avec les données existantes en mode édition
+  // On utilise un ref pour ne charger les données qu'une seule fois au montage
+  const [isInitialized, setIsInitialized] = useState(false)
+
   useEffect(() => {
-    if (mode === 'edit' && initialData) {
+    if (mode === 'edit' && initialData && !isInitialized) {
       setTitle(initialData.title)
       setCategory(initialData.category)
       setPrepTime(initialData.prep_time)
@@ -47,8 +50,9 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
       setCookingMethods(initialData.cooking_methods || [])
       setNotes(initialData.notes || '')
       setTimeCalculationMode(initialData.time_calculation_mode || 'manual')
+      setIsInitialized(true)
     }
-  }, [mode, initialData])
+  }, [mode, initialData, isInitialized])
 
   // Calculer automatiquement le temps basé sur les minuteurs
   useEffect(() => {

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
@@ -20,6 +20,7 @@ export default function EditRecipePage({ params }: { params: Promise<{ id: strin
   const [loading, setLoading] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const hasLoadedRecipe = useRef(false)
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -29,16 +30,20 @@ export default function EditRecipePage({ params }: { params: Promise<{ id: strin
 
   useEffect(() => {
     const loadRecipe = async () => {
+      if (hasLoadedRecipe.current) return
+
       setLoading(true)
       const data = await getRecipe(resolvedParams.id)
       setRecipe(data)
       setLoading(false)
+      hasLoadedRecipe.current = true
     }
 
-    if (user) {
+    if (user && !hasLoadedRecipe.current) {
       loadRecipe()
     }
-  }, [resolvedParams.id, user, getRecipe])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resolvedParams.id, user])
 
   const handleUpdate = async (data: RecipeFormData) => {
     setIsLoading(true)
