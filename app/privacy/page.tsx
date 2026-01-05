@@ -13,7 +13,7 @@ export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-ios-bg">
       {/* Header */}
-      <header className="bg-ios-bg-secondary/80 backdrop-blur-lg border-b border-ios-separator sticky top-0 z-40">
+      <header className="bg-ios-bg-secondary/80 border-b border-ios-separator sticky top-0 z-40">
         <div className="container px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center gap-3">
           <Button
             variant="ghost"

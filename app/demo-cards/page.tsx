@@ -105,24 +105,24 @@ function HeroCard({ recipe }: { recipe: Recipe }) {
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
       {/* Floating action button */}
-      <button className="absolute top-6 right-6 w-14 h-14 rounded-2xl corner-squircle bg-white/15 backdrop-blur-xl border border-white/20 hover:bg-white/25 shadow-ios-lg transition-all duration-300 flex items-center justify-center text-white group-hover:scale-110">
+      <button className="absolute top-6 right-6 w-14 h-14 rounded-2xl corner-squircle bg-white/15 border border-white/20 hover:bg-white/25 shadow-ios-lg transition-all duration-300 flex items-center justify-center text-white group-hover:scale-110">
         <ChefHat className="w-7 h-7" />
       </button>
 
       {/* Content */}
       <div className="absolute bottom-0 left-0 right-0 p-6 space-y-4">
-        <Badge variant="recipe" className="bg-white/10 backdrop-blur-md border-white/20 text-white">
+        <Badge variant="recipe" className="bg-white/10 border-white/20 text-white">
           {categoryLabel}
         </Badge>
         <h3 className="text-3xl font-bold text-white tracking-tight">
           {recipe.title}
         </h3>
         <div className="flex items-center gap-2">
-          <div className="px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center gap-2 text-white text-sm font-medium">
+          <div className="px-4 py-2 bg-white/10 border border-white/20 rounded-full flex items-center gap-2 text-white text-sm font-medium">
             <Clock className="w-4 h-4" />
             {totalTime} min
           </div>
-          <div className="px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center gap-2 text-white text-sm font-medium">
+          <div className="px-4 py-2 bg-white/10 border border-white/20 rounded-full flex items-center gap-2 text-white text-sm font-medium">
             <Users className="w-4 h-4" />
             {recipe.servings} pers.
           </div>
@@ -193,7 +193,7 @@ function MinimalCard({ recipe }: { recipe: Recipe }) {
 
         {/* Minimal overlay badge */}
         <div className="absolute top-4 left-4">
-          <Badge variant="recipe" className="bg-white/95 backdrop-blur-sm shadow-ios-sm">
+          <Badge variant="recipe" className="bg-white/95 shadow-ios-sm">
             {categoryLabel}
           </Badge>
         </div>
@@ -249,7 +249,7 @@ function LiquidGlassCard({ recipe }: { recipe: Recipe }) {
         <div className="absolute inset-0 bg-gradient-to-tl from-blue-500/10 via-transparent to-ios-pink/15 opacity-40 group-hover:opacity-60 transition-opacity duration-1000 rounded-[2.5rem] corner-squircle" />
 
         {/* Glass blur layer */}
-        <div className="absolute inset-0 backdrop-blur-[0.5px] group-hover:backdrop-blur-[1px] transition-all duration-700 rounded-[2.5rem] corner-squircle" />
+        <div className="absolute inset-0 group-hover:bg-white/5 transition-all duration-700 rounded-[2.5rem] corner-squircle" />
       </div>
 
       {/* Floating glass elements */}
@@ -260,7 +260,7 @@ function LiquidGlassCard({ recipe }: { recipe: Recipe }) {
             <div className="absolute inset-0 bg-white/10 blur-xl rounded-full" />
             <Badge
               variant="recipe"
-              className="relative bg-white/[0.15] backdrop-blur-2xl border border-white/[0.25] text-white shadow-[0_8px_32px_rgba(0,0,0,0.1)]"
+              className="relative bg-white/[0.15] border border-white/[0.25] text-white shadow-[0_8px_32px_rgba(0,0,0,0.1)]"
             >
               {categoryLabel}
             </Badge>
@@ -272,7 +272,7 @@ function LiquidGlassCard({ recipe }: { recipe: Recipe }) {
             <div className="absolute inset-0 bg-ios-pink/40 blur-xl rounded-xl corner-squircle opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500" />
 
             {/* Glass button */}
-            <div className="relative w-11 h-11 rounded-xl corner-squircle bg-white/[0.08] backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.15)] flex items-center justify-center transition-all duration-500 group-hover/btn:bg-white/[0.15] group-hover/btn:scale-110 group-hover/btn:border-white/[0.25]">
+            <div className="relative w-11 h-11 rounded-xl corner-squircle bg-white/[0.08] border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.15)] flex items-center justify-center transition-all duration-500 group-hover/btn:bg-white/[0.15] group-hover/btn:scale-110 group-hover/btn:border-white/[0.25]">
               <ChefHat className="w-5 h-5 text-white drop-shadow-lg" />
             </div>
           </button>
@@ -282,7 +282,7 @@ function LiquidGlassCard({ recipe }: { recipe: Recipe }) {
         <div className="space-y-3">
           {/* Glass container for title */}
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-white/[0.08] to-white/[0.03] backdrop-blur-2xl rounded-2xl corner-squircle border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.2)]" />
+            <div className="absolute inset-0 bg-gradient-to-r from-white/[0.08] to-white/[0.03] rounded-2xl corner-squircle border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.2)]" />
             <div className="relative px-5 py-4">
               <h3 className="text-3xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] tracking-tight line-clamp-2">
                 {recipe.title}
@@ -294,7 +294,7 @@ function LiquidGlassCard({ recipe }: { recipe: Recipe }) {
           <div className="flex items-center gap-2">
             <div className="relative group/pill flex-1">
               <div className="absolute inset-0 bg-white/5 blur-lg rounded-full" />
-              <div className="relative px-4 py-2 bg-white/[0.1] backdrop-blur-xl border border-white/[0.2] rounded-full flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,0,0,0.15)] transition-all duration-300 group-hover/pill:bg-white/[0.15] group-hover/pill:border-white/[0.3]">
+              <div className="relative px-4 py-2 bg-white/[0.1] border border-white/[0.2] rounded-full flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,0,0,0.15)] transition-all duration-300 group-hover/pill:bg-white/[0.15] group-hover/pill:border-white/[0.3]">
                 <Clock className="w-4 h-4 text-white/90" />
                 <span className="text-sm font-semibold text-white drop-shadow-sm">{totalTime} min</span>
               </div>
@@ -302,7 +302,7 @@ function LiquidGlassCard({ recipe }: { recipe: Recipe }) {
 
             <div className="relative group/pill flex-1">
               <div className="absolute inset-0 bg-white/5 blur-lg rounded-full" />
-              <div className="relative px-4 py-2 bg-white/[0.1] backdrop-blur-xl border border-white/[0.2] rounded-full flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,0,0,0.15)] transition-all duration-300 group-hover/pill:bg-white/[0.15] group-hover/pill:border-white/[0.3]">
+              <div className="relative px-4 py-2 bg-white/[0.1] border border-white/[0.2] rounded-full flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,0,0,0.15)] transition-all duration-300 group-hover/pill:bg-white/[0.15] group-hover/pill:border-white/[0.3]">
                 <Users className="w-4 h-4 text-white/90" />
                 <span className="text-sm font-semibold text-white drop-shadow-sm">{recipe.servings} pers.</span>
               </div>
@@ -327,7 +327,7 @@ function ConcentricCard({ recipe }: { recipe: Recipe }) {
       {/* Outer concentric layer */}
       <div className="p-4 bg-gradient-to-br from-ios-pink/5 to-purple-500/5 rounded-[2.5rem] corner-squircle">
         {/* Middle concentric layer */}
-        <div className="p-3 bg-white/80 backdrop-blur-sm rounded-[2rem] corner-squircle shadow-ios-sm">
+        <div className="p-3 bg-white/80 rounded-[2rem] corner-squircle shadow-ios-sm">
           {/* Inner concentric layer with image */}
           <div className="relative h-72 rounded-[1.5rem] corner-squircle overflow-hidden shadow-ios-md group-hover:shadow-ios-lg transition-all duration-500">
             <img
@@ -340,7 +340,7 @@ function ConcentricCard({ recipe }: { recipe: Recipe }) {
             {/* Nested content with concentric alignment */}
             <div className="absolute bottom-0 left-0 right-0 p-5 space-y-3">
               {/* Innermost concentric element */}
-              <div className="inline-block p-3 bg-white/10 backdrop-blur-md rounded-2xl corner-squircle border border-white/20">
+              <div className="inline-block p-3 bg-white/10 rounded-2xl corner-squircle border border-white/20">
                 <Badge variant="recipe" className="bg-transparent border-0 text-white p-0 m-0">
                   {categoryLabel}
                 </Badge>
@@ -352,11 +352,11 @@ function ConcentricCard({ recipe }: { recipe: Recipe }) {
 
               {/* Concentric pills */}
               <div className="flex gap-2">
-                <div className="px-4 py-2 bg-white/15 backdrop-blur-md rounded-full border border-white/25 text-white text-sm flex items-center gap-2">
+                <div className="px-4 py-2 bg-white/15 rounded-full border border-white/25 text-white text-sm flex items-center gap-2">
                   <Clock className="w-4 h-4" />
                   {totalTime} min
                 </div>
-                <div className="px-4 py-2 bg-white/15 backdrop-blur-md rounded-full border border-white/25 text-white text-sm flex items-center gap-2">
+                <div className="px-4 py-2 bg-white/15 rounded-full border border-white/25 text-white text-sm flex items-center gap-2">
                   <Users className="w-4 h-4" />
                   {recipe.servings}
                 </div>
@@ -435,12 +435,12 @@ function ScrollEdgeCard({ recipe }: { recipe: Recipe }) {
       />
 
       {/* Top scroll edge effect - soft blur */}
-      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/40 via-black/20 to-transparent backdrop-blur-sm" />
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/40 via-black/20 to-transparent" />
 
       {/* Top floating bar with Liquid Glass */}
       <div className="absolute top-4 left-4 right-4">
-        <div className="h-14 px-5 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl corner-squircle shadow-ios-lg flex items-center justify-between">
-          <Badge variant="recipe" className="bg-white/20 backdrop-blur-sm border-white/30 text-white">
+        <div className="h-14 px-5 bg-white/10 border border-white/20 rounded-2xl corner-squircle shadow-ios-lg flex items-center justify-between">
+          <Badge variant="recipe" className="bg-white/20 border-white/30 text-white">
             {categoryLabel}
           </Badge>
           <button className="w-10 h-10 rounded-xl bg-white/15 hover:bg-white/25 border border-white/20 flex items-center justify-center text-white transition-all duration-300">
@@ -458,11 +458,11 @@ function ScrollEdgeCard({ recipe }: { recipe: Recipe }) {
           {recipe.title}
         </h3>
         <div className="flex gap-2">
-          <div className="px-4 py-2 bg-white/15 backdrop-blur-md border border-white/25 rounded-full text-white text-sm flex items-center gap-2">
+          <div className="px-4 py-2 bg-white/15 border border-white/25 rounded-full text-white text-sm flex items-center gap-2">
             <Clock className="w-4 h-4" />
             {totalTime} min
           </div>
-          <div className="px-4 py-2 bg-white/15 backdrop-blur-md border border-white/25 rounded-full text-white text-sm flex items-center gap-2">
+          <div className="px-4 py-2 bg-white/15 border border-white/25 rounded-full text-white text-sm flex items-center gap-2">
             <Users className="w-4 h-4" />
             {recipe.servings}
           </div>
@@ -491,7 +491,7 @@ function SpatialCard({ recipe }: { recipe: Recipe }) {
 
           {/* Floating element that springs from source */}
           <div className="absolute top-4 right-4">
-            <button className="w-12 h-12 bg-white/95 backdrop-blur-sm rounded-2xl corner-squircle shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)] hover:scale-110 transition-all duration-300 flex items-center justify-center text-ios-pink group-hover:rotate-12">
+            <button className="w-12 h-12 bg-white/95 rounded-2xl corner-squircle shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)] hover:scale-110 transition-all duration-300 flex items-center justify-center text-ios-pink group-hover:rotate-12">
               <ChefHat className="w-6 h-6" />
             </button>
           </div>
@@ -547,17 +547,17 @@ function MaterialVariationCard({ recipe }: { recipe: Recipe }) {
       <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors duration-500" />
 
       {/* Liquid Glass with material variation based on depth */}
-      <div className="absolute inset-0 backdrop-blur-[0.5px] group-hover:backdrop-blur-[2px] transition-all duration-700" />
+      <div className="absolute inset-0 group-hover:bg-white/5 transition-all duration-700" />
 
       {/* Surface that grows more opaque on hover (deeper engagement) */}
       <div className="absolute inset-4 group-hover:inset-2 transition-all duration-500 ease-out">
-        <div className="h-full p-6 bg-white/5 group-hover:bg-white/10 backdrop-blur-xl border border-white/10 group-hover:border-white/20 rounded-3xl corner-squircle shadow-[0_8px_32px_rgba(0,0,0,0.2)] flex flex-col justify-between transition-all duration-500">
+        <div className="h-full p-6 bg-white/5 group-hover:bg-white/10 border border-white/10 group-hover:border-white/20 rounded-3xl corner-squircle shadow-[0_8px_32px_rgba(0,0,0,0.2)] flex flex-col justify-between transition-all duration-500">
           {/* Top section */}
           <div className="flex items-start justify-between">
-            <Badge variant="recipe" className="bg-white/20 backdrop-blur-md border-white/30 text-white">
+            <Badge variant="recipe" className="bg-white/20 border-white/30 text-white">
               {categoryLabel}
             </Badge>
-            <div className="text-xs text-white/70 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
+            <div className="text-xs text-white/70 bg-white/10 px-3 py-1 rounded-full">
               {recipe.steps.length} étapes
             </div>
           </div>
@@ -568,11 +568,11 @@ function MaterialVariationCard({ recipe }: { recipe: Recipe }) {
               {recipe.title}
             </h3>
             <div className="flex gap-3">
-              <div className="flex-1 h-11 px-4 bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/25 rounded-full flex items-center justify-center gap-2 text-white transition-all duration-300">
+              <div className="flex-1 h-11 px-4 bg-white/15 hover:bg-white/25 border border-white/25 rounded-full flex items-center justify-center gap-2 text-white transition-all duration-300">
                 <Clock className="w-4 h-4" />
                 <span className="text-sm font-medium">{totalTime} min</span>
               </div>
-              <div className="flex-1 h-11 px-4 bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/25 rounded-full flex items-center justify-center gap-2 text-white transition-all duration-300">
+              <div className="flex-1 h-11 px-4 bg-white/15 hover:bg-white/25 border border-white/25 rounded-full flex items-center justify-center gap-2 text-white transition-all duration-300">
                 <Users className="w-4 h-4" />
                 <span className="text-sm font-medium">{recipe.servings}</span>
               </div>
@@ -599,7 +599,7 @@ function ContinuityCard({ recipe }: { recipe: Recipe }) {
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
         />
         {/* Selection indicator (shared component behavior) */}
-        <div className="absolute top-4 left-4 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-ios-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute top-4 left-4 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow-ios-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="w-5 h-5 rounded-full bg-ios-pink" />
         </div>
       </div>
