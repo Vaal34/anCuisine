@@ -10,6 +10,7 @@ interface UseAuthReturn {
   signUp: (email: string, password: string) => Promise<void>
   signIn: (email: string, password: string) => Promise<void>
   signOut: () => Promise<void>
+  deleteAccount: () => Promise<void>
   isAuthenticated: boolean
 }
 
@@ -63,12 +64,48 @@ export function useAuth(): UseAuthReturn {
     setUser(null)
   }
 
+  const deleteAccount = async () => {
+    if (!user) throw new Error('Aucun utilisateur connecté')
+
+    // 1. Supprimer toutes les recettes de l'utilisateur
+    const { error: deleteRecipesError } = await supabase
+      .from('recipes')
+      .delete()
+      .eq('user_id', user.id)
+
+    if (deleteRecipesError) throw deleteRecipesError
+
+    // 2. Supprimer le compte utilisateur (via l'API Admin de Supabase)
+    // Note: La suppression du compte Auth doit être faite via un endpoint API
+    // car le client ne peut pas supprimer son propre compte directement
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session) throw new Error('Session expirée')
+
+    const response = await fetch('/api/auth/delete-account', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`
+      }
+    })
+
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(error.message || 'Erreur lors de la suppression du compte')
+    }
+
+    // 3. Déconnecter l'utilisateur
+    await signOut()
+  }
+
   return {
     user,
     loading,
     signUp,
     signIn,
     signOut,
+    deleteAccount,
     isAuthenticated: !!user,
   }
 }

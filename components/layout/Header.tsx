@@ -1,8 +1,9 @@
 'use client'
 
 import React from 'react'
-import { ChefHat, LogOut, Plus } from 'lucide-react'
+import { ChefHat, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { UserMenu } from '@/components/layout/UserMenu'
 import { useRouter } from 'next/navigation'
 import type { User } from '@/types'
 
@@ -52,31 +53,13 @@ export function Header({ user, onLogout }: HeaderProps) {
               size="sm"
               onClick={() => router.push('/recettes/nouvelle')}
               leftIcon={<Plus className="w-4 h-4" />}
-              className="hidden sm:flex"
+              className="hidden sm:flex h-12"
             >
               Nouvelle recette
             </Button>
 
-            {/* Logout Button - Mobile: icon only */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onLogout}
-              className="sm:hidden w-10 h-10 p-0 rounded-2xl"
-              aria-label="Déconnexion"
-            >
-              <LogOut className="w-5 h-5" />
-            </Button>
-            {/* Logout Button - Desktop: icon + text */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onLogout}
-              leftIcon={<LogOut className="w-4 h-4" />}
-              className="hidden sm:flex"
-            >
-              Déconnexion
-            </Button>
+            {/* User Menu with Avatar */}
+            <UserMenu user={user} onLogout={onLogout} />
           </div>
         )}
       </div>
