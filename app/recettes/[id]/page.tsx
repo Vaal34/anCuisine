@@ -11,7 +11,6 @@ import { Spinner } from '@/components/ui/Spinner'
 import { RecipeInfo } from '@/components/recipe/RecipeInfo'
 import { IngredientsList } from '@/components/recipe/IngredientsList'
 import { StepsList } from '@/components/recipe/StepsList'
-import { RecipeStepByStep } from '@/components/recipe/RecipeStepByStep'
 import { useAuth } from '@/hooks/useAuth'
 import { useRecipes } from '@/hooks/useRecipes'
 import type { Recipe } from '@/types'
@@ -25,8 +24,6 @@ export default function RecipePage({ params }: { params: Promise<{ id: string }>
   const { getRecipe, deleteRecipe } = useRecipes()
   const [recipe, setRecipe] = useState<Recipe | null>(null)
   const [loading, setLoading] = useState(true)
-  const [stepByStepMode, setStepByStepMode] = useState(false)
-  const [currentStep, setCurrentStep] = useState(0)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
 
@@ -49,13 +46,6 @@ export default function RecipePage({ params }: { params: Promise<{ id: string }>
     }
   }, [resolvedParams.id, user, getRecipe])
 
-  // Démarrer en mode étape par étape si le paramètre mode=stepbystep est présent
-  useEffect(() => {
-    const mode = searchParams.get('mode')
-    if (mode === 'stepbystep' && !loading && recipe) {
-      setStepByStepMode(true)
-    }
-  }, [searchParams, loading, recipe])
 
   const handleDelete = async () => {
     setIsDeleting(true)
@@ -80,20 +70,6 @@ export default function RecipePage({ params }: { params: Promise<{ id: string }>
 
   if (!user || !recipe) {
     return null
-  }
-
-  if (stepByStepMode) {
-    return (
-      <RecipeStepByStep
-        recipe={recipe}
-        currentStep={currentStep}
-        onStepChange={setCurrentStep}
-        onExit={() => {
-          setStepByStepMode(false)
-          setCurrentStep(0)
-        }}
-      />
-    )
   }
 
   return (
@@ -183,7 +159,7 @@ export default function RecipePage({ params }: { params: Promise<{ id: string }>
             variant="primary"
             size="lg"
             fullWidth
-            onClick={() => setStepByStepMode(true)}
+            onClick={() => router.push(`/recettes/${resolvedParams.id}/cook`)}
             leftIcon={<ChefHat className="w-5 h-5 sm:w-6 sm:h-6" />}
             className="text-sm sm:text-base"
           >
