@@ -5,7 +5,7 @@
 ## ✨ Fonctionnalités
 
 - 📝 **Créer et gérer vos recettes** : Titre, catégorie, ingrédients, étapes, notes personnelles
-- 🖼️ **Recherche d'images Pinterest** : Trouvez des photos haute résolution pour illustrer vos recettes
+- 🖼️ **Recherche d'images Unsplash** : Trouvez des photos haute résolution gratuites pour illustrer vos recettes
 - 👨‍🍳 **Mode cuisine pas-à-pas** : Suivez vos recettes étape par étape avec minuteurs intégrés
 - 🔍 **Recherche et filtres** : Par nom, catégorie, ou méthode de cuisson
 - ⏱️ **Minuteurs intelligents** : Ajoutez des minuteurs à chaque étape de préparation/cuisson
@@ -46,10 +46,8 @@ cp .env.example .env.local
 NEXT_PUBLIC_SUPABASE_URL=https://votre-projet.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=votre-anon-key
 
-# Pinterest (optionnel - voir PINTEREST_SETUP.md)
-PINTEREST_APP_ID=votre_app_id
-PINTEREST_APP_SECRET=votre_app_secret
-PINTEREST_ACCESS_TOKEN=votre_access_token
+# Unsplash (optionnel - pour la recherche d'images)
+UNSPLASH_ACCESS_KEY=votre_access_key
 ```
 
 4. **Configurer Supabase**
@@ -72,12 +70,11 @@ L'application sera disponible sur `http://localhost:3000`
 - **Frontend** : Next.js 15, React, TypeScript
 - **Styling** : Tailwind CSS avec design system iOS
 - **Backend** : Supabase (PostgreSQL + Auth)
-- **API** : Pinterest API v5 pour la recherche d'images
+- **API** : Unsplash API pour la recherche d'images
 - **Déploiement** : Vercel (recommandé)
 
 ## 📖 Documentation
 
-- [Configuration Pinterest](./PINTEREST_SETUP.md) - Guide pour configurer l'API Pinterest
 - [Politique de confidentialité](/privacy) - `/privacy`
 - [Conditions d'utilisation](/terms) - `/terms`
 
@@ -96,7 +93,7 @@ anCuisine/
 │   ├── privacy/            # Politique de confidentialité
 │   ├── terms/              # Conditions d'utilisation
 │   └── api/                # Routes API
-│       └── pinterest/      # API Pinterest
+│       └── unsplash/       # API Unsplash
 ├── components/              # Composants React
 │   ├── layout/             # Layout (Header, Footer, Container)
 │   ├── recipe/             # Composants recettes
@@ -109,15 +106,16 @@ anCuisine/
 
 ## 🔧 Configuration avancée
 
-### Pinterest API (Optionnel)
+### Unsplash API (Optionnel)
 
-Pour activer la recherche d'images Pinterest :
+Pour activer la recherche d'images Unsplash :
 
-1. Suivez le guide [PINTEREST_SETUP.md](./PINTEREST_SETUP.md)
-2. Ajoutez vos credentials dans `.env.local`
-3. Redémarrez l'application
+1. Créez un compte gratuit sur [Unsplash Developers](https://unsplash.com/developers)
+2. Créez une nouvelle application pour obtenir votre Access Key
+3. Ajoutez `UNSPLASH_ACCESS_KEY=votre_clé` dans `.env.local`
+4. Redémarrez l'application
 
-Sans configuration Pinterest, vous pouvez toujours :
+Sans configuration Unsplash, vous pouvez toujours :
 - Coller manuellement des URLs d'images
 - Utiliser des liens directs vers des images
 
@@ -135,7 +133,7 @@ N'oubliez pas d'ajouter vos variables d'environnement dans les paramètres du pr
 
 1. **Créer un compte** : Première visite → S'inscrire avec email/mot de passe
 2. **Ajouter une recette** : Cliquez sur "+" dans le header
-3. **Rechercher une image** : Utilisez le bouton "Rechercher sur Pinterest"
+3. **Rechercher une image** : Utilisez le bouton "Rechercher sur Unsplash"
 4. **Cuisiner** : Cliquez sur "Commencer à cuisiner" pour le mode pas-à-pas
 5. **Filtrer** : Utilisez la barre de recherche et les filtres de catégorie
 
@@ -159,13 +157,12 @@ Voir [Politique de confidentialité](/privacy) pour plus de détails.
 
 ## 🐛 Problèmes connus
 
-- La recherche Pinterest nécessite une authentification API
+- La recherche Unsplash nécessite une clé API (gratuite)
 - Les minuteurs ne fonctionnent que pendant que l'onglet est actif
 
 ## 📮 Support
 
 Pour toute question, consultez :
-- La [documentation Pinterest](./PINTEREST_SETUP.md)
 - Les [pages légales](/privacy)
 - Les paramètres de l'application
 

@@ -53,7 +53,7 @@ export default function NewRecipePage() {
   return (
     <div className="min-h-screen bg-ios-bg">
       {/* Header */}
-      <header className="bg-ios-bg-secondary/80 flex justify-center items-center backdrop-blur-lg border-b border-ios-separator sticky top-0 z-40">
+      <header className="bg-ios-bg-secondary flex justify-center items-center border-b border-ios-separator sticky top-0 z-40">
         <div className="container px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-4">
           {/* Back button and title */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-shrink">

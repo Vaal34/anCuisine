@@ -16,7 +16,7 @@ export function Header({ user, onLogout }: HeaderProps) {
   const router = useRouter()
 
   return (
-    <header className="bg-ios-bg-secondary/80 flex justify-center items-center backdrop-blur-lg border-b border-ios-separator sticky top-0 z-40">
+    <header className="bg-ios-bg-secondary flex justify-center items-center border-b border-ios-separator sticky top-0 z-40">
       <div className="container px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-4">
         {/* Logo and title */}
         <div
