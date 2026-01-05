@@ -5,8 +5,8 @@ import { Check, Minus, Plus, ShoppingCart } from 'lucide-react'
 export interface IngredientsListProps {
   ingredients: RecipeIngredient[]
   variant?:
-    | 'cards' | 'list' | 'compact' | 'table' | 'checklist' | 'badges'
-    | 'minimal' | 'grouped' | 'pills' | 'boxes' | 'modern' | 'elegant'
+  | 'cards' | 'list' | 'compact' | 'table' | 'checklist' | 'badges'
+  | 'minimal' | 'grouped' | 'pills' | 'boxes' | 'modern' | 'elegant'
 }
 
 export function IngredientsListVariants({ ingredients, variant = 'cards' }: IngredientsListProps) {
@@ -110,22 +110,19 @@ export function IngredientsListVariants({ ingredients, variant = 'cards' }: Ingr
             <button
               key={index}
               onClick={() => toggleCheck(index)}
-              className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all ${
-                isChecked
+              className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all ${isChecked
                   ? 'bg-ios-green/10 border border-ios-green/30'
                   : 'bg-ios-bg-tertiary/50 border border-transparent hover:border-ios-pink/30'
-              }`}
+                }`}
             >
-              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all ${
-                isChecked
+              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all ${isChecked
                   ? 'bg-ios-green border-ios-green'
                   : 'border-ios-separator'
-              }`}>
+                }`}>
                 {isChecked && <Check className="w-3 h-3 text-white" />}
               </div>
-              <span className={`text-sm sm:text-base font-medium flex-1 text-left ${
-                isChecked ? 'text-ios-label-secondary line-through' : 'text-ios-label'
-              }`}>
+              <span className={`text-sm sm:text-base font-medium flex-1 text-left ${isChecked ? 'text-ios-label-secondary line-through' : 'text-ios-label'
+                }`}>
                 {ingredient.name}
               </span>
               {ingredient.quantity && ingredient.unit && !isChecked && (
@@ -286,7 +283,7 @@ export function IngredientsListVariants({ ingredients, variant = 'cards' }: Ingr
         {ingredients.map((ingredient, index) => (
           <div
             key={index}
-            className="group relative rounded-2xl overflow-hidden bg-white/60 backdrop-blur-sm border border-white/50 shadow-sm hover:shadow-md transition-all duration-300"
+            className="group relative rounded-2xl overflow-hidden bg-white/60 border border-white/50 shadow-sm hover:shadow-md transition-all duration-300"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-ios-pink/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="relative flex items-center justify-between p-4">

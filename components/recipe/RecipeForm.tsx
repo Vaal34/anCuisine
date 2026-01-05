@@ -149,11 +149,10 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
               <button
                 type="button"
                 onClick={() => setTimeCalculationMode('manual')}
-                className={`p-3 rounded-2xl corner-squircle border-2 transition-all duration-ios-normal ${
-                  timeCalculationMode === 'manual'
+                className={`p-3 rounded-2xl corner-squircle border-2 transition-all duration-ios-normal ${timeCalculationMode === 'manual'
                     ? 'border-ios-pink bg-ios-pink/10 shadow-ios-sm'
                     : 'border-ios-separator bg-ios-bg-tertiary hover:border-ios-pink/30'
-                }`}
+                  }`}
               >
                 <div className="text-sm font-semibold text-ios-label mb-1">Manuel</div>
                 <div className="text-xs text-ios-label-secondary">Vous définissez les temps</div>
@@ -161,11 +160,10 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
               <button
                 type="button"
                 onClick={() => setTimeCalculationMode('auto-timers')}
-                className={`p-3 rounded-2xl corner-squircle border-2 transition-all duration-ios-normal ${
-                  timeCalculationMode === 'auto-timers'
+                className={`p-3 rounded-2xl corner-squircle border-2 transition-all duration-ios-normal ${timeCalculationMode === 'auto-timers'
                     ? 'border-ios-pink bg-ios-pink/10 shadow-ios-sm'
                     : 'border-ios-separator bg-ios-bg-tertiary hover:border-ios-pink/30'
-                }`}
+                  }`}
               >
                 <div className="text-sm font-semibold text-ios-label mb-1">Automatique</div>
                 <div className="text-xs text-ios-label-secondary">Basé sur les minuteurs</div>
@@ -240,7 +238,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
                   <button
                     type="button"
                     onClick={() => setImageUrl('')}
-                    className="w-8 h-8 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/70 transition-colors"
+                    className="w-8 h-8 bg-black/50 rounded-full flex items-center justify-center hover:bg-black/70 transition-colors"
                   >
                     <span className="text-white text-xl">×</span>
                   </button>
@@ -264,10 +262,9 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
               key={method.value}
               className={`
                 relative flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl corner-squircle border-2 cursor-pointer transition-all duration-ios-normal
-                ${
-                  cookingMethods.includes(method.value)
-                    ? 'border-ios-pink bg-ios-pink/10 shadow-ios-sm'
-                    : 'border-ios-separator bg-ios-bg-tertiary hover:border-ios-pink/30 hover:bg-ios-pink/5'
+                ${cookingMethods.includes(method.value)
+                  ? 'border-ios-pink bg-ios-pink/10 shadow-ios-sm'
+                  : 'border-ios-separator bg-ios-bg-tertiary hover:border-ios-pink/30 hover:bg-ios-pink/5'
                 }
               `}
             >
@@ -287,9 +284,8 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
                 {method.icon === 'Droplets' && '💧'}
                 {method.icon === 'Sparkles' && '✨'}
               </span>
-              <span className={`text-xs sm:text-sm font-medium text-center ${
-                cookingMethods.includes(method.value) ? 'text-ios-pink' : 'text-ios-label-secondary'
-              }`}>
+              <span className={`text-xs sm:text-sm font-medium text-center ${cookingMethods.includes(method.value) ? 'text-ios-pink' : 'text-ios-label-secondary'
+                }`}>
                 {method.label}
               </span>
             </label>
