@@ -37,6 +37,7 @@ export function StepsList({ steps, numbered = true, ingredients = [] }: StepsLis
                 </p>
                 {stepIngredients.length > 0 && (
                   <div className="text-xs sm:text-sm text-ios-pink font-medium break-words">
+                    Liste des ingrédients: {" "}
                     {stepIngredients.map((ingredient, idx) => (
                       <span key={idx}>
                         {ingredient.name}
@@ -49,9 +50,8 @@ export function StepsList({ steps, numbered = true, ingredients = [] }: StepsLis
               </div>
               {step.timerMinutes && (
                 <div className="flex items-center gap-2 text-xs sm:text-sm text-ios-label-secondary">
-                  <span>{step.timerType === 'cook' ? '🔥' : '🥄'}</span>
                   <span>
-                    {step.timerType === 'cook' ? 'Temps de cuisson' : 'Temps de préparation'}: {step.timerMinutes} min
+                    {step.timerType === 'cook' ? 'Temps de cuisson' : 'Temps de préparation'}: {step.timerMinutes} min 
                     {step.timerLabel && ` (${step.timerLabel})`}
                   </span>
                 </div>
