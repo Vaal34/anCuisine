@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { IngredientsInput } from './IngredientsInput'
 import { StepsInput } from './StepsInput'
-import { PinterestImagePicker } from './PinterestImagePicker'
+import { UnsplashImagePicker } from './UnsplashImagePicker'
 import type { Recipe, RecipeFormData } from '@/types'
 import { CATEGORIES, COOKING_METHODS } from '@/types'
 
@@ -224,7 +224,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
               <div className="flex-1 h-px bg-ios-separator" />
             </div>
 
-            <PinterestImagePicker
+            <UnsplashImagePicker
               onSelect={setImageUrl}
               currentImageUrl={imageUrl}
             />

@@ -381,43 +381,44 @@ export function RecipeStepByStep({ recipe, currentStep, onStepChange, onExit }: 
           </div>
         </header>
 
-        {/* Main Content - Swipeable Widgets */}
+        {/* Main Content - Swipeable Card */}
         <div
           ref={containerRef}
-          className="flex-1 px-4 py-4 overflow-y-auto"
+          className="flex-1 flex flex-col px-4 py-6 overflow-hidden"
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
-          <div className="space-y-4">
-            {/* Widget 1: Instruction principale */}
-            <Card className="!p-5">
+          <Card className="flex-1 flex flex-col !p-0 overflow-hidden">
+            <div className="flex-1 p-5 flex flex-col">
               {/* Step badge */}
               <div className="inline-flex self-start items-center gap-2 bg-ios-pink/10 px-3 py-1.5 rounded-full mb-4">
                 <span className="text-ios-pink font-bold text-sm">Étape {currentStep + 1}</span>
               </div>
 
               {/* Instruction */}
-              <h2 className="text-xl font-bold text-ios-label leading-relaxed">
+              <h2 className="text-xl font-bold text-ios-label leading-relaxed mb-6">
                 {typeof currentStepData === 'string'
                   ? currentStepData
                   : currentStepData.description}
               </h2>
-            </Card>
 
-            {/* Widget 2: Timer (si présent) */}
-            {hasTimer && (
-              <TimerComponent compact />
-            )}
+              {/* Timer */}
+              {hasTimer && (
+                <div className="mb-4">
+                  <TimerComponent compact />
+                </div>
+              )}
 
-            {/* Widget 3: Ingrédients (si présents) */}
-            {stepObj?.ingredientIndices && stepObj.ingredientIndices.length > 0 && (
-              <IngredientsComponent compact />
-            )}
-          </div>
+              {/* Ingrédients inline */}
+              <div className="mt-auto pt-4">
+                <IngredientsComponent inline />
+              </div>
+            </div>
+          </Card>
 
           {/* Swipe hint */}
-          <div className="text-center mt-4 text-xs text-ios-label-tertiary pb-2">
+          <div className="text-center mt-4 text-xs text-ios-label-tertiary">
             ← Swipez pour naviguer →
           </div>
         </div>
