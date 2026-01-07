@@ -62,7 +62,7 @@ export default function NewRecipePage() {
               variant="ghost"
               size="sm"
               onClick={() => router.push('/')}
-              className="sm:hidden w-10 h-10 p-0 rounded-2xl flex-shrink-0"
+              className="sm:hidden w-10 h-10 p-0 rounded-2xl flex-shrink-0 min-h-0"
               aria-label="Retour"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -88,7 +88,7 @@ export default function NewRecipePage() {
 
       <Container maxWidth="lg">
         {error && (
-          <div className="mb-4 sm:mb-5 md:mb-6 bg-ios-red/10 border border-ios-red rounded-3xl corner-squircle px-4 py-3">
+          <div className="mb-4 sm:mb-5 md:mb-6 bg-ios-red/10 border border-ios-red rounded-3xl px-4 py-3">
             <p className="text-ios-red text-sm sm:text-base">{error}</p>
           </div>
         )}

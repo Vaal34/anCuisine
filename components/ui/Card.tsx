@@ -14,7 +14,7 @@ export function Card({ children, className, hoverable = false, onClick, header, 
   return (
     <div
       className={cn(
-        'bg-ios-bg-secondary rounded-3xl corner-squircle shadow-ios-md overflow-hidden',
+        'bg-ios-bg-secondary rounded-3xl shadow-ios-md overflow-hidden',
         hoverable && 'cursor-pointer hover:shadow-ios-lg transition-shadow duration-ios-normal',
         onClick && 'cursor-pointer active:scale-98 transition-transform duration-ios-fast',
         className

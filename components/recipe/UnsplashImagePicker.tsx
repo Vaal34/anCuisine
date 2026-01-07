@@ -153,7 +153,7 @@ export function UnsplashImagePicker({ onSelect, currentImageUrl }: UnsplashImage
                     type="button"
                     onClick={() => handleSelectImage(image.imageUrl)}
                     className={`
-                      relative group overflow-hidden rounded-2xl corner-squircle
+                      relative group overflow-hidden rounded-2xl
                       transition-shadow duration-200
                       ${selectedImageUrl === image.imageUrl
                         ? 'ring-4 ring-ios-pink shadow-lg'

@@ -29,13 +29,13 @@ export function IngredientsListVariants({ ingredients, variant = 'cards' }: Ingr
         {ingredients.map((ingredient, index) => (
           <div
             key={index}
-            className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 bg-ios-pink/10 border-2 border-ios-pink/30 rounded-3xl corner-squircle shadow-sm hover:shadow-md hover:border-ios-pink/50 transition-all duration-300"
+            className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 bg-ios-pink/10 border-2 border-ios-pink/30 rounded-3xl shadow-sm hover:shadow-md hover:border-ios-pink/50 transition-all duration-300"
           >
             <span className="text-sm sm:text-base font-medium text-ios-label truncate mr-2">
               {ingredient.name}
             </span>
             {ingredient.quantity && ingredient.unit && (
-              <span className="px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm font-semibold bg-ios-pink text-white rounded-2xl corner-squircle whitespace-nowrap flex-shrink-0 shadow-sm">
+              <span className="px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm font-semibold bg-ios-pink text-white rounded-2xl whitespace-nowrap flex-shrink-0 shadow-sm">
                 {ingredient.quantity} {ingredient.unit}
               </span>
             )}
@@ -111,13 +111,13 @@ export function IngredientsListVariants({ ingredients, variant = 'cards' }: Ingr
               key={index}
               onClick={() => toggleCheck(index)}
               className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all ${isChecked
-                  ? 'bg-ios-green/10 border border-ios-green/30'
-                  : 'bg-ios-bg-tertiary/50 border border-transparent hover:border-ios-pink/30'
+                ? 'bg-ios-green/10 border border-ios-green/30'
+                : 'bg-ios-bg-tertiary/50 border border-transparent hover:border-ios-pink/30'
                 }`}
             >
               <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all ${isChecked
-                  ? 'bg-ios-green border-ios-green'
-                  : 'border-ios-separator'
+                ? 'bg-ios-green border-ios-green'
+                : 'border-ios-separator'
                 }`}>
                 {isChecked && <Check className="w-3 h-3 text-white" />}
               </div>

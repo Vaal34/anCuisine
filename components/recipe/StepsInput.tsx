@@ -306,7 +306,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                   placeholder={`Décrivez l'étape ${index + 1}... (utilisez @ pour mentionner un ingrédient)`}
                   rows={3}
                   disabled={disabled}
-                  className="w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none resize-none"
+                  className="w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none resize-none"
                 />
 
                 {/* Boutons Ingrédients et Minuteur sur la même ligne */}
@@ -317,11 +317,10 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                         ref={(el) => { buttonRefs.current[index] = el }}
                         type="button"
                         onClick={() => setShowIngredientPicker(showIngredientPicker === index ? null : index)}
-                        className={`flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm rounded-2xl corner-squircle transition-colors flex-shrink-0 ${
-                          selectedIngredientIndices.length > 0
+                        className={`flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm rounded-2xl transition-colors flex-shrink-0 ${selectedIngredientIndices.length > 0
                             ? 'text-white bg-black'
                             : 'text-ios-label-secondary bg-ios-bg-secondary hover:bg-ios-bg-tertiary'
-                        }`}
+                          }`}
                       >
                         <Tag className="w-4 h-4 flex-shrink-0" />
                         <span className="whitespace-nowrap">Ingrédients</span>
@@ -336,11 +335,10 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                     <button
                       type="button"
                       onClick={() => setShowTimerInput(showTimerInput === index ? null : index)}
-                      className={`flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm rounded-2xl corner-squircle transition-colors flex-shrink-0 ${
-                        step.timerMinutes
+                      className={`flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm rounded-2xl transition-colors flex-shrink-0 ${step.timerMinutes
                           ? 'text-white bg-black'
                           : 'text-ios-label-secondary bg-ios-bg-secondary hover:bg-ios-bg-tertiary'
-                      }`}
+                        }`}
                     >
                       <Timer className="w-4 h-4 flex-shrink-0" />
                       {step.timerMinutes ? (
@@ -365,7 +363,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                       return (
                         <div
                           key={ingredientIdx}
-                          className="inline-flex items-center gap-1 px-3 py-1.5 bg-ios-bg-tertiary text-ios-label rounded-full corner-squircle text-sm"
+                          className="inline-flex items-center gap-1 px-3 py-1.5 bg-ios-bg-tertiary text-ios-label rounded-full text-sm"
                         >
                           <span className="font-medium">{ingredient.name}</span>
                           {!disabled && (
@@ -393,11 +391,10 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                         <button
                           type="button"
                           onClick={() => updateTimer(index, step.timerMinutes, step.timerLabel, 'prep')}
-                          className={`px-3 py-2 rounded-xl corner-squircle text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${
-                            step.timerType === 'prep' || !step.timerType
+                          className={`px-3 py-2 rounded-xl text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${step.timerType === 'prep' || !step.timerType
                               ? 'bg-ios-label text-white'
                               : 'bg-ios-bg-tertiary text-ios-label-secondary hover:bg-ios-bg-secondary'
-                          }`}
+                            }`}
                         >
                           <span>🥄</span>
                           <span>Préparation</span>
@@ -405,11 +402,10 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                         <button
                           type="button"
                           onClick={() => updateTimer(index, step.timerMinutes, step.timerLabel, 'cook')}
-                          className={`px-3 py-2 rounded-xl corner-squircle text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${
-                            step.timerType === 'cook'
+                          className={`px-3 py-2 rounded-xl text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${step.timerType === 'cook'
                               ? 'bg-ios-label text-white'
                               : 'bg-ios-bg-tertiary text-ios-label-secondary hover:bg-ios-bg-secondary'
-                          }`}
+                            }`}
                         >
                           <span>🔥</span>
                           <span>Cuisson</span>
@@ -467,7 +463,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                     placeholder={`Décrivez l'étape ${index + 1}... (utilisez @ pour mentionner un ingrédient)`}
                     rows={3}
                     disabled={disabled}
-                    className="flex-1 w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none resize-none"
+                    className="flex-1 w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none resize-none"
                   />
 
                   {/* Supprimer */}
@@ -494,11 +490,10 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                           ref={(el) => { buttonRefs.current[index] = el }}
                           type="button"
                           onClick={() => setShowIngredientPicker(showIngredientPicker === index ? null : index)}
-                          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-2xl corner-squircle transition-colors flex-shrink-0 ${
-                            selectedIngredientIndices.length > 0
+                          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-2xl transition-colors flex-shrink-0 ${selectedIngredientIndices.length > 0
                               ? 'text-white bg-black'
                               : 'text-ios-label-secondary bg-ios-bg-secondary hover:bg-ios-bg-tertiary'
-                          }`}
+                            }`}
                         >
                           <Tag className="w-4 h-4 flex-shrink-0" />
                           <span className="whitespace-nowrap">Ingrédients</span>
@@ -513,11 +508,10 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                       <button
                         type="button"
                         onClick={() => setShowTimerInput(showTimerInput === index ? null : index)}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-2xl corner-squircle transition-colors flex-shrink-0 ${
-                          step.timerMinutes
+                        className={`flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-2xl transition-colors flex-shrink-0 ${step.timerMinutes
                             ? 'text-white bg-black'
                             : 'text-ios-label-secondary bg-ios-bg-secondary hover:bg-ios-bg-tertiary'
-                        }`}
+                          }`}
                       >
                         <Timer className="w-4 h-4 flex-shrink-0" />
                         {step.timerMinutes ? (
@@ -542,7 +536,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                         return (
                           <div
                             key={ingredientIdx}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 bg-ios-bg-tertiary text-ios-label rounded-full corner-squircle text-sm"
+                            className="inline-flex items-center gap-1 px-3 py-1.5 bg-ios-bg-tertiary text-ios-label rounded-full text-sm"
                           >
                             <span className="font-medium">{ingredient.name}</span>
                             {!disabled && (
@@ -572,11 +566,10 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                           <button
                             type="button"
                             onClick={() => updateTimer(index, step.timerMinutes, step.timerLabel, 'prep')}
-                            className={`px-3 py-2 rounded-xl corner-squircle text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${
-                              step.timerType === 'prep' || !step.timerType
+                            className={`px-3 py-2 rounded-xl text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${step.timerType === 'prep' || !step.timerType
                                 ? 'bg-ios-label text-white'
                                 : 'bg-ios-bg-tertiary text-ios-label-secondary hover:bg-ios-bg-secondary'
-                            }`}
+                              }`}
                           >
                             <span>🥄</span>
                             <span>Préparation</span>
@@ -584,11 +577,10 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                           <button
                             type="button"
                             onClick={() => updateTimer(index, step.timerMinutes, step.timerLabel, 'cook')}
-                            className={`px-3 py-2 rounded-xl corner-squircle text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${
-                              step.timerType === 'cook'
+                            className={`px-3 py-2 rounded-xl text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${step.timerType === 'cook'
                                 ? 'bg-ios-label text-white'
                                 : 'bg-ios-bg-tertiary text-ios-label-secondary hover:bg-ios-bg-secondary'
-                            }`}
+                              }`}
                           >
                             <span>🔥</span>
                             <span>Cuisson</span>
@@ -659,7 +651,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
             minWidth: window.innerWidth < 640 ? 'auto' : '250px',
             zIndex: 10000
           }}
-          className="bg-white rounded-3xl corner-squircle shadow-ios-xl border border-ios-separator overflow-hidden max-h-60 overflow-y-auto"
+          className="bg-white rounded-3xl shadow-ios-xl border border-ios-separator overflow-hidden max-h-60 overflow-y-auto"
         >
           {(() => {
             const autocompleteIngredients = getAutocompleteIngredients(showAutocomplete)
@@ -718,7 +710,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
             maxWidth: window.innerWidth < 640 ? 'auto' : '400px',
             zIndex: 9999
           }}
-          className="bg-white rounded-3xl corner-squircle shadow-ios-xl border border-ios-separator overflow-hidden max-h-80 overflow-y-auto"
+          className="bg-white rounded-3xl shadow-ios-xl border border-ios-separator overflow-hidden max-h-80 overflow-y-auto"
         >
           <div className="px-4 py-3 bg-ios-bg-secondary border-b border-ios-separator sticky top-0">
             <p className="text-sm text-ios-label font-semibold">
@@ -734,11 +726,10 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                   key={idx}
                   type="button"
                   onClick={() => toggleIngredient(showIngredientPicker, idx)}
-                  className={`w-full text-left px-3 py-2.5 rounded-2xl transition-all mb-1 last:mb-0 ${
-                    isSelected
+                  className={`w-full text-left px-3 py-2.5 rounded-2xl transition-all mb-1 last:mb-0 ${isSelected
                       ? 'bg-ios-pink text-white'
                       : 'hover:bg-ios-bg-secondary text-ios-label'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex-1 min-w-0">

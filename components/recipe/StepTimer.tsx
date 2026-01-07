@@ -103,32 +103,29 @@ export function StepTimer({ durationMinutes, label, type = 'prep' }: StepTimerPr
   const color = colors[type]
 
   return (
-    <div className={`relative p-4 rounded-3xl corner-squircle transition-all duration-ios-normal ${
-      isComplete
+    <div className={`relative p-4 rounded-3xl transition-all duration-ios-normal ${isComplete
         ? 'bg-ios-green/10 border-2 border-ios-green shadow-ios-md'
         : isRunning
-        ? `${color.bg} border-2 ${color.border} shadow-ios-md`
-        : 'bg-ios-bg-tertiary border-2 border-ios-separator'
-    }`}>
+          ? `${color.bg} border-2 ${color.border} shadow-ios-md`
+          : 'bg-ios-bg-tertiary border-2 border-ios-separator'
+      }`}>
       {/* Barre de progression */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-ios-separator rounded-t-3xl overflow-hidden">
         <div
-          className={`h-full transition-all duration-1000 ${
-            isComplete ? 'bg-ios-green' : color.progress
-          }`}
+          className={`h-full transition-all duration-1000 ${isComplete ? 'bg-ios-green' : color.progress
+            }`}
           style={{ width: `${progress}%` }}
         />
       </div>
 
       <div className="flex items-center gap-3">
         {/* Icône */}
-        <div className={`flex-shrink-0 w-12 h-12 rounded-2xl corner-squircle flex items-center justify-center ${
-          isComplete
+        <div className={`flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center ${isComplete
             ? 'bg-ios-green text-white'
             : isRunning
-            ? `${color.icon} text-white`
-            : `bg-ios-bg-secondary ${color.text}`
-        }`}>
+              ? `${color.icon} text-white`
+              : `bg-ios-bg-secondary ${color.text}`
+          }`}>
           <Timer className="w-6 h-6" />
         </div>
 
@@ -145,13 +142,12 @@ export function StepTimer({ durationMinutes, label, type = 'prep' }: StepTimerPr
               <span>{type === 'cook' ? 'Cuisson' : 'Préparation'}</span>
             </span>
           </div>
-          <div className={`text-2xl sm:text-3xl font-bold tabular-nums ${
-            isComplete
+          <div className={`text-2xl sm:text-3xl font-bold tabular-nums ${isComplete
               ? 'text-ios-green'
               : isRunning
-              ? color.text
-              : 'text-ios-label'
-          }`}>
+                ? color.text
+                : 'text-ios-label'
+            }`}>
             {formatTime(timeLeft)}
           </div>
           {isComplete && (
@@ -166,13 +162,12 @@ export function StepTimer({ durationMinutes, label, type = 'prep' }: StepTimerPr
           <button
             type="button"
             onClick={toggleTimer}
-            className={`p-3 rounded-2xl corner-squircle transition-all duration-ios-fast ${
-              isComplete
+            className={`p-3 rounded-2xl transition-all duration-ios-fast ${isComplete
                 ? 'bg-ios-green text-white hover:bg-ios-green/90'
                 : isRunning
-                ? `${color.icon} text-white hover:opacity-90`
-                : `${color.icon} text-white hover:opacity-90`
-            }`}
+                  ? `${color.icon} text-white hover:opacity-90`
+                  : `${color.icon} text-white hover:opacity-90`
+              }`}
           >
             {isRunning ? (
               <Pause className="w-5 h-5" />
@@ -184,7 +179,7 @@ export function StepTimer({ durationMinutes, label, type = 'prep' }: StepTimerPr
           <button
             type="button"
             onClick={resetTimer}
-            className="p-3 rounded-2xl corner-squircle bg-ios-bg-secondary text-ios-label-secondary hover:bg-ios-bg-tertiary transition-all duration-ios-fast"
+            className="p-3 rounded-2xl bg-ios-bg-secondary text-ios-label-secondary hover:bg-ios-bg-tertiary transition-all duration-ios-fast"
           >
             <RotateCcw className="w-5 h-5" />
           </button>
@@ -192,7 +187,7 @@ export function StepTimer({ durationMinutes, label, type = 'prep' }: StepTimerPr
           <button
             type="button"
             onClick={() => setSoundEnabled(!soundEnabled)}
-            className="p-3 rounded-2xl corner-squircle bg-ios-bg-secondary text-ios-label-secondary hover:bg-ios-bg-tertiary transition-all duration-ios-fast"
+            className="p-3 rounded-2xl bg-ios-bg-secondary text-ios-label-secondary hover:bg-ios-bg-tertiary transition-all duration-ios-fast"
           >
             {soundEnabled ? (
               <Volume2 className="w-5 h-5" />

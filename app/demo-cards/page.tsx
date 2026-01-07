@@ -96,7 +96,7 @@ function HeroCard({ recipe }: { recipe: Recipe }) {
   const totalTime = recipe.prep_time + recipe.cook_time
 
   return (
-    <div className="relative h-[420px] cursor-pointer group overflow-hidden rounded-3xl corner-squircle shadow-ios-lg">
+    <div className="relative h-[420px] cursor-pointer group overflow-hidden rounded-3xl shadow-ios-lg">
       <img
         src={recipe.image_url}
         alt={recipe.title}
@@ -105,7 +105,7 @@ function HeroCard({ recipe }: { recipe: Recipe }) {
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
       {/* Floating action button */}
-      <button className="absolute top-6 right-6 w-14 h-14 rounded-2xl corner-squircle bg-white/15 border border-white/20 hover:bg-white/25 shadow-ios-lg transition-all duration-300 flex items-center justify-center text-white group-hover:scale-110">
+      <button className="absolute top-6 right-6 w-14 h-14 rounded-2xl bg-white/15 border border-white/20 hover:bg-white/25 shadow-ios-lg transition-all duration-300 flex items-center justify-center text-white group-hover:scale-110">
         <ChefHat className="w-7 h-7" />
       </button>
 
@@ -138,7 +138,7 @@ function CompactCard({ recipe }: { recipe: Recipe }) {
   const totalTime = recipe.prep_time + recipe.cook_time
 
   return (
-    <div className="bg-white rounded-3xl corner-squircle shadow-ios-sm hover:shadow-ios-lg transition-all duration-500 cursor-pointer group overflow-hidden">
+    <div className="bg-white rounded-3xl shadow-ios-sm hover:shadow-ios-lg transition-all duration-500 cursor-pointer group overflow-hidden">
       {/* Image section */}
       <div className="relative h-48 overflow-hidden">
         <img
@@ -149,7 +149,7 @@ function CompactCard({ recipe }: { recipe: Recipe }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         {/* Floating button on image */}
-        <button className="absolute bottom-4 right-4 w-12 h-12 rounded-2xl corner-squircle bg-ios-pink hover:bg-ios-pink-dark shadow-ios-lg transition-all duration-300 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0">
+        <button className="absolute bottom-4 right-4 w-12 h-12 rounded-2xl bg-ios-pink hover:bg-ios-pink-dark shadow-ios-lg transition-all duration-300 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0">
           <ChefHat className="w-6 h-6" />
         </button>
       </div>
@@ -184,7 +184,7 @@ function MinimalCard({ recipe }: { recipe: Recipe }) {
   return (
     <div className="cursor-pointer group">
       {/* Image avec overlay subtil */}
-      <div className="relative h-64 overflow-hidden rounded-3xl corner-squircle mb-5 shadow-ios-sm group-hover:shadow-ios-md transition-all duration-500">
+      <div className="relative h-64 overflow-hidden rounded-3xl mb-5 shadow-ios-sm group-hover:shadow-ios-md transition-all duration-500">
         <img
           src={recipe.image_url}
           alt={recipe.title}
@@ -199,7 +199,7 @@ function MinimalCard({ recipe }: { recipe: Recipe }) {
         </div>
 
         {/* Subtle action button bottom right */}
-        <button className="absolute bottom-4 right-4 w-11 h-11 rounded-2xl corner-squircle bg-ios-pink/95 hover:bg-ios-pink shadow-ios-md hover:shadow-ios-lg transition-all duration-300 flex items-center justify-center text-white scale-95 group-hover:scale-100">
+        <button className="absolute bottom-4 right-4 w-11 h-11 rounded-2xl bg-ios-pink/95 hover:bg-ios-pink shadow-ios-md hover:shadow-ios-lg transition-all duration-300 flex items-center justify-center text-white scale-95 group-hover:scale-100">
           <ChefHat className="w-5 h-5" />
         </button>
       </div>
@@ -231,25 +231,25 @@ function LiquidGlassCard({ recipe }: { recipe: Recipe }) {
   const totalTime = recipe.prep_time + recipe.cook_time
 
   return (
-    <div className="relative h-[340px] cursor-pointer group overflow-hidden rounded-[2.5rem] corner-squircle shadow-[0_8px_32px_rgba(0,0,0,0.12)]">
+    <div className="relative h-[340px] cursor-pointer group overflow-hidden rounded-[2.5rem] shadow-[0_8px_32px_rgba(0,0,0,0.12)]">
       {/* Background image */}
       <img
         src={recipe.image_url}
         alt={recipe.title}
-        className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem] corner-squircle scale-110 group-hover:scale-115 transition-transform duration-[1200ms] ease-out"
+        className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem] scale-110 group-hover:scale-115 transition-transform duration-[1200ms] ease-out"
       />
 
       {/* Liquid glass layers */}
-      <div className="absolute inset-0 rounded-[2.5rem] corner-squircle">
+      <div className="absolute inset-0 rounded-[2.5rem]">
         {/* Base gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/60 rounded-[2.5rem] corner-squircle" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/60 rounded-[2.5rem]" />
 
         {/* Animated gradient mesh (liquid effect) */}
-        <div className="absolute inset-0 bg-gradient-to-br from-ios-pink/20 via-transparent to-purple-500/10 opacity-60 group-hover:opacity-80 transition-opacity duration-700 rounded-[2.5rem] corner-squircle" />
-        <div className="absolute inset-0 bg-gradient-to-tl from-blue-500/10 via-transparent to-ios-pink/15 opacity-40 group-hover:opacity-60 transition-opacity duration-1000 rounded-[2.5rem] corner-squircle" />
+        <div className="absolute inset-0 bg-gradient-to-br from-ios-pink/20 via-transparent to-purple-500/10 opacity-60 group-hover:opacity-80 transition-opacity duration-700 rounded-[2.5rem]" />
+        <div className="absolute inset-0 bg-gradient-to-tl from-blue-500/10 via-transparent to-ios-pink/15 opacity-40 group-hover:opacity-60 transition-opacity duration-1000 rounded-[2.5rem]" />
 
         {/* Glass blur layer */}
-        <div className="absolute inset-0 group-hover:bg-white/5 transition-all duration-700 rounded-[2.5rem] corner-squircle" />
+        <div className="absolute inset-0 group-hover:bg-white/5 transition-all duration-700 rounded-[2.5rem]" />
       </div>
 
       {/* Floating glass elements */}
@@ -269,10 +269,10 @@ function LiquidGlassCard({ recipe }: { recipe: Recipe }) {
           {/* Liquid glass button */}
           <button className="relative group/btn">
             {/* Glow effect */}
-            <div className="absolute inset-0 bg-ios-pink/40 blur-xl rounded-xl corner-squircle opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-ios-pink/40 blur-xl rounded-xl opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500" />
 
             {/* Glass button */}
-            <div className="relative w-11 h-11 rounded-xl corner-squircle bg-white/[0.08] border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.15)] flex items-center justify-center transition-all duration-500 group-hover/btn:bg-white/[0.15] group-hover/btn:scale-110 group-hover/btn:border-white/[0.25]">
+            <div className="relative w-11 h-11 rounded-xl bg-white/[0.08] border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.15)] flex items-center justify-center transition-all duration-500 group-hover/btn:bg-white/[0.15] group-hover/btn:scale-110 group-hover/btn:border-white/[0.25]">
               <ChefHat className="w-5 h-5 text-white drop-shadow-lg" />
             </div>
           </button>
@@ -282,7 +282,7 @@ function LiquidGlassCard({ recipe }: { recipe: Recipe }) {
         <div className="space-y-3">
           {/* Glass container for title */}
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-white/[0.08] to-white/[0.03] rounded-2xl corner-squircle border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.2)]" />
+            <div className="absolute inset-0 bg-gradient-to-r from-white/[0.08] to-white/[0.03] rounded-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.2)]" />
             <div className="relative px-5 py-4">
               <h3 className="text-3xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] tracking-tight line-clamp-2">
                 {recipe.title}
@@ -312,7 +312,7 @@ function LiquidGlassCard({ recipe }: { recipe: Recipe }) {
       </div>
 
       {/* Edge glow effect */}
-      <div className="absolute inset-0 rounded-[2.5rem] corner-squircle ring-1 ring-inset ring-white/[0.05] pointer-events-none" />
+      <div className="absolute inset-0 rounded-[2.5rem] ring-1 ring-inset ring-white/[0.05] pointer-events-none" />
     </div>
   )
 }
@@ -325,11 +325,11 @@ function ConcentricCard({ recipe }: { recipe: Recipe }) {
   return (
     <div className="relative cursor-pointer group">
       {/* Outer concentric layer */}
-      <div className="p-4 bg-gradient-to-br from-ios-pink/5 to-purple-500/5 rounded-[2.5rem] corner-squircle">
+      <div className="p-4 bg-gradient-to-br from-ios-pink/5 to-purple-500/5 rounded-[2.5rem]">
         {/* Middle concentric layer */}
-        <div className="p-3 bg-white/80 rounded-[2rem] corner-squircle shadow-ios-sm">
+        <div className="p-3 bg-white/80 rounded-[2rem] shadow-ios-sm">
           {/* Inner concentric layer with image */}
-          <div className="relative h-72 rounded-[1.5rem] corner-squircle overflow-hidden shadow-ios-md group-hover:shadow-ios-lg transition-all duration-500">
+          <div className="relative h-72 rounded-[1.5rem] overflow-hidden shadow-ios-md group-hover:shadow-ios-lg transition-all duration-500">
             <img
               src={recipe.image_url}
               alt={recipe.title}
@@ -340,7 +340,7 @@ function ConcentricCard({ recipe }: { recipe: Recipe }) {
             {/* Nested content with concentric alignment */}
             <div className="absolute bottom-0 left-0 right-0 p-5 space-y-3">
               {/* Innermost concentric element */}
-              <div className="inline-block p-3 bg-white/10 rounded-2xl corner-squircle border border-white/20">
+              <div className="inline-block p-3 bg-white/10 rounded-2xl border border-white/20">
                 <Badge variant="recipe" className="bg-transparent border-0 text-white p-0 m-0">
                   {categoryLabel}
                 </Badge>
@@ -375,7 +375,7 @@ function CapsuleCard({ recipe }: { recipe: Recipe }) {
   const totalTime = recipe.prep_time + recipe.cook_time
 
   return (
-    <div className="bg-white rounded-[2rem] corner-squircle shadow-ios-md hover:shadow-ios-lg transition-all duration-500 cursor-pointer group overflow-hidden">
+    <div className="bg-white rounded-[2rem] shadow-ios-md hover:shadow-ios-lg transition-all duration-500 cursor-pointer group overflow-hidden">
       {/* Image section */}
       <div className="relative h-48 overflow-hidden">
         <img
@@ -426,7 +426,7 @@ function ScrollEdgeCard({ recipe }: { recipe: Recipe }) {
   const totalTime = recipe.prep_time + recipe.cook_time
 
   return (
-    <div className="relative h-96 cursor-pointer group overflow-hidden rounded-3xl corner-squircle shadow-ios-lg">
+    <div className="relative h-96 cursor-pointer group overflow-hidden rounded-3xl shadow-ios-lg">
       {/* Background image */}
       <img
         src={recipe.image_url}
@@ -439,7 +439,7 @@ function ScrollEdgeCard({ recipe }: { recipe: Recipe }) {
 
       {/* Top floating bar with Liquid Glass */}
       <div className="absolute top-4 left-4 right-4">
-        <div className="h-14 px-5 bg-white/10 border border-white/20 rounded-2xl corner-squircle shadow-ios-lg flex items-center justify-between">
+        <div className="h-14 px-5 bg-white/10 border border-white/20 rounded-2xl shadow-ios-lg flex items-center justify-between">
           <Badge variant="recipe" className="bg-white/20 border-white/30 text-white">
             {categoryLabel}
           </Badge>
@@ -480,7 +480,7 @@ function SpatialCard({ recipe }: { recipe: Recipe }) {
   return (
     <div className="relative cursor-pointer group">
       {/* Main surface */}
-      <div className="bg-ios-bg rounded-3xl corner-squircle overflow-hidden shadow-ios-sm hover:shadow-ios-md transition-all duration-500">
+      <div className="bg-ios-bg rounded-3xl overflow-hidden shadow-ios-sm hover:shadow-ios-md transition-all duration-500">
         {/* Image with spatial depth */}
         <div className="relative h-56 overflow-hidden">
           <img
@@ -491,7 +491,7 @@ function SpatialCard({ recipe }: { recipe: Recipe }) {
 
           {/* Floating element that springs from source */}
           <div className="absolute top-4 right-4">
-            <button className="w-12 h-12 bg-white/95 rounded-2xl corner-squircle shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)] hover:scale-110 transition-all duration-300 flex items-center justify-center text-ios-pink group-hover:rotate-12">
+            <button className="w-12 h-12 bg-white/95 rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)] hover:scale-110 transition-all duration-300 flex items-center justify-center text-ios-pink group-hover:rotate-12">
               <ChefHat className="w-6 h-6" />
             </button>
           </div>
@@ -512,7 +512,7 @@ function SpatialCard({ recipe }: { recipe: Recipe }) {
           </h3>
 
           {/* Grouped related elements */}
-          <div className="p-3 bg-ios-bg/50 rounded-2xl corner-squircle flex items-center justify-around">
+          <div className="p-3 bg-ios-bg/50 rounded-2xl flex items-center justify-around">
             <div className="flex items-center gap-2 text-ios-label-secondary">
               <Clock className="w-4 h-4" />
               <span className="text-sm">{totalTime} min</span>
@@ -535,7 +535,7 @@ function MaterialVariationCard({ recipe }: { recipe: Recipe }) {
   const totalTime = recipe.prep_time + recipe.cook_time
 
   return (
-    <div className="relative h-96 cursor-pointer group overflow-hidden rounded-3xl corner-squircle">
+    <div className="relative h-96 cursor-pointer group overflow-hidden rounded-3xl">
       {/* Background image */}
       <img
         src={recipe.image_url}
@@ -551,7 +551,7 @@ function MaterialVariationCard({ recipe }: { recipe: Recipe }) {
 
       {/* Surface that grows more opaque on hover (deeper engagement) */}
       <div className="absolute inset-4 group-hover:inset-2 transition-all duration-500 ease-out">
-        <div className="h-full p-6 bg-white/5 group-hover:bg-white/10 border border-white/10 group-hover:border-white/20 rounded-3xl corner-squircle shadow-[0_8px_32px_rgba(0,0,0,0.2)] flex flex-col justify-between transition-all duration-500">
+        <div className="h-full p-6 bg-white/5 group-hover:bg-white/10 border border-white/10 group-hover:border-white/20 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] flex flex-col justify-between transition-all duration-500">
           {/* Top section */}
           <div className="flex items-start justify-between">
             <Badge variant="recipe" className="bg-white/20 border-white/30 text-white">
@@ -590,7 +590,7 @@ function ContinuityCard({ recipe }: { recipe: Recipe }) {
   const totalTime = recipe.prep_time + recipe.cook_time
 
   return (
-    <div className="bg-white rounded-3xl corner-squircle shadow-ios-md hover:shadow-ios-lg transition-all duration-500 cursor-pointer group overflow-hidden">
+    <div className="bg-white rounded-3xl shadow-ios-md hover:shadow-ios-lg transition-all duration-500 cursor-pointer group overflow-hidden">
       {/* Shared anatomy: Image */}
       <div className="relative h-52 overflow-hidden">
         <img

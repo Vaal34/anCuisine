@@ -38,7 +38,7 @@ export function RecipeIngredientsList({
                         key={index}
                         onClick={() => onToggleIngredient(index)}
                         className={cn(
-                            "w-full flex items-center gap-3 p-3 rounded-2xl corner-squircle transition-all duration-200 text-left group",
+                            "w-full flex items-center gap-3 p-3 rounded-2xl transition-all duration-200 text-left group",
                             isChecked
                                 ? "bg-ios-bg-secondary"
                                 : "bg-ios-bg hover:bg-ios-bg-secondary"
@@ -92,13 +92,13 @@ export function RecipeIngredientsList({
     // Desktop Widget Version
     return (
         <div className={cn(
-            "bg-white rounded-3xl corner-squircle shadow-ios-md overflow-hidden",
+            "bg-white rounded-3xl shadow-ios-md overflow-hidden",
             compact ? "p-4" : "p-5"
         )}>
             {/* Header */}
             <div className="flex items-center gap-2 mb-4">
                 <div className={cn(
-                    "flex items-center justify-center rounded-2xl corner-squircle bg-ios-pink",
+                    "flex items-center justify-center rounded-2xl bg-ios-pink",
                     compact ? "w-8 h-8" : "w-9 h-9"
                 )}>
                     <span className="text-white text-sm font-bold">

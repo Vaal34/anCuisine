@@ -74,7 +74,7 @@ export default function TestDBPage() {
                 {status}
               </p>
               {error && (
-                <div className="bg-ios-red/10 border border-ios-red rounded-3xl corner-squircle p-4">
+                <div className="bg-ios-red/10 border border-ios-red rounded-3xl p-4">
                   <p className="text-ios-red font-mono text-sm">{error}</p>
                 </div>
               )}
@@ -87,7 +87,7 @@ export default function TestDBPage() {
             <Card>
               <div className="space-y-4">
                 <h2 className="text-2xl font-bold text-ios-red">❌ Les tables n'existent pas encore</h2>
-                <div className="bg-ios-bg-tertiary rounded-3xl corner-squircle p-6 space-y-4">
+                <div className="bg-ios-bg-tertiary rounded-3xl p-6 space-y-4">
                   <h3 className="text-xl font-bold text-ios-label">📋 Étapes pour créer la base de données :</h3>
                   <ol className="list-decimal list-inside space-y-2 text-ios-label">
                     <li>Ouvrez votre projet Supabase : <a href="https://supabase.com" target="_blank" className="text-ios-pink underline">supabase.com</a></li>
@@ -112,7 +112,7 @@ export default function TestDBPage() {
                 </h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                   {ingredients.slice(0, 20).map((ing) => (
-                    <div key={ing.id} className="bg-ios-bg-tertiary rounded-3xl corner-squircle p-2">
+                    <div key={ing.id} className="bg-ios-bg-tertiary rounded-3xl p-2">
                       <p className="font-semibold text-sm">{ing.name}</p>
                       <p className="text-xs text-ios-label-secondary">{ing.category}</p>
                     </div>
@@ -131,7 +131,7 @@ export default function TestDBPage() {
                 </h2>
                 <div className="space-y-2">
                   {recipes.map((recipe) => (
-                    <div key={recipe.id} className="bg-ios-bg-tertiary rounded-3xl corner-squircle p-3">
+                    <div key={recipe.id} className="bg-ios-bg-tertiary rounded-3xl p-3">
                       <p className="font-semibold">{recipe.title}</p>
                       <p className="text-sm text-ios-label-secondary">{recipe.category}</p>
                     </div>

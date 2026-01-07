@@ -79,14 +79,14 @@ export function RecipeTimer({
 
     return (
         <div className={cn(
-            "bg-white rounded-3xl corner-squircle shadow-ios-md overflow-hidden",
+            "bg-white rounded-3xl shadow-ios-md overflow-hidden",
             compact ? "p-4" : "p-5"
         )}>
             {/* Header avec label */}
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                     <div className={cn(
-                        "flex items-center justify-center rounded-2xl corner-squircle",
+                        "flex items-center justify-center rounded-2xl",
                         isComplete ? "bg-ios-green" : "bg-ios-pink",
                         compact ? "w-8 h-8" : "w-9 h-9"
                     )}>
@@ -139,7 +139,7 @@ export function RecipeTimer({
                     <button
                         onClick={onReset}
                         className={cn(
-                            "flex-1 flex items-center justify-center gap-2 rounded-2xl corner-squircle",
+                            "flex-1 flex items-center justify-center gap-2 rounded-2xl",
                             "bg-ios-green text-white font-semibold transition-all active:scale-[0.98]",
                             compact ? "py-3 text-base" : "py-4 text-lg"
                         )}
@@ -151,7 +151,7 @@ export function RecipeTimer({
                     <button
                         onClick={onToggle}
                         className={cn(
-                            "flex-1 flex items-center justify-center gap-2 rounded-2xl corner-squircle",
+                            "flex-1 flex items-center justify-center gap-2 rounded-2xl",
                             "font-semibold transition-all active:scale-[0.98]",
                             timer.isRunning
                                 ? "bg-ios-pink/50 text-white"

@@ -207,7 +207,7 @@ export function IngredientsInput({ ingredients, onChange, disabled }: Ingredient
                     min={0}
                     step={0.1}
                     disabled={disabled}
-                    className="w-full px-3 md:px-4 py-3 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none text-sm md:text-base"
+                    className="w-full px-3 md:px-4 py-3 bg-ios-bg-tertiary rounded-3xl text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none text-sm md:text-base"
                   />
                 </div>
 
@@ -217,7 +217,7 @@ export function IngredientsInput({ ingredients, onChange, disabled }: Ingredient
                     value={ingredient.unit || 'g'}
                     onChange={(e) => handleUnitChange(index, e.target.value)}
                     disabled={disabled}
-                    className="w-full px-3 md:px-4 py-3 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none appearance-none cursor-pointer text-sm md:text-base"
+                    className="w-full px-3 md:px-4 py-3 bg-ios-bg-tertiary rounded-3xl text-ios-label focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none appearance-none cursor-pointer text-sm md:text-base"
                   >
                     {UNITS.map((unit) => (
                       <option key={unit.value} value={unit.value}>
@@ -241,7 +241,7 @@ export function IngredientsInput({ ingredients, onChange, disabled }: Ingredient
                     }}
                     placeholder="Ex: Farine, Œuf, Tomate..."
                     disabled={disabled}
-                    className="w-full px-4 py-3 pr-10 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none"
+                    className="w-full px-4 py-3 pr-10 bg-ios-bg-tertiary rounded-3xl text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none"
                   />
                   {/* Bouton dropdown */}
                   {ingredient.name.length > 0 && suggestions.length > 0 && (
@@ -301,7 +301,7 @@ export function IngredientsInput({ ingredients, onChange, disabled }: Ingredient
                     }}
                     placeholder="Ex: Farine, Œuf, Tomate..."
                     disabled={disabled}
-                    className="w-full px-4 py-3 pr-10 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none"
+                    className="w-full px-4 py-3 pr-10 bg-ios-bg-tertiary rounded-3xl text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none"
                   />
                   {/* Bouton dropdown */}
                   {ingredient.name.length > 0 && suggestions.length > 0 && (
@@ -329,7 +329,7 @@ export function IngredientsInput({ ingredients, onChange, disabled }: Ingredient
                       min={0}
                       step={0.1}
                       disabled={disabled}
-                      className="w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none"
+                      className="w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none"
                     />
                   </div>
                   <div>
@@ -340,7 +340,7 @@ export function IngredientsInput({ ingredients, onChange, disabled }: Ingredient
                       value={ingredient.unit || 'g'}
                       onChange={(e) => handleUnitChange(index, e.target.value)}
                       disabled={disabled}
-                      className="w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl corner-squircle text-ios-label focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none appearance-none cursor-pointer"
+                      className="w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl text-ios-label focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none appearance-none cursor-pointer"
                     >
                       {UNITS.map((unit) => (
                         <option key={unit.value} value={unit.value}>
@@ -380,7 +380,7 @@ export function IngredientsInput({ ingredients, onChange, disabled }: Ingredient
             width: `${dropdownPosition.width}px`,
             zIndex: 9999
           }}
-          className="bg-white rounded-3xl corner-squircle shadow-ios-xl border border-ios-separator overflow-hidden max-h-64 overflow-y-auto"
+          className="bg-white rounded-3xl shadow-ios-xl border border-ios-separator overflow-hidden max-h-64 overflow-y-auto"
         >
           {getSuggestions(showDropdown).map((sug) => (
             <button

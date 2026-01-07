@@ -45,7 +45,7 @@ export function Modal({ isOpen, onClose, title, description, children, footer, s
       {/* Modal */}
       <div
         className={cn(
-          'relative bg-ios-bg-secondary rounded-3xl corner-squircle shadow-ios-xl w-full overflow-hidden',
+          'relative bg-ios-bg-secondary rounded-3xl shadow-ios-xl w-full overflow-hidden',
           sizeStyles[size]
         )}
       >
@@ -59,7 +59,7 @@ export function Modal({ isOpen, onClose, title, description, children, footer, s
           </div>
           <button
             onClick={onClose}
-            className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-xl corner-squircle hover:bg-ios-bg-tertiary transition-colors"
+            className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-xl hover:bg-ios-bg-tertiary transition-colors"
           >
             <X className="w-5 h-5 text-ios-label-secondary" />
           </button>

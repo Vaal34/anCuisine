@@ -84,7 +84,7 @@ export default function RecipePage({ params }: { params: Promise<{ id: string }>
               variant="ghost"
               size="sm"
               onClick={() => router.push('/')}
-              className="sm:hidden w-10 h-10 p-0 rounded-2xl flex-shrink-0"
+              className="sm:hidden w-10 h-10 p-0 rounded-2xl flex-shrink-0 min-h-0"
               aria-label="Retour"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -112,7 +112,7 @@ export default function RecipePage({ params }: { params: Promise<{ id: string }>
               variant="secondary"
               size="sm"
               onClick={() => router.push(`/recettes/${resolvedParams.id}/edit`)}
-              className="w-10 h-10 p-0 sm:p-2 rounded-2xl"
+              className="w-10 h-10 p-0 sm:p-2 rounded-2xl min-h-0"
               aria-label="Modifier"
             >
               <Edit className="w-4 h-4" />
@@ -121,7 +121,7 @@ export default function RecipePage({ params }: { params: Promise<{ id: string }>
               variant="primary"
               size="sm"
               onClick={() => setShowDeleteModal(true)}
-              className="w-10 h-10 p-0 sm:p-2 rounded-2xl"
+              className="w-10 h-10 p-0 sm:p-2 rounded-2xl min-h-0"
               aria-label="Supprimer"
             >
               <Trash2 className="w-4 h-4 text-white" />
@@ -134,7 +134,7 @@ export default function RecipePage({ params }: { params: Promise<{ id: string }>
         <div className="space-y-4 sm:space-y-5 md:space-y-6">
           {/* Image avec catégorie */}
           {recipe.image_url && (
-            <div className="relative w-full h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden rounded-2xl sm:rounded-3xl corner-squircle">
+            <div className="relative w-full h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden rounded-2xl sm:rounded-3xl">
               <img
                 src={recipe.image_url}
                 alt={recipe.title}

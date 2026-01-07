@@ -53,7 +53,7 @@ export default function LoginPage() {
       <div className="min-h-screen flex items-center justify-center p-4 w-full">
         <Card className="max-w-md w-full p-8">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-recipe-primary rounded-3xl corner-squircle mb-4">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-recipe-primary rounded-3xl mb-4">
               <ChefHat className="w-10 h-10 text-white" />
             </div>
             <h1 className="text-4xl font-bold text-ios-label mb-2">anCuisine</h1>
@@ -91,7 +91,7 @@ export default function LoginPage() {
             />
 
             {error && (
-              <div className="bg-ios-red/10 border border-ios-red rounded-3xl corner-squircle px-4 py-3">
+              <div className="bg-ios-red/10 border border-ios-red rounded-3xl px-4 py-3">
                 <p className="text-ios-red text-sm">{error}</p>
               </div>
             )}

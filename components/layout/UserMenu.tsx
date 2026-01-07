@@ -53,7 +53,7 @@ export function UserMenu({ user, onLogout }: UserMenuProps) {
       {/* Avatar Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-10 h-10 sm:w-12 sm:h-12 rounded-3xl corner-squircle bg-ios-pink/90 flex items-center justify-center text-white font-semibold text-sm sm:text-base hover:bg-ios-pink hover:scale-105 active:scale-95 transition-all duration-200 border border-ios-separator"
+        className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-ios-pink/90 flex items-center justify-center text-white font-semibold text-sm sm:text-base hover:bg-ios-pink hover:scale-105 active:scale-95 transition-all duration-200 border border-ios-separator"
         aria-label="Menu utilisateur"
       >
         {getInitials(user.email)}
@@ -61,11 +61,11 @@ export function UserMenu({ user, onLogout }: UserMenuProps) {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-56 bg-ios-bg-secondary rounded-3xl corner-squircle shadow-ios-lg border border-ios-separator overflow-hidden z-50">
+        <div className="absolute right-0 mt-2 w-56 bg-ios-bg-secondary rounded-3xl shadow-ios-lg border border-ios-separator overflow-hidden z-50">
           {/* User Info */}
           <div className="px-4 py-3 border-b border-ios-separator">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-3xl corner-squircle bg-ios-pink/90 flex items-center justify-center text-white font-semibold text-sm flex-shrink-0 border border-ios-separator">
+              <div className="w-10 h-10 rounded-3xl bg-ios-pink/90 flex items-center justify-center text-white font-semibold text-sm flex-shrink-0 border border-ios-separator">
                 {getInitials(user.email)}
               </div>
               <div className="min-w-0 flex-1">

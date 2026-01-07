@@ -1,5 +1,4 @@
 import type { Config } from 'tailwindcss'
-import cornerShape from '@toolwind/corner-shape'
 
 const config: Config = {
   content: [
@@ -74,20 +73,9 @@ const config: Config = {
         'ios-normal': '300ms',
         'ios-slow': '400ms',
       },
-      cornerShape: {
-        'ios-sm': '10px',
-        'ios-md': '12px',
-        'ios-default': '14px',
-        'ios-lg': '16px',
-        'ios-xl': '20px',
-        'ios-2xl': '24px',
-        'ios-3xl': '30px',
-      },
     },
   },
-  plugins: [
-    cornerShape,
-  ],
+  plugins: [],
 }
 
 export default config

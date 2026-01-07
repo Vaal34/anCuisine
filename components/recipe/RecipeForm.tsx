@@ -149,9 +149,9 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
               <button
                 type="button"
                 onClick={() => setTimeCalculationMode('manual')}
-                className={`p-3 rounded-2xl corner-squircle border-2 transition-all duration-ios-normal ${timeCalculationMode === 'manual'
-                    ? 'border-ios-pink bg-ios-pink/10 shadow-ios-sm'
-                    : 'border-ios-separator bg-ios-bg-tertiary hover:border-ios-pink/30'
+                className={`p-3 rounded-2xl border-2 transition-all duration-ios-normal ${timeCalculationMode === 'manual'
+                  ? 'border-ios-pink bg-ios-pink/10 shadow-ios-sm'
+                  : 'border-ios-separator bg-ios-bg-tertiary hover:border-ios-pink/30'
                   }`}
               >
                 <div className="text-sm font-semibold text-ios-label mb-1">Manuel</div>
@@ -160,9 +160,9 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
               <button
                 type="button"
                 onClick={() => setTimeCalculationMode('auto-timers')}
-                className={`p-3 rounded-2xl corner-squircle border-2 transition-all duration-ios-normal ${timeCalculationMode === 'auto-timers'
-                    ? 'border-ios-pink bg-ios-pink/10 shadow-ios-sm'
-                    : 'border-ios-separator bg-ios-bg-tertiary hover:border-ios-pink/30'
+                className={`p-3 rounded-2xl border-2 transition-all duration-ios-normal ${timeCalculationMode === 'auto-timers'
+                  ? 'border-ios-pink bg-ios-pink/10 shadow-ios-sm'
+                  : 'border-ios-separator bg-ios-bg-tertiary hover:border-ios-pink/30'
                   }`}
               >
                 <div className="text-sm font-semibold text-ios-label mb-1">Automatique</div>
@@ -261,7 +261,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
             <label
               key={method.value}
               className={`
-                relative flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl corner-squircle border-2 cursor-pointer transition-all duration-ios-normal
+                relative flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl border-2 cursor-pointer transition-all duration-ios-normal
                 ${cookingMethods.includes(method.value)
                   ? 'border-ios-pink bg-ios-pink/10 shadow-ios-sm'
                   : 'border-ios-separator bg-ios-bg-tertiary hover:border-ios-pink/30 hover:bg-ios-pink/5'

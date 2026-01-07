@@ -34,9 +34,9 @@ export function Button({
   }
 
   const sizeStyles = {
-    sm: 'px-4 py-2.5 text-sm rounded-3xl corner-squircle min-h-[44px]', // Ensure 44px minimum for iOS touch target
-    md: 'px-6 py-3 text-base rounded-3xl corner-squircle min-h-[48px]',
-    lg: 'px-8 py-4 text-lg rounded-3xl corner-squircle min-h-[52px]',
+    sm: 'px-4 py-2.5 text-sm rounded-3xl min-h-[44px]', // Ensure 44px minimum for iOS touch target
+    md: 'px-6 py-3 text-base rounded-3xl min-h-[48px]',
+    lg: 'px-8 py-4 text-lg rounded-3xl min-h-[52px]',
   }
 
   return (
