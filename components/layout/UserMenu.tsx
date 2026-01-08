@@ -53,7 +53,7 @@ export function UserMenu({ user, onLogout }: UserMenuProps) {
       {/* Avatar Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-ios-pink/90 flex items-center justify-center text-white font-semibold text-sm sm:text-base hover:bg-ios-pink hover:scale-105 active:scale-95 transition-all duration-200 border border-ios-separator"
+        className="border-2 border-ios-separator w-10 h-10 sm:w-12 sm:h-12 rounded-3xl bg-ios-pink flex items-center justify-center text-white font-semibold text-sm sm:text-base hover:bg-ios-pink hover:scale-105 active:scale-95 transition-all duration-200"
         aria-label="Menu utilisateur"
       >
         {getInitials(user.email)}

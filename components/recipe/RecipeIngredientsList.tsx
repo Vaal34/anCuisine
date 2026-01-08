@@ -1,6 +1,7 @@
 import React from 'react'
 import { Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { formatQuantity } from '@/lib/format'
 import type { Recipe, RecipeStep } from '@/types'
 
 export interface RecipeIngredientsListProps {
@@ -68,7 +69,7 @@ export function RecipeIngredientsList({
                                         "font-bold transition-colors",
                                         isChecked ? "text-ios-label" : "text-ios-pink"
                                     )}>
-                                        {ingredient.quantity}{ingredient.unit && ` ${ingredient.unit}`}
+                                        {formatQuantity(ingredient.quantity)}{ingredient.unit && ` ${ingredient.unit}`}
                                     </span>
                                 )}
                                 <span className={cn(

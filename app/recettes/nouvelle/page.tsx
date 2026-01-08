@@ -62,7 +62,7 @@ export default function NewRecipePage() {
               variant="ghost"
               size="sm"
               onClick={() => router.push('/')}
-              className="sm:hidden w-10 h-10 p-0 rounded-2xl flex-shrink-0 min-h-0"
+              className="sm:hidden w-10 h-10 p-0 rounded-3xl flex-shrink-0 min-h-0"
               aria-label="Retour"
             >
               <ArrowLeft className="w-5 h-5" />

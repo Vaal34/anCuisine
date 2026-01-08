@@ -58,17 +58,17 @@ export function RecipeCard({ recipe, onClick, onStartCooking, variant = 'premium
       {/* Content */}
       <div className="absolute inset-0 p-4 sm:p-5 md:p-6 flex flex-col justify-end">
         {/* Category Badge - iOS Pink */}
-        <span className="text-[#FF2D55] text-[10px] sm:text-xs font-semibold uppercase tracking-widest mb-1 sm:mb-2">
+        <span className="text-[#FF2D55] text-[10px] sm:text-xs font-semibold uppercase tracking-widest">
           {categoryLabel}
         </span>
 
         {/* Title */}
-        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 leading-tight line-clamp-2">
+        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white leading-tight line-clamp-2">
           {recipe.title}
         </h3>
 
         {/* Bottom Row - Info & Play Button */}
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex items-end justify-between gap-2">
           {/* Time & Servings Info */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-4 text-white/70 text-xs sm:text-sm">
             <div className="flex items-center gap-1 sm:gap-1.5">

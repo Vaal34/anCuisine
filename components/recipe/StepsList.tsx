@@ -1,4 +1,5 @@
 import React from 'react'
+import { formatQuantity } from '@/lib/format'
 import type { RecipeIngredient, RecipeStep } from '@/types'
 
 export interface StepsListProps {
@@ -41,7 +42,7 @@ export function StepsList({ steps, numbered = true, ingredients = [] }: StepsLis
                     {stepIngredients.map((ingredient, idx) => (
                       <span key={idx}>
                         {ingredient.name}
-                        {ingredient.quantity && ingredient.unit && ` ${ingredient.quantity}${ingredient.unit}`}
+                        {ingredient.quantity && ingredient.unit && ` ${formatQuantity(ingredient.quantity)}${ingredient.unit}`}
                         {idx < stepIngredients.length - 1 && ', '}
                       </span>
                     ))}
@@ -51,7 +52,7 @@ export function StepsList({ steps, numbered = true, ingredients = [] }: StepsLis
               {step.timerMinutes && (
                 <div className="flex items-center gap-2 text-xs sm:text-sm text-ios-label-secondary">
                   <span>
-                    {step.timerType === 'cook' ? 'Temps de cuisson' : 'Temps de préparation'}: {step.timerMinutes} min 
+                    {step.timerType === 'cook' ? 'Temps de cuisson' : 'Temps de préparation'}: {step.timerMinutes} min
                     {step.timerLabel && ` (${step.timerLabel})`}
                   </span>
                 </div>

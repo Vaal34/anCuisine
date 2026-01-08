@@ -153,7 +153,7 @@ export default function SettingsPage() {
                   variant="primary"
                   onClick={() => setShowDeleteModal(true)}
                   leftIcon={<Trash2 className="w-4 h-4" />}
-                  className="bg-ios-red hover:bg-ios-red/90"
+                  className="bg-ios-red hover:bg-ios-red/90 rounded-2xl"
                   fullWidth
                 >
                   Supprimer mon compte
