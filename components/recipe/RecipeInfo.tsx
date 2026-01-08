@@ -75,9 +75,11 @@ export function RecipeInfo({ recipe, hideCategory = false }: RecipeInfoProps) {
         {CookingIcon && cookingMethod && (
           <div className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-ios-pink/10 border border-ios-pink/30 rounded-2xl">
             <CookingIcon className="w-4 h-4 sm:w-5 sm:h-5 text-ios-pink flex-shrink-0" />
-            <span className="text-xs sm:text-sm font-semibold text-ios-pink">
-              {cookingMethod.label}
-            </span>
+            <div className="flex items-baseline gap-1">
+              <span className="text-base sm:text-lg font-bold text-ios-pink">
+                {cookingMethod.label}
+              </span>
+            </div>
           </div>
         )}
       </div>
