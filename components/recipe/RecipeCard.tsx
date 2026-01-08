@@ -41,7 +41,7 @@ export function RecipeCard({ recipe, onClick, onStartCooking, variant = 'premium
   return (
     <div
       onClick={onClick}
-      className="relative h-64 sm:h-72 md:h-80 lg:h-96 rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden group cursor-pointer shadow-[0_8px_32px_rgba(0,0,0,0.12)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.2)] transition-shadow duration-300 w-full"
+      className="relative aspect-square rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden group cursor-pointer shadow-[0_8px_32px_rgba(0,0,0,0.12)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.2)] transition-shadow duration-300 w-full"
     >
       {/* Background Image */}
       {recipe.image_url && (
