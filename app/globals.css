@@ -30,5 +30,27 @@
     display: none;
   }
 
+  .scrollbar-subtle {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(60, 60, 67, 0.16) transparent;
+  }
+
+  .scrollbar-subtle::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-subtle::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-subtle::-webkit-scrollbar-thumb {
+    background-color: rgba(60, 60, 67, 0.16);
+    border-radius: 10px;
+  }
+
+  .scrollbar-subtle::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(60, 60, 67, 0.3);
+  }
+
 }
 

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { Plus, X, Tag, Timer } from 'lucide-react'
+import { Plus, X, Tag, Timer, Check } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { Input } from '@/components/ui/Input'
@@ -317,7 +317,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                         ref={(el) => { buttonRefs.current[index] = el }}
                         type="button"
                         onClick={() => setShowIngredientPicker(showIngredientPicker === index ? null : index)}
-                        className={`flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm rounded-2xl transition-colors flex-shrink-0 ${selectedIngredientIndices.length > 0
+                        className={`flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm rounded-full transition-colors flex-shrink-0 ${selectedIngredientIndices.length > 0
                             ? 'text-white bg-black'
                             : 'text-ios-label-secondary bg-ios-bg-secondary hover:bg-ios-bg-tertiary'
                           }`}
@@ -335,7 +335,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                     <button
                       type="button"
                       onClick={() => setShowTimerInput(showTimerInput === index ? null : index)}
-                      className={`flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm rounded-2xl transition-colors flex-shrink-0 ${step.timerMinutes
+                      className={`flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm rounded-full transition-colors flex-shrink-0 ${step.timerMinutes
                           ? 'text-white bg-black'
                           : 'text-ios-label-secondary bg-ios-bg-secondary hover:bg-ios-bg-tertiary'
                         }`}
@@ -383,7 +383,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
 
                 {/* Configuration du minuteur */}
                 {showTimerInput === index && !disabled && (
-                  <div className="space-y-3 p-3 bg-ios-bg-secondary rounded-2xl">
+                  <div className="space-y-3 p-4 bg-zinc-50 border border-ios-separator rounded-3xl">
                     {/* Type de minuteur */}
                     <div className="space-y-1.5">
                       <label className="text-xs font-medium text-ios-label-secondary">Type de minuteur</label>
@@ -422,6 +422,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                         onChange={(e) => updateTimer(index, parseInt(e.target.value) || undefined, step.timerLabel, step.timerType)}
                         min={1}
                         placeholder="30"
+                        className="!bg-white"
                       />
                       <Input
                         type="text"
@@ -429,20 +430,32 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                         value={step.timerLabel || ''}
                         onChange={(e) => updateTimer(index, step.timerMinutes, e.target.value || undefined, step.timerType)}
                         placeholder="Au frigo"
+                        className="!bg-white"
                       />
                     </div>
-                    {step.timerMinutes && (
+
+                    {/* Boutons d'action */}
+                    <div className="flex gap-2">
+                      {step.timerMinutes && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            removeTimer(index)
+                            setShowTimerInput(null)
+                          }}
+                          className="text-sm text-ios-red hover:underline"
+                        >
+                          Supprimer
+                        </button>
+                      )}
                       <button
                         type="button"
-                        onClick={() => {
-                          removeTimer(index)
-                          setShowTimerInput(null)
-                        }}
-                        className="text-sm text-ios-pink hover:underline"
+                        onClick={() => setShowTimerInput(null)}
+                        className="ml-auto px-4 py-2 bg-ios-pink text-white rounded-full text-sm font-medium hover:bg-ios-pink/90 transition-colors"
                       >
-                        Supprimer le minuteur
+                        Terminé
                       </button>
-                    )}
+                    </div>
                   </div>
                 )}
               </div>
@@ -490,7 +503,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                           ref={(el) => { buttonRefs.current[index] = el }}
                           type="button"
                           onClick={() => setShowIngredientPicker(showIngredientPicker === index ? null : index)}
-                          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-2xl transition-colors flex-shrink-0 ${selectedIngredientIndices.length > 0
+                          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-full transition-colors flex-shrink-0 ${selectedIngredientIndices.length > 0
                               ? 'text-white bg-black'
                               : 'text-ios-label-secondary bg-ios-bg-secondary hover:bg-ios-bg-tertiary'
                             }`}
@@ -508,7 +521,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                       <button
                         type="button"
                         onClick={() => setShowTimerInput(showTimerInput === index ? null : index)}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-2xl transition-colors flex-shrink-0 ${step.timerMinutes
+                        className={`flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-full transition-colors flex-shrink-0 ${step.timerMinutes
                             ? 'text-white bg-black'
                             : 'text-ios-label-secondary bg-ios-bg-secondary hover:bg-ios-bg-tertiary'
                           }`}
@@ -558,7 +571,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                 {/* Configuration du minuteur */}
                 <div className="ml-10 space-y-2">
                   {showTimerInput === index && !disabled && (
-                    <div className="space-y-3 p-3 bg-ios-bg-secondary rounded-2xl">
+                    <div className="space-y-3 p-4 bg-zinc-50 border border-ios-separator rounded-3xl">
                       {/* Type de minuteur */}
                       <div className="space-y-1.5">
                         <label className="text-xs font-medium text-ios-label-secondary">Type de minuteur</label>
@@ -597,6 +610,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                           onChange={(e) => updateTimer(index, parseInt(e.target.value) || undefined, step.timerLabel, step.timerType)}
                           min={1}
                           placeholder="30"
+                          className="!bg-white"
                         />
                         <Input
                           type="text"
@@ -604,20 +618,32 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                           value={step.timerLabel || ''}
                           onChange={(e) => updateTimer(index, step.timerMinutes, e.target.value || undefined, step.timerType)}
                           placeholder="Au frigo"
+                          className="!bg-white"
                         />
                       </div>
-                      {step.timerMinutes && (
+
+                      {/* Boutons d'action */}
+                      <div className="flex gap-2">
+                        {step.timerMinutes && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              removeTimer(index)
+                              setShowTimerInput(null)
+                            }}
+                            className="text-sm text-ios-red hover:underline"
+                          >
+                            Supprimer
+                          </button>
+                        )}
                         <button
                           type="button"
-                          onClick={() => {
-                            removeTimer(index)
-                            setShowTimerInput(null)
-                          }}
-                          className="text-sm text-ios-pink hover:underline"
+                          onClick={() => setShowTimerInput(null)}
+                          className="ml-auto px-4 py-2 bg-ios-pink text-white rounded-full text-sm font-medium hover:bg-ios-pink/90 transition-colors"
                         >
-                          Supprimer le minuteur
+                          Terminé
                         </button>
-                      )}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -726,7 +752,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                   key={idx}
                   type="button"
                   onClick={() => toggleIngredient(showIngredientPicker, idx)}
-                  className={`w-full text-left px-3 py-2.5 rounded-2xl transition-all mb-1 last:mb-0 ${isSelected
+                  className={`w-full text-left px-3 py-2.5 rounded-xl transition-all mb-1 last:mb-0 ${isSelected
                       ? 'bg-ios-pink text-white'
                       : 'hover:bg-ios-bg-secondary text-ios-label'
                     }`}
@@ -743,9 +769,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                       )}
                     </div>
                     {isSelected && (
-                      <div className="flex-shrink-0 w-5 h-5 bg-white rounded-full flex items-center justify-center">
-                        <div className="w-2.5 h-2.5 bg-ios-pink rounded-full"></div>
-                      </div>
+                      <Check className="flex-shrink-0 w-5 h-5 text-white" strokeWidth={3} />
                     )}
                   </div>
                 </button>

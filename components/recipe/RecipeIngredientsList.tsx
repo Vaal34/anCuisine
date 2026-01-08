@@ -93,11 +93,11 @@ export function RecipeIngredientsList({
     // Desktop Widget Version
     return (
         <div className={cn(
-            "bg-white rounded-3xl shadow-ios-md overflow-hidden",
+            "bg-white rounded-3xl shadow-ios-md overflow-hidden flex flex-col h-full",
             compact ? "p-4" : "p-5"
         )}>
             {/* Header */}
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-4 flex-shrink-0">
                 <div className={cn(
                     "flex items-center justify-center rounded-2xl bg-ios-pink",
                     compact ? "w-8 h-8" : "w-9 h-9"
@@ -114,7 +114,9 @@ export function RecipeIngredientsList({
                 </span>
             </div>
 
-            {content}
+            <div className="flex-1 min-h-0 overflow-y-auto scrollbar-subtle">
+                {content}
+            </div>
         </div>
     )
 }

@@ -37,10 +37,10 @@ export function StepsList({ steps, numbered = true, ingredients = [] }: StepsLis
                   {step.description}
                 </p>
                 {stepIngredients.length > 0 && (
-                  <div className="text-xs sm:text-sm text-ios-pink font-medium break-words">
-                    Liste des ingrédients: {" "}
+                  <div className="text-xs sm:text-sm font-medium break-words text-ios-label-secondary">
+                    Liste des ingrédients : {" "}
                     {stepIngredients.map((ingredient, idx) => (
-                      <span key={idx}>
+                      <span key={idx} className='text-ios-pink'>
                         {ingredient.name}
                         {ingredient.quantity && ingredient.unit && ` ${formatQuantity(ingredient.quantity)}${ingredient.unit}`}
                         {idx < stepIngredients.length - 1 && ', '}
@@ -52,8 +52,7 @@ export function StepsList({ steps, numbered = true, ingredients = [] }: StepsLis
               {step.timerMinutes && (
                 <div className="flex items-center gap-2 text-xs sm:text-sm text-ios-label-secondary">
                   <span>
-                    {step.timerType === 'cook' ? 'Temps de cuisson' : 'Temps de préparation'}: {step.timerMinutes} min
-                    {step.timerLabel && ` (${step.timerLabel})`}
+                    {step.timerType === 'cook' ? 'Temps de cuisson' : 'Temps de préparation'} : <span className="text-ios-pink">{step.timerMinutes} min {step.timerLabel && ` (${step.timerLabel})`}</span>
                   </span>
                 </div>
               )}

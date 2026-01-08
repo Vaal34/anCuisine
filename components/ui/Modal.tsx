@@ -12,9 +12,10 @@ export interface ModalProps {
   children?: React.ReactNode
   footer?: React.ReactNode
   size?: 'sm' | 'md' | 'lg'
+  disableContentScroll?: boolean
 }
 
-export function Modal({ isOpen, onClose, title, description, children, footer, size = 'md' }: ModalProps) {
+export function Modal({ isOpen, onClose, title, description, children, footer, size = 'md', disableContentScroll = false }: ModalProps) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
@@ -44,6 +45,9 @@ export function Modal({ isOpen, onClose, title, description, children, footer, s
 
       {/* Modal */}
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
         className={cn(
           'relative bg-ios-bg-secondary rounded-3xl shadow-ios-xl w-full overflow-hidden',
           sizeStyles[size]
@@ -52,7 +56,7 @@ export function Modal({ isOpen, onClose, title, description, children, footer, s
         {/* Header */}
         <div className="px-6 py-4 border-b border-ios-separator flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-bold text-ios-label">{title}</h2>
+            <h2 id="modal-title" className="text-xl font-bold text-ios-label">{title}</h2>
             {description && (
               <p className="text-sm text-ios-label-secondary mt-1">{description}</p>
             )}
@@ -67,7 +71,10 @@ export function Modal({ isOpen, onClose, title, description, children, footer, s
 
         {/* Content */}
         {children && (
-          <div className="px-6 py-4 max-h-[60vh] overflow-y-auto">
+          <div className={cn(
+            "px-6 py-4",
+            !disableContentScroll && "max-h-[60vh] overflow-y-auto"
+          )}>
             {children}
           </div>
         )}

@@ -195,7 +195,7 @@ export function RecipeStepByStepDesktop({
                     <div className="max-w-4xl w-full h-full mx-auto flex gap-8 min-h-0">
                         {/* Main instruction - gauche */}
                         <div className="flex-[3] flex flex-col min-w-0 min-h-0">
-                            <div className="h-full bg-white rounded-xl shadow-ios-md p-6 flex flex-col min-h-0">
+                            <div className="h-full bg-white rounded-2xl shadow-ios-md p-6 flex flex-col min-h-0">
                                 {/* Instruction - scrollable */}
                                 <div className="flex-1 overflow-y-auto min-h-0">
                                     <p className="text-lg text-ios-label leading-relaxed">
@@ -221,9 +221,9 @@ export function RecipeStepByStepDesktop({
                         </div>
 
                         {/* Sidebar - droite - avec scroll interne */}
-                        <div className="flex-[2] flex flex-col min-w-0 min-h-0">
-                            <div className="h-full overflow-y-auto flex flex-col gap-6">
-                                {/* Timer */}
+                        <div className="flex-[2] flex flex-col min-w-0 min-h-0 gap-6">
+                            {/* Timer - taille fixe */}
+                            <div className="flex-shrink-0">
                                 <RecipeTimer
                                     timer={timer}
                                     stepObj={stepObj}
@@ -231,8 +231,10 @@ export function RecipeStepByStepDesktop({
                                     onReset={onResetTimer}
                                     formatTime={formatTime}
                                 />
+                            </div>
 
-                                {/* Ingrédients */}
+                            {/* Ingrédients - avec scroll interne */}
+                            <div className="flex-1 min-h-0">
                                 <RecipeIngredientsList
                                     recipe={recipe}
                                     stepObj={stepObj}

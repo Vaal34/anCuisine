@@ -9,7 +9,7 @@ import { Card } from '@/components/ui/Card'
 import { IngredientsInput } from './IngredientsInput'
 import { StepsInput } from './StepsInput'
 import { UnsplashImagePicker } from './UnsplashImagePicker'
-import type { Recipe, RecipeFormData } from '@/types'
+import type { Recipe, RecipeFormData, RecipeStep } from '@/types'
 import { CATEGORIES, COOKING_METHODS } from '@/types'
 
 export interface RecipeFormProps {
@@ -28,7 +28,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
   const [servings, setServings] = useState(4)
   const [imageUrl, setImageUrl] = useState('')
   const [ingredients, setIngredients] = useState<RecipeFormData['ingredients']>([])
-  const [steps, setSteps] = useState<string[]>([])
+  const [steps, setSteps] = useState<RecipeStep[]>([])
   const [cookingMethods, setCookingMethods] = useState<string[]>([])
   const [notes, setNotes] = useState('')
   const [timeCalculationMode, setTimeCalculationMode] = useState<'manual' | 'auto-timers'>('manual')
@@ -107,6 +107,18 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
     await onSubmit(formData)
   }
 
+  // Empêcher la soumission du formulaire lors de l'appui sur Entrée
+  // Exception: permettre l'Entrée dans les champs à l'intérieur des modals
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    if (e.key === 'Enter' && e.target instanceof HTMLElement && e.target.tagName !== 'TEXTAREA') {
+      // Vérifier si le champ est à l'intérieur d'un modal
+      const isInModal = e.target.closest('[role="dialog"]') !== null
+      if (!isInModal) {
+        e.preventDefault()
+      }
+    }
+  }
+
   const handleCookingMethodToggle = (methodValue: string) => {
     setCookingMethods((prev) =>
       prev.includes(methodValue)
@@ -116,7 +128,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-6">
+    <form onSubmit={handleSubmit} onKeyDown={handleKeyDown} className="space-y-4 sm:space-y-5 md:space-y-6">
       {/* Section 1: Informations générales */}
       <Card header="Informations générales">
         <div className="space-y-3 sm:space-y-4">
@@ -175,24 +187,27 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
             <Input
               type="number"
               label="Préparation (min)"
-              value={prepTime}
+              value={prepTime || ''}
               onChange={(e) => setPrepTime(parseInt(e.target.value) || 0)}
+              placeholder="0"
               min={0}
               disabled={timeCalculationMode === 'auto-timers'}
             />
             <Input
               type="number"
               label="Cuisson (min)"
-              value={cookTime}
+              value={cookTime || ''}
               onChange={(e) => setCookTime(parseInt(e.target.value) || 0)}
+              placeholder="0"
               min={0}
               disabled={timeCalculationMode === 'auto-timers'}
             />
             <Input
               type="number"
               label="Portions"
-              value={servings}
+              value={servings || ''}
               onChange={(e) => setServings(parseInt(e.target.value) || 1)}
+              placeholder="4"
               min={1}
             />
           </div>
