@@ -17,15 +17,11 @@ export interface StepsInputProps {
 
 export function StepsInput({ steps, onChange, disabled, ingredients = [] }: StepsInputProps) {
   const [showIngredientPicker, setShowIngredientPicker] = useState<number | null>(null)
-  const [showAutocomplete, setShowAutocomplete] = useState<number | null>(null)
-  const [autocompleteSearch, setAutocompleteSearch] = useState('')
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 })
-  const [autocompletePosition, setAutocompletePosition] = useState({ top: 0, left: 0 })
   const [showTimerInput, setShowTimerInput] = useState<number | null>(null)
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([])
   const textareaRefs = useRef<(HTMLTextAreaElement | null)[]>([])
   const dropdownRef = useRef<HTMLDivElement>(null)
-  const autocompleteRef = useRef<HTMLDivElement>(null)
 
   // Normaliser les steps en RecipeStep[]
   const normalizedSteps: RecipeStep[] = steps.map(step =>
@@ -75,40 +71,6 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
     }
   }, [showIngredientPicker])
 
-  // Calculer la position de l'autocomplete
-  useEffect(() => {
-    const updatePosition = () => {
-      if (showAutocomplete !== null) {
-        const textarea = textareaRefs.current[showAutocomplete]
-        if (textarea) {
-          const rect = textarea.getBoundingClientRect()
-          const isMobile = window.innerWidth < 640
-
-          if (isMobile) {
-            // Sur mobile, centrer l'autocomplete
-            setAutocompletePosition({
-              top: rect.bottom + window.scrollY + 4,
-              left: 16 // padding de 16px sur les côtés
-            })
-          } else {
-            setAutocompletePosition({
-              top: rect.bottom + window.scrollY + 4,
-              left: rect.left + window.scrollX
-            })
-          }
-        }
-      }
-    }
-
-    updatePosition()
-    window.addEventListener('scroll', updatePosition, true)
-    window.addEventListener('resize', updatePosition)
-
-    return () => {
-      window.removeEventListener('scroll', updatePosition, true)
-      window.removeEventListener('resize', updatePosition)
-    }
-  }, [showAutocomplete])
 
   // Fermer dropdown en cliquant à l'extérieur
   useEffect(() => {
@@ -124,52 +86,19 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
           setShowIngredientPicker(null)
         }
       }
-
-      if (showAutocomplete !== null) {
-        const textarea = textareaRefs.current[showAutocomplete]
-        const autocomplete = autocompleteRef.current
-
-        const clickedInsideTextarea = textarea && textarea.contains(e.target as Node)
-        const clickedInsideAutocomplete = autocomplete && autocomplete.contains(e.target as Node)
-
-        if (!clickedInsideTextarea && !clickedInsideAutocomplete) {
-          setShowAutocomplete(null)
-          setAutocompleteSearch('')
-        }
-      }
     }
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [showIngredientPicker, showAutocomplete])
+  }, [showIngredientPicker])
 
   const addStep = () => {
     onChange([...normalizedSteps, { description: '', ingredientIndices: [] }])
   }
 
-  const updateStepDescription = (index: number, description: string, cursorPos?: number) => {
+  const updateStepDescription = (index: number, description: string) => {
     const updated = [...normalizedSteps]
     updated[index] = { ...updated[index], description }
     onChange(updated)
-
-    // Détecter si on tape "@" pour l'autocomplétion
-    if (cursorPos !== undefined) {
-      const textBeforeCursor = description.slice(0, cursorPos)
-      const lastAtIndex = textBeforeCursor.lastIndexOf('@')
-
-      if (lastAtIndex !== -1) {
-        const searchTerm = textBeforeCursor.slice(lastAtIndex + 1)
-        // Vérifier qu'il n'y a pas d'espace après @
-        if (!searchTerm.includes(' ') && !searchTerm.includes('\n')) {
-          setAutocompleteSearch(searchTerm)
-          setShowAutocomplete(index)
-          return
-        }
-      }
-
-      // Fermer l'autocomplete si on n'est plus en train de taper une mention
-      setShowAutocomplete(null)
-      setAutocompleteSearch('')
-    }
   }
 
   const removeStep = (index: number) => {
@@ -207,51 +136,6 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
       ingredientIndices: currentIndices.filter(i => i !== ingredientIndex)
     }
     onChange(updated)
-  }
-
-  const insertIngredientFromAutocomplete = (stepIndex: number, ingredientName: string) => {
-    const textarea = textareaRefs.current[stepIndex]
-    if (!textarea) return
-
-    const currentValue = normalizedSteps[stepIndex].description
-    const cursorPos = textarea.selectionStart
-
-    // Trouver le début de la mention (@)
-    const textBeforeCursor = currentValue.slice(0, cursorPos)
-    const lastAtIndex = textBeforeCursor.lastIndexOf('@')
-
-    if (lastAtIndex !== -1) {
-      // Remplacer "@search" par "ingredientName " (sans le @)
-      const before = currentValue.slice(0, lastAtIndex)
-      const after = currentValue.slice(cursorPos)
-      const newValue = before + ingredientName + ' ' + after
-
-      updateStepDescription(stepIndex, newValue)
-
-      // Repositionner le curseur après l'insertion
-      setTimeout(() => {
-        const newCursorPos = lastAtIndex + ingredientName.length + 1
-        textarea.setSelectionRange(newCursorPos, newCursorPos)
-        textarea.focus()
-      }, 0)
-    }
-
-    setShowAutocomplete(null)
-    setAutocompleteSearch('')
-  }
-
-  const getAutocompleteIngredients = (stepIndex: number) => {
-    // Ne montrer que les ingrédients sélectionnés pour cette étape
-    const selectedIndices = normalizedSteps[stepIndex]?.ingredientIndices || []
-    const selectedIngredients = selectedIndices
-      .map(idx => ({ ...ingredients[idx], originalIndex: idx }))
-      .filter(ing => ing && ing.name)
-
-    // Filtrer par la recherche
-    const search = autocompleteSearch.toLowerCase()
-    return selectedIngredients.filter(ing =>
-      ing.name.toLowerCase().includes(search)
-    )
   }
 
   const updateTimer = (stepIndex: number, minutes?: number, label?: string, type?: 'prep' | 'cook') => {
@@ -302,8 +186,8 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                 <textarea
                   ref={(el) => { textareaRefs.current[index] = el }}
                   value={step.description}
-                  onChange={(e) => updateStepDescription(index, e.target.value, e.target.selectionStart)}
-                  placeholder={`Décrivez l'étape ${index + 1}... (utilisez @ pour mentionner un ingrédient)`}
+                  onChange={(e) => updateStepDescription(index, e.target.value)}
+                  placeholder={`Décrivez l'étape ${index + 1}...`}
                   rows={3}
                   disabled={disabled}
                   className="w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none resize-none"
@@ -472,8 +356,8 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                   <textarea
                     ref={(el) => { textareaRefs.current[index] = el }}
                     value={step.description}
-                    onChange={(e) => updateStepDescription(index, e.target.value, e.target.selectionStart)}
-                    placeholder={`Décrivez l'étape ${index + 1}... (utilisez @ pour mentionner un ingrédient)`}
+                    onChange={(e) => updateStepDescription(index, e.target.value)}
+                    placeholder={`Décrivez l'étape ${index + 1}...`}
                     rows={3}
                     disabled={disabled}
                     className="flex-1 w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none resize-none"
@@ -664,64 +548,6 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
           </Button>
         )}
       </div>
-
-      {/* Autocomplete Portal pour mentionner les ingrédients */}
-      {showAutocomplete !== null && typeof window !== 'undefined' && createPortal(
-        <div
-          ref={autocompleteRef}
-          style={{
-            position: 'absolute',
-            top: `${autocompletePosition.top}px`,
-            left: `${autocompletePosition.left}px`,
-            right: window.innerWidth < 640 ? '16px' : 'auto',
-            minWidth: window.innerWidth < 640 ? 'auto' : '250px',
-            zIndex: 10000
-          }}
-          className="bg-white rounded-3xl shadow-ios-xl border border-ios-separator overflow-hidden max-h-60 overflow-y-auto"
-        >
-          {(() => {
-            const autocompleteIngredients = getAutocompleteIngredients(showAutocomplete)
-
-            if (autocompleteIngredients.length === 0) {
-              return (
-                <div className="px-4 py-3 text-center text-ios-label-secondary text-sm">
-                  {autocompleteSearch.length > 0
-                    ? 'Aucun ingrédient sélectionné ne correspond'
-                    : 'Sélectionnez d\'abord des ingrédients pour cette étape'}
-                </div>
-              )
-            }
-
-            return (
-              <>
-                <div className="px-3 py-2 bg-ios-bg-secondary border-b border-ios-separator">
-                  <p className="text-xs text-ios-label-secondary font-medium">
-                    Ingrédients de cette étape
-                  </p>
-                </div>
-                {autocompleteIngredients.map((ing) => (
-                  <button
-                    key={ing.originalIndex}
-                    type="button"
-                    onClick={() => insertIngredientFromAutocomplete(showAutocomplete, ing.name)}
-                    className="w-full text-left px-4 py-2.5 hover:bg-ios-pink hover:text-white transition-colors border-b border-ios-separator last:border-b-0 group"
-                  >
-                    <div className="font-semibold text-ios-label group-hover:text-white">
-                      {ing.name}
-                    </div>
-                    {ing.quantity && ing.unit && (
-                      <div className="text-xs text-ios-label-secondary group-hover:text-white/80">
-                        {ing.quantity} {ing.unit}
-                      </div>
-                    )}
-                  </button>
-                ))}
-              </>
-            )
-          })()}
-        </div>,
-        document.body
-      )}
 
       {/* Dropdown Portal pour sélectionner les ingrédients */}
       {showIngredientPicker !== null && ingredients.length > 0 && typeof window !== 'undefined' && createPortal(
