@@ -2,10 +2,11 @@
 
 import React, { useEffect, useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { Plus, X, Tag, Timer, Check } from 'lucide-react'
+import { Plus, X, Tag, Timer, Check, Mic, MicOff } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { Input } from '@/components/ui/Input'
+import { useSpeechInput } from '@/hooks/useSpeechInput'
 import type { RecipeIngredient, RecipeStep } from '@/types'
 
 export interface StepsInputProps {
@@ -22,13 +23,48 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([])
   const textareaRefs = useRef<(HTMLTextAreaElement | null)[]>([])
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const [activeVoiceIndex, setActiveVoiceIndex] = useState<number | null>(null)
 
-  // Normaliser les steps en RecipeStep[]
+  // Normaliser les steps en RecipeStep[] (déplacé avant le hook)
   const normalizedSteps: RecipeStep[] = steps.map(step =>
     typeof step === 'string'
       ? { description: step, ingredientIndices: [] }
       : step
   )
+
+  // Hook pour la reconnaissance vocale
+  const {
+    isListening,
+    toggleListening,
+    isSupported,
+    isMicrophoneAvailable,
+    resetTranscript
+  } = useSpeechInput({
+    appendMode: true,
+    currentValue: activeVoiceIndex !== null ? normalizedSteps[activeVoiceIndex]?.description || '' : '',
+    onTranscript: (text) => {
+      if (activeVoiceIndex !== null) {
+        updateStepDescription(activeVoiceIndex, text)
+      }
+    }
+  })
+
+  // Gérer le clic sur le bouton micro
+  const handleMicClick = (index: number) => {
+    if (isListening && activeVoiceIndex === index) {
+      // Arrêter l'écoute
+      toggleListening()
+      setActiveVoiceIndex(null)
+    } else {
+      // Démarrer l'écoute pour cet index
+      if (isListening) {
+        toggleListening() // Arrêter l'écoute précédente
+      }
+      resetTranscript()
+      setActiveVoiceIndex(index)
+      toggleListening()
+    }
+  }
 
   useEffect(() => {
     if (normalizedSteps.length === 0) {
@@ -166,11 +202,31 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
             <div key={index} className="space-y-2 pb-4 sm:pb-0 border-b sm:border-b-0 border-ios-separator last:border-b-0 last:pb-0">
               {/* Mobile Layout */}
               <div className="sm:hidden space-y-2">
-                {/* Badge and delete button row */}
+                {/* Badge, bouton dicter et delete button row */}
                 <div className="flex items-center justify-between">
-                  <Badge variant="recipe">
-                    Étape {index + 1}
-                  </Badge>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="recipe">
+                      Étape {index + 1}
+                    </Badge>
+                    {!disabled && isSupported && (
+                      <button
+                        type="button"
+                        onClick={() => handleMicClick(index)}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-full transition-all ${
+                          isListening && activeVoiceIndex === index
+                            ? 'bg-ios-red text-white animate-pulse'
+                            : 'bg-ios-bg-secondary text-ios-label-secondary hover:bg-ios-pink hover:text-white'
+                        }`}
+                      >
+                        {isListening && activeVoiceIndex === index ? (
+                          <MicOff className="w-3.5 h-3.5" />
+                        ) : (
+                          <Mic className="w-3.5 h-3.5" />
+                        )}
+                        <span>{isListening && activeVoiceIndex === index ? 'Arrêter' : 'Dicter l\'étape'}</span>
+                      </button>
+                    )}
+                  </div>
                   {normalizedSteps.length > 1 && !disabled && (
                     <button
                       type="button"
@@ -182,7 +238,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                   )}
                 </div>
 
-                {/* Textarea full width */}
+                {/* Textarea */}
                 <textarea
                   ref={(el) => { textareaRefs.current[index] = el }}
                   value={step.description}
@@ -346,30 +402,37 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
 
               {/* Desktop/Tablet Layout - horizontal */}
               <div className="hidden sm:block space-y-2">
-                <div className="flex gap-2 items-start">
-                  {/* Numéro */}
-                  <Badge variant="recipe" className="mt-2 flex-shrink-0">
-                    {index + 1}
-                  </Badge>
-
-                  {/* Textarea */}
-                  <textarea
-                    ref={(el) => { textareaRefs.current[index] = el }}
-                    value={step.description}
-                    onChange={(e) => updateStepDescription(index, e.target.value)}
-                    placeholder={`Décrivez l'étape ${index + 1}...`}
-                    rows={3}
-                    disabled={disabled}
-                    className="flex-1 w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none resize-none"
-                  />
-
-                  {/* Supprimer */}
+                {/* Header avec badge et bouton dicter */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="recipe">
+                      {index + 1}
+                    </Badge>
+                    {!disabled && isSupported && (
+                      <button
+                        type="button"
+                        onClick={() => handleMicClick(index)}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-full transition-all ${
+                          isListening && activeVoiceIndex === index
+                            ? 'bg-ios-red text-white animate-pulse'
+                            : 'bg-ios-bg-secondary text-ios-label-secondary hover:bg-ios-pink hover:text-white'
+                        }`}
+                      >
+                        {isListening && activeVoiceIndex === index ? (
+                          <MicOff className="w-3.5 h-3.5" />
+                        ) : (
+                          <Mic className="w-3.5 h-3.5" />
+                        )}
+                        <span>{isListening && activeVoiceIndex === index ? 'Arrêter' : 'Dicter l\'étape'}</span>
+                      </button>
+                    )}
+                  </div>
                   {normalizedSteps.length > 1 && !disabled && (
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => removeStep(index)}
-                      className="mt-2 flex-shrink-0"
+                      className="flex-shrink-0"
                       type="button"
                     >
                       <X className="w-4 h-4" />
@@ -377,8 +440,19 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                   )}
                 </div>
 
+                {/* Textarea */}
+                <textarea
+                  ref={(el) => { textareaRefs.current[index] = el }}
+                  value={step.description}
+                  onChange={(e) => updateStepDescription(index, e.target.value)}
+                  placeholder={`Décrivez l'étape ${index + 1}...`}
+                  rows={3}
+                  disabled={disabled}
+                  className="w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none resize-none"
+                />
+
                 {/* Boutons et badges regroupés */}
-                <div className="ml-10 space-y-2">
+                <div className="space-y-2">
                   {/* Boutons Ingrédients et Minuteur sur la même ligne */}
                   {!disabled && (
                     <div className="flex flex-wrap gap-2">

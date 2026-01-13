@@ -181,7 +181,7 @@ export function RecipeStepByStep({ recipe, currentStep, onStepChange, onExit }: 
   }
 
   return (
-    <div className="lg:h-screen flex flex-col bg-ios-bg">
+    <div className="h-screen flex flex-col bg-ios-bg">
       <RecipeStepByStepMobile
         {...viewProps}
         swipeHandlers={{ onTouchStart, onTouchMove, onTouchEnd }}

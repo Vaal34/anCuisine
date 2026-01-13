@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Input } from '@/components/ui/Input'
 import { Textarea } from '@/components/ui/Textarea'
 import { Select } from '@/components/ui/Select'
@@ -9,8 +9,24 @@ import { Card } from '@/components/ui/Card'
 import { IngredientsInput } from './IngredientsInput'
 import { StepsInput } from './StepsInput'
 import { UnsplashImagePicker } from './UnsplashImagePicker'
+import { useFormPersistence } from '@/hooks/useFormPersistence'
 import type { Recipe, RecipeFormData, RecipeStep } from '@/types'
 import { CATEGORIES, COOKING_METHODS } from '@/types'
+
+/** Type pour les données persistées du formulaire */
+interface PersistedFormData {
+  title: string
+  category: string
+  prepTime: number
+  cookTime: number
+  servings: number
+  imageUrl: string
+  ingredients: RecipeFormData['ingredients']
+  steps: RecipeStep[]
+  cookingMethods: string[]
+  notes: string
+  timeCalculationMode: 'manual' | 'auto-timers'
+}
 
 export interface RecipeFormProps {
   mode: 'create' | 'edit'
@@ -21,6 +37,23 @@ export interface RecipeFormProps {
 }
 
 export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }: RecipeFormProps) {
+  // Clé unique pour la persistance (différente pour création vs édition)
+  const persistenceKey = mode === 'edit' && initialData?.id
+    ? `recipe-edit-${initialData.id}`
+    : 'recipe-create'
+
+  // Hook de persistance du brouillon
+  const {
+    data: persistedData,
+    isReady: persistenceReady,
+    wasRestored,
+    save: saveDraft,
+    clear: clearDraft,
+    discardRestored,
+  } = useFormPersistence<PersistedFormData>({
+    key: persistenceKey,
+  })
+
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState('autre')
   const [prepTime, setPrepTime] = useState(0)
@@ -32,13 +65,37 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
   const [cookingMethods, setCookingMethods] = useState<string[]>([])
   const [notes, setNotes] = useState('')
   const [timeCalculationMode, setTimeCalculationMode] = useState<'manual' | 'auto-timers'>('manual')
+  const [showRestoredBanner, setShowRestoredBanner] = useState(false)
 
   // Initialiser le formulaire avec les données existantes en mode édition
   // On utilise un ref pour ne charger les données qu'une seule fois au montage
   const [isInitialized, setIsInitialized] = useState(false)
 
+  // Initialisation : attendre que le hook soit prêt, puis charger les données
   useEffect(() => {
-    if (mode === 'edit' && initialData && !isInitialized) {
+    // Attendre que le hook de persistance soit prêt
+    if (!persistenceReady || isInitialized) return
+
+    // Si un brouillon a été restauré, l'utiliser
+    if (wasRestored && persistedData) {
+      setTitle(persistedData.title)
+      setCategory(persistedData.category)
+      setPrepTime(persistedData.prepTime)
+      setCookTime(persistedData.cookTime)
+      setServings(persistedData.servings)
+      setImageUrl(persistedData.imageUrl)
+      setIngredients(persistedData.ingredients)
+      setSteps(persistedData.steps)
+      setCookingMethods(persistedData.cookingMethods)
+      setNotes(persistedData.notes)
+      setTimeCalculationMode(persistedData.timeCalculationMode)
+      setShowRestoredBanner(true)
+      setIsInitialized(true)
+      return
+    }
+
+    // Sinon, en mode édition, utiliser les données initiales
+    if (mode === 'edit' && initialData) {
       setTitle(initialData.title)
       setCategory(initialData.category)
       setPrepTime(initialData.prep_time)
@@ -46,13 +103,87 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
       setServings(initialData.servings)
       setImageUrl(initialData.image_url || '')
       setIngredients(initialData.ingredients)
-      setSteps(initialData.steps)
+      setSteps(initialData.steps as RecipeStep[])
       setCookingMethods(initialData.cooking_methods || [])
       setNotes(initialData.notes || '')
       setTimeCalculationMode(initialData.time_calculation_mode || 'manual')
       setIsInitialized(true)
+    } else if (mode === 'create') {
+      // Mode création sans brouillon
+      setIsInitialized(true)
     }
-  }, [mode, initialData, isInitialized])
+  }, [mode, initialData, isInitialized, persistenceReady, wasRestored, persistedData])
+
+  // Sauvegarder le brouillon à chaque modification
+  const saveCurrentDraft = useCallback(() => {
+    if (!isInitialized) return
+
+    saveDraft({
+      title,
+      category,
+      prepTime,
+      cookTime,
+      servings,
+      imageUrl,
+      ingredients,
+      steps,
+      cookingMethods,
+      notes,
+      timeCalculationMode,
+    })
+  }, [
+    isInitialized,
+    saveDraft,
+    title,
+    category,
+    prepTime,
+    cookTime,
+    servings,
+    imageUrl,
+    ingredients,
+    steps,
+    cookingMethods,
+    notes,
+    timeCalculationMode,
+  ])
+
+  // Déclencher la sauvegarde à chaque changement
+  useEffect(() => {
+    saveCurrentDraft()
+  }, [saveCurrentDraft])
+
+  // Fonction pour ignorer le brouillon et repartir de zéro
+  const handleDiscardDraft = () => {
+    discardRestored()
+    setShowRestoredBanner(false)
+
+    // Réinitialiser avec les données initiales ou les valeurs par défaut
+    if (mode === 'edit' && initialData) {
+      setTitle(initialData.title)
+      setCategory(initialData.category)
+      setPrepTime(initialData.prep_time)
+      setCookTime(initialData.cook_time)
+      setServings(initialData.servings)
+      setImageUrl(initialData.image_url || '')
+      setIngredients(initialData.ingredients)
+      setSteps(initialData.steps as RecipeStep[])
+      setCookingMethods(initialData.cooking_methods || [])
+      setNotes(initialData.notes || '')
+      setTimeCalculationMode(initialData.time_calculation_mode || 'manual')
+    } else {
+      setTitle('')
+      setCategory('autre')
+      setPrepTime(0)
+      setCookTime(0)
+      setServings(4)
+      setImageUrl('')
+      setIngredients([])
+      setSteps([])
+      setCookingMethods([])
+      setNotes('')
+      setTimeCalculationMode('manual')
+    }
+  }
 
   // Calculer automatiquement le temps basé sur les minuteurs
   useEffect(() => {
@@ -105,6 +236,9 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
     }
 
     await onSubmit(formData)
+
+    // Effacer le brouillon après soumission réussie
+    clearDraft()
   }
 
   // Empêcher la soumission du formulaire lors de l'appui sur Entrée
@@ -129,6 +263,34 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
 
   return (
     <form onSubmit={handleSubmit} onKeyDown={handleKeyDown} className="space-y-4 sm:space-y-5 md:space-y-6">
+      {/* Bannière de brouillon restauré */}
+      {showRestoredBanner && (
+        <div className="flex items-center justify-between gap-3 p-3 sm:p-4 bg-ios-blue/10 border border-ios-blue/30 rounded-2xl">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-lg sm:text-xl shrink-0">📝</span>
+            <p className="text-sm text-ios-label truncate">
+              Brouillon restauré
+            </p>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={() => setShowRestoredBanner(false)}
+              className="px-3 py-1.5 text-xs sm:text-sm font-medium text-ios-blue hover:bg-ios-blue/10 rounded-xl transition-colors"
+            >
+              OK
+            </button>
+            <button
+              type="button"
+              onClick={handleDiscardDraft}
+              className="px-3 py-1.5 text-xs sm:text-sm font-medium text-ios-label-secondary hover:bg-ios-bg-tertiary rounded-xl transition-colors"
+            >
+              Ignorer
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Section 1: Informations générales */}
       <Card header="Informations générales">
         <div className="space-y-3 sm:space-y-4">

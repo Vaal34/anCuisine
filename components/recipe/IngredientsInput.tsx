@@ -50,17 +50,19 @@ export function IngredientsInput({ ingredients, onChange, disabled }: Ingredient
           const rect = inputElement.getBoundingClientRect()
           const dropdownHeight = 256 // max-h-64 = 16rem = 256px
           const viewportHeight = window.visualViewport?.height || window.innerHeight
-          const spaceBelow = viewportHeight - rect.bottom
-          const spaceAbove = rect.top
+          const viewportOffsetTop = window.visualViewport?.offsetTop || 0
+          const spaceBelow = viewportHeight - (rect.bottom - viewportOffsetTop)
+          const spaceAbove = rect.top - viewportOffsetTop
 
           // Si pas assez d'espace en dessous et plus d'espace au-dessus, afficher au-dessus
           const shouldShowAbove = spaceBelow < dropdownHeight && spaceAbove > spaceBelow
 
+          // Utiliser position fixed avec les coordonnées du viewport
           setDropdownPosition({
             top: shouldShowAbove
-              ? rect.top + window.scrollY - Math.min(dropdownHeight, spaceAbove) - 4
-              : rect.bottom + window.scrollY + 4,
-            left: rect.left + window.scrollX,
+              ? rect.top - Math.min(dropdownHeight, spaceAbove) - 4
+              : rect.bottom + 4,
+            left: rect.left,
             width: rect.width
           })
         }
@@ -374,7 +376,7 @@ export function IngredientsInput({ ingredients, onChange, disabled }: Ingredient
         <div
           ref={dropdownRef}
           style={{
-            position: 'absolute',
+            position: 'fixed',
             top: `${dropdownPosition.top}px`,
             left: `${dropdownPosition.left}px`,
             width: `${dropdownPosition.width}px`,

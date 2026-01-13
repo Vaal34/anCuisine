@@ -51,10 +51,22 @@ export function RecipeTimer({
                     {formatTime(timer.remainingSeconds)}
                 </span>
 
+                {/* Bouton Reset - visible si le timer a démarré et n'est pas terminé */}
+                {timer.hasStarted && !isComplete && (
+                    <button
+                        onClick={onReset}
+                        className="p-1 rounded-full hover:bg-ios-separator/50 text-ios-label-tertiary"
+                        aria-label="Réinitialiser le minuteur"
+                    >
+                        <RotateCcw className="w-3.5 h-3.5" />
+                    </button>
+                )}
+
                 {isComplete ? (
                     <button
                         onClick={onReset}
                         className="p-1 rounded-full hover:bg-white/20"
+                        aria-label="Recommencer le minuteur"
                     >
                         <RotateCcw className="w-3.5 h-3.5" />
                     </button>
@@ -65,6 +77,7 @@ export function RecipeTimer({
                             "p-1 rounded-full text-white",
                             timer.isRunning ? "bg-ios-pink" : "bg-ios-label-secondary"
                         )}
+                        aria-label={timer.isRunning ? "Pause" : "Démarrer"}
                     >
                         {timer.isRunning ? (
                             <Pause className="w-3 h-3 fill-current" />
