@@ -24,7 +24,7 @@ export function Header({ user, onLogout }: HeaderProps) {
           onClick={() => router.push('/')}
         >
           {/* Logo - consistent size with action buttons */}
-          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-ios-pink rounded-3xl sm:rounded-3xl flex items-center justify-center flex-shrink-0">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-accent rounded-3xl sm:rounded-3xl flex items-center justify-center flex-shrink-0">
             <ChefHat className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
           </div>
 

@@ -12,13 +12,13 @@ export function Footer() {
           <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs">
             <Link
               href="/privacy"
-              className="text-ios-label-secondary hover:text-ios-pink transition-colors"
+              className="text-ios-label-secondary hover:text-accent transition-colors"
             >
               Politique de confidentialité
             </Link>
             <Link
               href="/terms"
-              className="text-ios-label-secondary hover:text-ios-pink transition-colors"
+              className="text-ios-label-secondary hover:text-accent transition-colors"
             >
               Conditions d'utilisation
             </Link>
