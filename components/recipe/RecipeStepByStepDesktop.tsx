@@ -52,7 +52,7 @@ export function RecipeStepByStepDesktop({
                 <div className="p-4 border-b border-ios-separator">
                     <button
                         onClick={onExit}
-                        className="flex items-center gap-2 text-ios-pink font-medium text-sm hover:opacity-80 transition-opacity"
+                        className="flex items-center gap-2 text-accent font-medium text-sm hover:opacity-80 transition-opacity"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         <span>Quitter</span>
@@ -86,7 +86,7 @@ export function RecipeStepByStepDesktop({
                                             className={cn(
                                                 "w-full flex items-start gap-3 p-2 rounded-xl transition-all text-left",
                                                 isCurrent
-                                                    ? "bg-ios-pink/10"
+                                                    ? "bg-accent/10"
                                                     : "hover:bg-ios-bg-tertiary"
                                             )}
                                         >
@@ -94,9 +94,9 @@ export function RecipeStepByStepDesktop({
                                             <div className={cn(
                                                 "relative z-10 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 transition-all",
                                                 isCompleted
-                                                    ? "bg-ios-pink text-white"
+                                                    ? "bg-accent text-white"
                                                     : isCurrent
-                                                        ? "bg-white border-2 border-ios-pink"
+                                                        ? "bg-white border-2 border-accent"
                                                         : "bg-white border-2 border-ios-separator"
                                             )}>
                                                 {isCompleted ? (
@@ -104,7 +104,7 @@ export function RecipeStepByStepDesktop({
                                                 ) : (
                                                     <span className={cn(
                                                         "text-xs font-bold",
-                                                        isCurrent ? "text-ios-pink" : "text-ios-label-secondary"
+                                                        isCurrent ? "text-accent" : "text-ios-label-secondary"
                                                     )}>
                                                         {index + 1}
                                                     </span>
@@ -116,7 +116,7 @@ export function RecipeStepByStepDesktop({
                                                 <p className={cn(
                                                     "text-sm line-clamp-2",
                                                     isCurrent
-                                                        ? "font-semibold text-ios-pink"
+                                                        ? "font-semibold text-accent"
                                                         : isCompleted
                                                             ? "text-ios-label-secondary"
                                                             : "text-ios-label"
@@ -136,13 +136,13 @@ export function RecipeStepByStepDesktop({
                 <div className="p-4 border-t border-ios-separator bg-ios-bg">
                     <div className="flex items-center justify-between text-sm mb-2">
                         <span className="text-ios-label-secondary">Progression</span>
-                        <span className="font-semibold text-ios-pink">
+                        <span className="font-semibold text-accent">
                             {Math.round(((currentStep + 1) / totalSteps) * 100)}%
                         </span>
                     </div>
                     <div className="w-full bg-ios-separator/30 rounded-full h-2 overflow-hidden">
                         <div
-                            className="h-full bg-ios-pink transition-all duration-300"
+                            className="h-full bg-accent transition-all duration-300"
                             style={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
                         />
                     </div>
@@ -155,8 +155,8 @@ export function RecipeStepByStepDesktop({
                 <header className="bg-white/80 border-b border-ios-separator px-8 py-4 flex-shrink-0">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="inline-flex items-center gap-1 bg-ios-pink/10 px-4 py-2 rounded-2xl">
-                                <span className="text-ios-pink font-bold">Étape {currentStep + 1}</span>
+                            <div className="inline-flex items-center gap-1 bg-accent/10 px-4 py-2 rounded-2xl">
+                                <span className="text-accent font-bold">Étape {currentStep + 1}</span>
                                 <span className="text-ios-label-secondary">sur {totalSteps}</span>
                             </div>
                         </div>

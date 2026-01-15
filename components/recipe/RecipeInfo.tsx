@@ -44,7 +44,7 @@ export function RecipeInfo({ recipe, hideCategory = false }: RecipeInfoProps) {
       <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
         {/* Temps de préparation */}
         <div className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-ios-bg-tertiary rounded-2xl">
-          <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-ios-pink flex-shrink-0" />
+          <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-accent flex-shrink-0" />
           <div className="flex items-baseline gap-1">
             <span className="text-base sm:text-lg font-bold text-ios-label">{recipe.prep_time}</span>
             <span className="text-xs sm:text-sm text-ios-label-secondary">min</span>
@@ -53,7 +53,7 @@ export function RecipeInfo({ recipe, hideCategory = false }: RecipeInfoProps) {
 
         {/* Temps de cuisson */}
         <div className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-ios-bg-tertiary rounded-2xl">
-          <ChefHat className="w-4 h-4 sm:w-5 sm:h-5 text-ios-pink flex-shrink-0" />
+          <ChefHat className="w-4 h-4 sm:w-5 sm:h-5 text-accent flex-shrink-0" />
           <div className="flex items-baseline gap-1">
             <span className="text-base sm:text-lg font-bold text-ios-label">{recipe.cook_time}</span>
             <span className="text-xs sm:text-sm text-ios-label-secondary">min</span>
@@ -62,7 +62,7 @@ export function RecipeInfo({ recipe, hideCategory = false }: RecipeInfoProps) {
 
         {/* Portions */}
         <div className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-ios-bg-tertiary rounded-2xl">
-          <Users className="w-4 h-4 sm:w-5 sm:h-5 text-ios-pink flex-shrink-0" />
+          <Users className="w-4 h-4 sm:w-5 sm:h-5 text-accent flex-shrink-0" />
           <div className="flex items-baseline gap-1">
             <span className="text-base sm:text-lg font-bold text-ios-label">{recipe.servings}</span>
             <span className="text-xs sm:text-sm text-ios-label-secondary">
@@ -73,10 +73,10 @@ export function RecipeInfo({ recipe, hideCategory = false }: RecipeInfoProps) {
 
         {/* Méthode de cuisson */}
         {CookingIcon && cookingMethod && (
-          <div className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-ios-pink/10 border border-ios-pink/30 rounded-2xl">
-            <CookingIcon className="w-4 h-4 sm:w-5 sm:h-5 text-ios-pink flex-shrink-0" />
+          <div className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-accent/10 border border-accent/30 rounded-2xl">
+            <CookingIcon className="w-4 h-4 sm:w-5 sm:h-5 text-accent flex-shrink-0" />
             <div className="flex items-baseline gap-1">
-              <span className="text-base sm:text-lg font-bold text-ios-pink">
+              <span className="text-base sm:text-lg font-bold text-accent">
                 {cookingMethod.label}
               </span>
             </div>
@@ -98,7 +98,7 @@ export function RecipeInfo({ recipe, hideCategory = false }: RecipeInfoProps) {
                 key={methodValue}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-ios-bg-tertiary rounded-full border border-ios-separator"
               >
-                <IconComponent className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-ios-pink" />
+                <IconComponent className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent" />
                 <span className="text-xs sm:text-sm font-medium text-ios-label">
                   {method.label}
                 </span>

@@ -10,7 +10,7 @@ export function IngredientsListVariant4({ ingredients }: IngredientsListProps) {
   return (
     <div className="overflow-hidden rounded-2xl border border-ios-separator bg-white shadow-sm">
       {/* Table Header */}
-      <div className="grid grid-cols-[1fr_auto] gap-4 px-4 sm:px-6 py-3 bg-gradient-to-r from-ios-pink/10 to-ios-pink/5 border-b border-ios-separator">
+      <div className="grid grid-cols-[1fr_auto] gap-4 px-4 sm:px-6 py-3 bg-gradient-to-r from-accent/10 to-accent/5 border-b border-ios-separator">
         <div className="text-xs sm:text-sm font-bold text-ios-label uppercase tracking-wide">
           Ingrédient
         </div>
@@ -28,7 +28,7 @@ export function IngredientsListVariant4({ ingredients }: IngredientsListProps) {
           >
             {/* Ingredient Name */}
             <div className="flex items-center gap-3">
-              <div className="flex-shrink-0 w-2 h-2 rounded-full bg-ios-pink" />
+              <div className="flex-shrink-0 w-2 h-2 rounded-full bg-accent" />
               <span className="text-sm sm:text-base font-medium text-ios-label">
                 {ingredient.name}
               </span>
@@ -37,7 +37,7 @@ export function IngredientsListVariant4({ ingredients }: IngredientsListProps) {
             {/* Quantity */}
             {ingredient.quantity ? (
               <div className="flex items-center justify-end">
-                <span className="inline-flex items-center px-3 py-1.5 text-sm sm:text-base font-semibold text-ios-pink bg-ios-pink/10 rounded-lg tabular-nums border border-ios-pink/20">
+                <span className="inline-flex items-center px-3 py-1.5 text-sm sm:text-base font-semibold text-accent bg-accent/10 rounded-lg tabular-nums border border-accent/20">
                   {formatQuantity(ingredient.quantity)} {ingredient.unit}
                 </span>
               </div>

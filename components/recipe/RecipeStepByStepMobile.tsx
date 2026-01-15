@@ -62,9 +62,9 @@ export function RecipeStepByStepMobile({
                                 className={cn(
                                     "flex-1 rounded-full transition-all duration-300",
                                     index < currentStep
-                                        ? "bg-ios-pink"
+                                        ? "bg-accent"
                                         : index === currentStep
-                                            ? "bg-ios-pink"
+                                            ? "bg-accent"
                                             : "bg-ios-separator"
                                 )}
                             />

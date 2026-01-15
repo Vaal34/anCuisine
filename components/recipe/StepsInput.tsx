@@ -215,7 +215,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                         className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-full transition-all ${
                           isListening && activeVoiceIndex === index
                             ? 'bg-ios-red text-white animate-pulse'
-                            : 'bg-ios-bg-secondary text-ios-label-secondary hover:bg-ios-pink hover:text-white'
+                            : 'bg-ios-bg-secondary text-ios-label-secondary hover:bg-accent hover:text-white'
                         }`}
                       >
                         {isListening && activeVoiceIndex === index ? (
@@ -246,7 +246,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                   placeholder={`Décrivez l'étape ${index + 1}...`}
                   rows={3}
                   disabled={disabled}
-                  className="w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none resize-none"
+                  className="w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-accent transition-all duration-ios-fast outline-none resize-none"
                 />
 
                 {/* Boutons Ingrédients et Minuteur sur la même ligne */}
@@ -391,7 +391,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                       <button
                         type="button"
                         onClick={() => setShowTimerInput(null)}
-                        className="ml-auto px-4 py-2 bg-ios-pink text-white rounded-full text-sm font-medium hover:bg-ios-pink/90 transition-colors"
+                        className="ml-auto px-4 py-2 bg-accent text-white rounded-full text-sm font-medium hover:bg-accent/90 transition-colors"
                       >
                         Terminé
                       </button>
@@ -415,7 +415,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                         className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-full transition-all ${
                           isListening && activeVoiceIndex === index
                             ? 'bg-ios-red text-white animate-pulse'
-                            : 'bg-ios-bg-secondary text-ios-label-secondary hover:bg-ios-pink hover:text-white'
+                            : 'bg-ios-bg-secondary text-ios-label-secondary hover:bg-accent hover:text-white'
                         }`}
                       >
                         {isListening && activeVoiceIndex === index ? (
@@ -448,7 +448,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                   placeholder={`Décrivez l'étape ${index + 1}...`}
                   rows={3}
                   disabled={disabled}
-                  className="w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none resize-none"
+                  className="w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-accent transition-all duration-ios-fast outline-none resize-none"
                 />
 
                 {/* Boutons et badges regroupés */}
@@ -597,7 +597,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                         <button
                           type="button"
                           onClick={() => setShowTimerInput(null)}
-                          className="ml-auto px-4 py-2 bg-ios-pink text-white rounded-full text-sm font-medium hover:bg-ios-pink/90 transition-colors"
+                          className="ml-auto px-4 py-2 bg-accent text-white rounded-full text-sm font-medium hover:bg-accent/90 transition-colors"
                         >
                           Terminé
                         </button>
@@ -653,7 +653,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                   type="button"
                   onClick={() => toggleIngredient(showIngredientPicker, idx)}
                   className={`w-full text-left px-3 py-2.5 rounded-xl transition-all mb-1 last:mb-0 ${isSelected
-                      ? 'bg-ios-pink text-white'
+                      ? 'bg-accent text-white'
                       : 'hover:bg-ios-bg-secondary text-ios-label'
                     }`}
                 >

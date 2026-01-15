@@ -57,8 +57,8 @@ export function RecipeCard({ recipe, onClick, onStartCooking, variant = 'premium
 
       {/* Content */}
       <div className="absolute inset-0 p-4 sm:p-5 md:p-6 flex flex-col justify-end">
-        {/* Category Badge - iOS Pink */}
-        <span className="text-[#FF2D55] text-[10px] sm:text-xs font-semibold uppercase tracking-widest">
+        {/* Category Badge - Accent Color */}
+        <span className="text-accent text-[10px] sm:text-xs font-semibold uppercase tracking-widest">
           {categoryLabel}
         </span>
 

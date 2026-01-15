@@ -161,7 +161,7 @@ export function UnsplashImagePicker({ onSelect }: UnsplashImagePickerProps) {
                       relative group overflow-hidden rounded-xl sm:rounded-2xl
                       transition-shadow duration-200
                       ${selectedImageUrl === image.imageUrl
-                        ? 'ring-2 sm:ring-4 ring-ios-pink shadow-lg'
+                        ? 'ring-2 sm:ring-4 ring-accent shadow-lg'
                         : 'hover:shadow-md active:scale-95'
                       }
                     `}
@@ -180,7 +180,7 @@ export function UnsplashImagePicker({ onSelect }: UnsplashImagePickerProps) {
                         ${selectedImageUrl === image.imageUrl ? 'opacity-100' : 'opacity-0 sm:group-hover:opacity-100'}
                       `}>
                         {selectedImageUrl === image.imageUrl ? (
-                          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-ios-pink rounded-full flex items-center justify-center">
+                          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-accent rounded-full flex items-center justify-center">
                             <Check className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                           </div>
                         ) : (

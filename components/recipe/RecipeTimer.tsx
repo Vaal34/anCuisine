@@ -75,7 +75,7 @@ export function RecipeTimer({
                         onClick={onToggle}
                         className={cn(
                             "p-1 rounded-full text-white",
-                            timer.isRunning ? "bg-ios-pink" : "bg-ios-label-secondary"
+                            timer.isRunning ? "bg-accent" : "bg-ios-label-secondary"
                         )}
                         aria-label={timer.isRunning ? "Pause" : "Démarrer"}
                     >
@@ -100,7 +100,7 @@ export function RecipeTimer({
                 <div className="flex items-center gap-2">
                     <div className={cn(
                         "flex items-center justify-center rounded-2xl",
-                        isComplete ? "bg-ios-green" : "bg-ios-pink",
+                        isComplete ? "bg-ios-green" : "bg-accent",
                         compact ? "w-8 h-8" : "w-9 h-9"
                     )}>
                         <Timer className={cn("text-white", compact ? "w-4 h-4" : "w-5 h-5")} />
@@ -140,7 +140,7 @@ export function RecipeTimer({
                 <div
                     className={cn(
                         "h-full rounded-full transition-all duration-1000",
-                        isComplete ? "bg-ios-green" : "bg-ios-pink"
+                        isComplete ? "bg-ios-green" : "bg-accent"
                     )}
                     style={{ width: `${progress}%` }}
                 />
@@ -167,8 +167,8 @@ export function RecipeTimer({
                             "flex-1 flex items-center justify-center gap-2 rounded-2xl",
                             "font-semibold transition-all active:scale-[0.98]",
                             timer.isRunning
-                                ? "bg-ios-pink/50 text-white"
-                                : "bg-ios-pink text-white",
+                                ? "bg-accent/50 text-white"
+                                : "bg-accent text-white",
                             compact ? "py-3 text-base" : "py-4 text-lg"
                         )}
                     >

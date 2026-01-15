@@ -324,8 +324,8 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
                 type="button"
                 onClick={() => setTimeCalculationMode('manual')}
                 className={`p-3 rounded-2xl border-2 transition-all duration-ios-normal ${timeCalculationMode === 'manual'
-                  ? 'border-ios-pink bg-ios-pink/10 shadow-ios-sm'
-                  : 'border-ios-separator bg-ios-bg-tertiary hover:border-ios-pink/30'
+                  ? 'border-accent bg-accent/10 shadow-ios-sm'
+                  : 'border-ios-separator bg-ios-bg-tertiary hover:border-accent/30'
                   }`}
               >
                 <div className="text-sm font-semibold text-ios-label mb-1">Manuel</div>
@@ -335,8 +335,8 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
                 type="button"
                 onClick={() => setTimeCalculationMode('auto-timers')}
                 className={`p-3 rounded-2xl border-2 transition-all duration-ios-normal ${timeCalculationMode === 'auto-timers'
-                  ? 'border-ios-pink bg-ios-pink/10 shadow-ios-sm'
-                  : 'border-ios-separator bg-ios-bg-tertiary hover:border-ios-pink/30'
+                  ? 'border-accent bg-accent/10 shadow-ios-sm'
+                  : 'border-ios-separator bg-ios-bg-tertiary hover:border-accent/30'
                   }`}
               >
                 <div className="text-sm font-semibold text-ios-label mb-1">Automatique</div>
@@ -379,7 +379,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
               <p className="text-xs sm:text-sm text-ios-label">
                 💡 Les temps seront calculés automatiquement en additionnant les minuteurs de chaque type :
                 <br />• Minuteurs <span className="text-ios-green font-semibold">Préparation</span> → Temps de préparation
-                <br />• Minuteurs <span className="text-ios-pink font-semibold">Cuisson</span> → Temps de cuisson
+                <br />• Minuteurs <span className="text-accent font-semibold">Cuisson</span> → Temps de cuisson
               </p>
             </div>
           )}
@@ -430,7 +430,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
       <Card header="Méthodes de cuisson">
         <div className="mb-2 sm:mb-3">
           <p className="text-xs sm:text-sm text-ios-label-secondary">
-            Sélectionnez au moins une méthode <span className="text-ios-pink">*</span>
+            Sélectionnez au moins une méthode <span className="text-accent">*</span>
           </p>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
@@ -440,8 +440,8 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
               className={`
                 relative flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl border-2 cursor-pointer transition-all duration-ios-normal
                 ${cookingMethods.includes(method.value)
-                  ? 'border-ios-pink bg-ios-pink/10 shadow-ios-sm'
-                  : 'border-ios-separator bg-ios-bg-tertiary hover:border-ios-pink/30 hover:bg-ios-pink/5'
+                  ? 'border-accent bg-accent/10 shadow-ios-sm'
+                  : 'border-ios-separator bg-ios-bg-tertiary hover:border-accent/30 hover:bg-accent/5'
                 }
               `}
             >
@@ -461,7 +461,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
                 {method.icon === 'Droplets' && '💧'}
                 {method.icon === 'Sparkles' && '✨'}
               </span>
-              <span className={`text-xs sm:text-sm font-medium text-center ${cookingMethods.includes(method.value) ? 'text-ios-pink' : 'text-ios-label-secondary'
+              <span className={`text-xs sm:text-sm font-medium text-center ${cookingMethods.includes(method.value) ? 'text-accent' : 'text-ios-label-secondary'
                 }`}>
                 {method.label}
               </span>

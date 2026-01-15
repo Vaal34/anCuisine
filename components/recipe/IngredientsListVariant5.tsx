@@ -15,7 +15,7 @@ export function IngredientsListVariant5({ ingredients }: IngredientsListProps) {
           className="flex items-center gap-3 p-3 sm:p-4 border border-ios-separator bg-zinc-50 rounded-2xl transition-all duration-200 hover:bg-zinc-100/50"
         >
           {/* Dot à gauche */}
-          <div className="flex-shrink-0 w-2 h-2 rounded-full bg-ios-pink" />
+          <div className="flex-shrink-0 w-2 h-2 rounded-full bg-accent" />
 
           {/* Nom de l'ingrédient */}
           <span className="flex-1 text-sm sm:text-base font-medium text-ios-label">
@@ -24,7 +24,7 @@ export function IngredientsListVariant5({ ingredients }: IngredientsListProps) {
 
           {/* Badge de quantité (style variante 4) */}
           {ingredient.quantity && (
-            <span className="inline-flex items-center px-3 py-1.5 text-sm sm:text-base font-semibold text-ios-pink bg-ios-pink/10 rounded-lg tabular-nums border border-ios-pink/20">
+            <span className="inline-flex items-center px-3 py-1.5 text-sm sm:text-base font-semibold text-accent bg-accent/10 rounded-lg tabular-nums border border-accent/20">
               {formatQuantity(ingredient.quantity)} {ingredient.unit}
             </span>
           )}

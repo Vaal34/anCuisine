@@ -49,8 +49,8 @@ export function RecipeIngredientsList({
                         <div className={cn(
                             "flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-300",
                             isChecked
-                                ? "bg-ios-pink border-ios-pink scale-110"
-                                : "bg-transparent border-ios-label-quaternary group-hover:border-ios-pink/50"
+                                ? "bg-accent border-accent scale-110"
+                                : "bg-transparent border-ios-label-quaternary group-hover:border-accent/50"
                         )}>
                             <Check className={cn(
                                 "w-3.5 h-3.5 text-white transition-all duration-300",
@@ -67,7 +67,7 @@ export function RecipeIngredientsList({
                                 {ingredient.quantity && (
                                     <span className={cn(
                                         "font-bold transition-colors",
-                                        isChecked ? "text-ios-label" : "text-ios-pink"
+                                        isChecked ? "text-ios-label" : "text-accent"
                                     )}>
                                         {formatQuantity(ingredient.quantity)}{ingredient.unit && ` ${ingredient.unit}`}
                                     </span>
@@ -99,7 +99,7 @@ export function RecipeIngredientsList({
             {/* Header */}
             <div className="flex items-center gap-2 mb-4 flex-shrink-0">
                 <div className={cn(
-                    "flex items-center justify-center rounded-2xl bg-ios-pink",
+                    "flex items-center justify-center rounded-2xl bg-accent",
                     compact ? "w-8 h-8" : "w-9 h-9"
                 )}>
                     <span className="text-white text-sm font-bold">
