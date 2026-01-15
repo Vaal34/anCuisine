@@ -9,8 +9,8 @@ export interface BadgeProps {
 
 export function Badge({ children, variant = 'recipe', className }: BadgeProps) {
   const variantStyles = {
-    recipe: 'bg-recipe-primary text-white',
-    blue: 'bg-ios-pink text-white',
+    recipe: 'bg-accent text-white',
+    blue: 'bg-accent text-white',
     green: 'bg-ios-green text-white',
     orange: 'bg-ios-orange text-white',
     red: 'bg-ios-red text-white',

@@ -29,7 +29,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             className={cn(
               'w-full px-4 py-3 sm:py-3 bg-ios-bg-tertiary rounded-3xl text-ios-label placeholder:text-gray-300',
-              'focus:bg-ios-bg-secondary focus:ring-2 focus:ring-ios-pink transition-all duration-ios-fast outline-none',
+              'focus:bg-ios-bg-secondary focus:ring-2 focus-accent transition-all duration-ios-fast outline-none',
               'text-base', // Prevent zoom on iOS
               error && 'ring-2 ring-ios-red focus:ring-ios-red',
               leftIcon && 'pl-10',

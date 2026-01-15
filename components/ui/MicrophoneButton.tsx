@@ -59,12 +59,12 @@ export function MicrophoneButton({
       }
       className={cn(
         'flex items-center justify-center rounded-full transition-all duration-ios-fast',
-        'focus:outline-none focus:ring-2 focus:ring-ios-pink focus:ring-offset-2',
+        'focus:outline-none focus:ring-2 focus-accent focus:ring-offset-2',
         'disabled:opacity-50 disabled:cursor-not-allowed',
         sizeStyles[size],
         isListening
           ? 'bg-ios-red text-white animate-pulse shadow-ios-md'
-          : 'bg-ios-bg-tertiary text-ios-label-secondary hover:bg-ios-pink hover:text-white',
+          : 'bg-ios-bg-tertiary text-ios-label-secondary hover:bg-accent hover:text-white',
         className
       )}
     >

@@ -27,10 +27,10 @@ export function Button({
   const baseStyles = 'font-semibold transition-all duration-ios-fast active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 inline-flex items-center justify-center gap-2'
 
   const variantStyles = {
-    primary: 'bg-ios-pink text-white shadow-ios-md hover:opacity-90',
-    secondary: 'bg-ios-bg-secondary text-ios-pink border border-ios-separator hover:bg-ios-bg-tertiary',
+    primary: 'bg-accent text-white shadow-ios-md hover:opacity-90',
+    secondary: 'bg-ios-bg-secondary text-accent border border-ios-separator hover:bg-ios-bg-tertiary',
     destructive: 'bg-ios-red text-white shadow-ios-md hover:opacity-90',
-    ghost: 'bg-transparent text-ios-pink hover:bg-ios-bg-tertiary',
+    ghost: 'bg-transparent text-accent hover:bg-ios-bg-tertiary',
   }
 
   const sizeStyles = {
