@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, Trash2, AlertTriangle } from 'lucide-react'
+import { ArrowLeft, Trash2, AlertTriangle, Check } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
 import { Footer } from '@/components/layout/Footer'
 import { Card } from '@/components/ui/Card'
@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/Button'
 import { Modal } from '@/components/ui/Modal'
 import { Spinner } from '@/components/ui/Spinner'
 import { useAuth } from '@/hooks/useAuth'
+import { useTheme, IOS_COLORS, IosColorKey } from '@/contexts/ThemeContext'
 
 export default function SettingsPage() {
   const router = useRouter()
