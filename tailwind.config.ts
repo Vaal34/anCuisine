@@ -39,6 +39,9 @@ const config: Config = {
         'recipe-primary': '#ff2d55',
         'recipe-secondary': '#FF686B',
         'recipe-accent': '#ffa69e',
+
+        // Couleur d'accent dynamique (via CSS variable)
+        'accent': 'var(--color-accent)',
       },
       fontFamily: {
         sans: [
