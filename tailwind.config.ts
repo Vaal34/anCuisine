@@ -41,7 +41,9 @@ const config: Config = {
         'recipe-accent': '#ffa69e',
 
         // Couleur d'accent dynamique (via CSS variable)
-        'accent': 'var(--color-accent)',
+        'accent': {
+          DEFAULT: 'rgb(var(--color-accent-rgb) / <alpha-value>)',
+        },
       },
       fontFamily: {
         sans: [

@@ -15,6 +15,7 @@ import { useTheme, IOS_COLORS, IosColorKey } from '@/contexts/ThemeContext'
 export default function SettingsPage() {
   const router = useRouter()
   const { user, loading: authLoading, deleteAccount, signOut } = useAuth()
+  const { accentColor, setAccentColor } = useTheme()
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [confirmEmail, setConfirmEmail] = useState('')
   const [isDeleting, setIsDeleting] = useState(false)
@@ -89,6 +90,59 @@ export default function SettingsPage() {
                     Adresse e-mail
                   </label>
                   <p className="mt-1 text-base text-ios-label">{user.email}</p>
+                </div>
+              </div>
+            </Card>
+
+            {/* Appearance */}
+            <Card header="Apparence">
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium text-ios-label-secondary">
+                    Couleur d'accentuation
+                  </label>
+                  <p className="text-xs text-ios-label-tertiary mt-1 mb-3">
+                    Personnalisez l'apparence de l'application
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    {(Object.keys(IOS_COLORS) as IosColorKey[]).map((colorKey) => {
+                      const color = IOS_COLORS[colorKey]
+                      const isSelected = accentColor === colorKey
+                      return (
+                        <button
+                          key={colorKey}
+                          onClick={() => setAccentColor(colorKey)}
+                          className="flex flex-col items-center gap-1.5 group"
+                          aria-label={`Sélectionner la couleur ${color.name}`}
+                        >
+                          <div
+                            className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                              isSelected
+                                ? 'ring-2 ring-offset-2 ring-offset-ios-bg-secondary'
+                                : 'hover:scale-110'
+                            }`}
+                            style={{
+                              backgroundColor: color.value,
+                              ringColor: isSelected ? color.value : undefined,
+                            }}
+                          >
+                            {isSelected && (
+                              <Check className="w-5 h-5 text-white" />
+                            )}
+                          </div>
+                          <span
+                            className={`text-xs ${
+                              isSelected
+                                ? 'font-medium text-ios-label'
+                                : 'text-ios-label-secondary'
+                            }`}
+                          >
+                            {color.name}
+                          </span>
+                        </button>
+                      )
+                    })}
+                  </div>
                 </div>
               </div>
             </Card>
@@ -191,7 +245,7 @@ export default function SettingsPage() {
             value={confirmEmail}
             onChange={(e) => setConfirmEmail(e.target.value)}
             placeholder="Votre adresse e-mail"
-            className="w-full px-4 py-3 bg-ios-bg-tertiary border border-ios-separator rounded-2xl text-ios-label placeholder:text-ios-label-tertiary focus:outline-none focus:ring-2 focus:ring-ios-pink focus:border-transparent"
+            className="w-full px-4 py-3 bg-ios-bg-tertiary border border-ios-separator rounded-2xl text-ios-label placeholder:text-ios-label-tertiary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
           />
 
           {deleteError && (

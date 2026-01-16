@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-accent: #FF2D55;
+  --color-accent-rgb: 255 45 85;
+}
+
 @layer base {
   body {
     @apply bg-ios-bg text-ios-label antialiased;
@@ -50,6 +55,33 @@
 
   .scrollbar-subtle::-webkit-scrollbar-thumb:hover {
     background-color: rgba(60, 60, 67, 0.3);
+  }
+
+  /* Spinner avec couleur d'accent dynamique */
+  .spinner-accent {
+    position: relative;
+  }
+
+  .spinner-accent::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-accent);
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+
+  .spinner-accent-button {
+    position: relative;
+  }
+
+  .spinner-accent-button::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: currentColor;
+    mix-blend-mode: multiply;
+    pointer-events: none;
   }
 
 }

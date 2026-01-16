@@ -122,7 +122,7 @@ export default function TermsPage() {
 
                 <h3 className="text-lg font-semibold text-ios-label mb-3">6.1 Pinterest</h3>
                 <p className="text-ios-label mb-4">
-                  L'intégration Pinterest est soumise aux <a href="https://policy.pinterest.com/terms-of-service" className="text-ios-pink hover:underline" target="_blank" rel="noopener noreferrer">conditions d'utilisation de Pinterest</a>.
+                  L'intégration Pinterest est soumise aux <a href="https://policy.pinterest.com/terms-of-service" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">conditions d'utilisation de Pinterest</a>.
                   Nous ne sommes pas responsables du contenu Pinterest ou de leur disponibilité.
                 </p>
 
@@ -173,7 +173,7 @@ export default function TermsPage() {
                 <h3 className="text-lg font-semibold text-ios-label mb-3">9.1 Par vous</h3>
                 <p className="text-ios-label mb-4">
                   Vous pouvez supprimer votre compte à tout moment. Vos données seront supprimées conformément à notre
-                  <a href="/privacy" className="text-ios-pink hover:underline ml-1">politique de confidentialité</a>.
+                  <a href="/privacy" className="text-accent hover:underline ml-1">politique de confidentialité</a>.
                 </p>
 
                 <h3 className="text-lg font-semibold text-ios-label mb-3">9.2 Par nous</h3>
@@ -205,7 +205,7 @@ export default function TermsPage() {
               <section className="mb-8">
                 <h2 className="text-xl font-bold text-ios-label mb-4">12. Contact</h2>
                 <p className="text-ios-label mb-4">
-                  Pour toute question concernant ces conditions, vous pouvez consulter la <a href="/privacy" className="text-ios-pink hover:underline">politique de confidentialité</a> ou
+                  Pour toute question concernant ces conditions, vous pouvez consulter la <a href="/privacy" className="text-accent hover:underline">politique de confidentialité</a> ou
                   gérer vos préférences depuis les paramètres de l'application.
                 </p>
               </section>
@@ -223,7 +223,7 @@ export default function TermsPage() {
           <div className="text-center text-sm text-ios-label-secondary pb-8">
             <p>© {new Date().getFullYear()} anCuisine - Tous droits réservés</p>
             <div className="mt-2 flex justify-center gap-4">
-              <a href="/privacy" className="text-ios-pink hover:underline">Politique de confidentialité</a>
+              <a href="/privacy" className="text-accent hover:underline">Politique de confidentialité</a>
             </div>
           </div>
         </div>

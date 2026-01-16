@@ -107,7 +107,7 @@ export default function LoginPage() {
                   setMode(mode === 'login' ? 'signup' : 'login')
                   setError('')
                 }}
-                className="text-ios-pink text-sm hover:underline"
+                className="text-accent text-sm hover:underline"
               >
                 {mode === 'login'
                   ? "Pas encore de compte ? S'inscrire"

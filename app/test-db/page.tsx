@@ -90,7 +90,7 @@ export default function TestDBPage() {
                 <div className="bg-ios-bg-tertiary rounded-3xl p-6 space-y-4">
                   <h3 className="text-xl font-bold text-ios-label">📋 Étapes pour créer la base de données :</h3>
                   <ol className="list-decimal list-inside space-y-2 text-ios-label">
-                    <li>Ouvrez votre projet Supabase : <a href="https://supabase.com" target="_blank" className="text-ios-pink underline">supabase.com</a></li>
+                    <li>Ouvrez votre projet Supabase : <a href="https://supabase.com" target="_blank" className="text-accent underline">supabase.com</a></li>
                     <li>Cliquez sur <strong>"SQL Editor"</strong> dans le menu de gauche</li>
                     <li>Cliquez sur <strong>"New Query"</strong></li>
                     <li>Copiez le contenu du fichier <code className="bg-ios-label text-white px-2 py-1 rounded">supabase-setup.sql</code></li>

@@ -16,7 +16,7 @@ export function StepsList({ steps, numbered = true, ingredients = [] }: StepsLis
       : step
   )
 
-  // Format MINIMAL-5 avec ingrédients en ios-pink
+  // Format MINIMAL-5 avec ingrédients en accent
   return (
     <div className="relative space-y-5 sm:space-y-6">
       <div className="absolute left-1.5 sm:left-2 top-3 bottom-3 w-px bg-ios-separator" />
@@ -27,7 +27,7 @@ export function StepsList({ steps, numbered = true, ingredients = [] }: StepsLis
 
         return (
           <div key={index} className="relative pl-5 sm:pl-6 pr-2 sm:pr-0">
-            <div className="absolute left-0 sm:left-0 top-1 w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-2 border-ios-pink" />
+            <div className="absolute left-0 sm:left-0 top-1 w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-2 border-accent" />
             <div className="min-w-0 space-y-3">
               <div>
                 <div className="text-[10px] text-ios-label-secondary uppercase tracking-wider mb-1">
@@ -40,7 +40,7 @@ export function StepsList({ steps, numbered = true, ingredients = [] }: StepsLis
                   <div className="text-xs sm:text-sm font-medium break-words text-ios-label-secondary">
                     Liste des ingrédients : {" "}
                     {stepIngredients.map((ingredient, idx) => (
-                      <span key={idx} className='text-ios-pink'>
+                      <span key={idx} className='text-accent'>
                         {ingredient.name}
                         {ingredient.quantity && ingredient.unit && ` ${formatQuantity(ingredient.quantity)}${ingredient.unit}`}
                         {idx < stepIngredients.length - 1 && ', '}
@@ -52,7 +52,7 @@ export function StepsList({ steps, numbered = true, ingredients = [] }: StepsLis
               {step.timerMinutes && (
                 <div className="flex items-center gap-2 text-xs sm:text-sm text-ios-label-secondary">
                   <span>
-                    {step.timerType === 'cook' ? 'Temps de cuisson' : 'Temps de préparation'} : <span className="text-ios-pink">{step.timerMinutes} min {step.timerLabel && ` (${step.timerLabel})`}</span>
+                    {step.timerType === 'cook' ? 'Temps de cuisson' : 'Temps de préparation'} : <span className="text-accent">{step.timerMinutes} min {step.timerLabel && ` (${step.timerLabel})`}</span>
                   </span>
                 </div>
               )}

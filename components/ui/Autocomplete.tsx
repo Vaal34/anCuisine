@@ -117,7 +117,7 @@ export function Autocomplete({
               key={item.id}
               className={cn(
                 'px-4 py-3 cursor-pointer transition-colors',
-                index === highlightedIndex ? 'bg-ios-pink text-white' : 'hover:bg-ios-bg-tertiary',
+                index === highlightedIndex ? 'bg-accent text-white' : 'hover:bg-ios-bg-tertiary',
                 index !== suggestions.length - 1 && 'border-b border-ios-separator'
               )}
               onClick={() => handleSelect(item)}

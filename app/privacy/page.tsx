@@ -91,7 +91,7 @@ export default function PrivacyPage() {
                 <ul className="list-disc pl-6 mb-4 text-ios-label space-y-2">
                   <li><strong>Données partagées :</strong> Vos requêtes de recherche sont envoyées à Pinterest</li>
                   <li><strong>Stockage :</strong> Seules les URLs des images sont stockées (pas les images elles-mêmes)</li>
-                  <li><strong>Politique Pinterest :</strong> L'utilisation de Pinterest est soumise à leur <a href="https://policy.pinterest.com/privacy-policy" className="text-ios-pink hover:underline" target="_blank" rel="noopener noreferrer">politique de confidentialité</a></li>
+                  <li><strong>Politique Pinterest :</strong> L'utilisation de Pinterest est soumise à leur <a href="https://policy.pinterest.com/privacy-policy" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">politique de confidentialité</a></li>
                   <li><strong>Optionnel :</strong> L'utilisation de Pinterest est facultative</li>
                 </ul>
               </section>

@@ -65,7 +65,7 @@ export function UserMenu({ user, onLogout }: UserMenuProps) {
           {/* User Info */}
           <div className="px-4 py-3 border-b border-ios-separator">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-3xl bg-ios-pink/90 flex items-center justify-center text-white font-semibold text-sm flex-shrink-0 border border-ios-separator">
+              <div className="w-10 h-10 rounded-3xl bg-accent/90 flex items-center justify-center text-white font-semibold text-sm flex-shrink-0 border border-ios-separator">
                 {getInitials(user.email)}
               </div>
               <div className="min-w-0 flex-1">

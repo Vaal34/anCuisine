@@ -91,9 +91,9 @@ export function RecipeCard({ recipe, onClick, onStartCooking, variant = 'premium
           {onStartCooking && (
             <button
               onClick={handleStartCooking}
-              className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-ios-pink/40 border border-ios-pink rounded-full flex items-center justify-center hover:bg-ios-pink/50 hover:scale-105 active:scale-95 transition-all duration-500 shadow-lg shadow-ios-pink/30"
+              className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-accent/40 border border-accent rounded-full flex items-center justify-center hover:bg-accent/50 hover:scale-105 active:scale-95 transition-all duration-500 shadow-lg shadow-accent/30"
             >
-              <UtensilsCrossed className="w-4 h-4 sm:w-5 sm:h-5 text-ios-pink" />
+              <UtensilsCrossed className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
             </button>
           )}
         </div>

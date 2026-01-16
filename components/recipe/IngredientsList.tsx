@@ -16,7 +16,7 @@ export function IngredientsList({ ingredients }: IngredientsListProps) {
           className="flex items-center justify-between p-3 sm:p-4 border border-ios-separator bg-zinc-50 rounded-2xl transition-all duration-200"
         >
           <span className="flex items-center text-sm sm:text-base font-medium text-ios-label">
-            <Dot className="w-5 h-5 text-ios-pink" />
+            <Dot className="w-5 h-5 text-accent" />
             {ingredient.name}
           </span>
           {ingredient.quantity && (
