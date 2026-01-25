@@ -27,6 +27,7 @@ export type TimerType = 'prep' | 'cook'
 export interface RecipeStep {
   description: string
   ingredientIndices?: number[]  // Indices des ingrédients utilisés dans cette étape
+  ustensileIndices?: number[]  // Indices des ustensiles utilisés dans cette étape
   timerMinutes?: number  // Durée du minuteur en minutes (optionnel)
   timerLabel?: string  // Label du minuteur (ex: "Repos au frigo", "Cuisson")
   timerType?: TimerType  // Type de minuteur : 'prep' (préparation) ou 'cook' (cuisson)
@@ -46,6 +47,7 @@ export interface Recipe {
   steps: string[] | RecipeStep[]
   category: string
   cooking_methods?: string[]
+  ustensiles?: string[]
   notes: string | null
   time_calculation_mode?: TimeCalculationMode  // 'manual' (par défaut) ou 'auto-timers'
   created_at: string
@@ -61,6 +63,7 @@ export interface RecipeFormData {
   ingredients: RecipeIngredient[]
   steps: string[] | RecipeStep[]
   cookingMethods: string[]
+  ustensiles: string[]
   notes: string
   imageUrl: string
   timeCalculationMode: TimeCalculationMode
@@ -110,3 +113,4 @@ export const COOKING_METHODS: readonly CookingMethod[] = [
   { value: 'barbecue', label: 'Barbecue', icon: 'Flame' },
   { value: 'sans-cuisson', label: 'Sans cuisson', icon: 'Sparkles' },
 ] as const
+

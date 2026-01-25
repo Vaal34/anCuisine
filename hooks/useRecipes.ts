@@ -38,6 +38,7 @@ export function useRecipes(): UseRecipesReturn {
         ingredients: recipe.ingredients as unknown as RecipeIngredient[],
         steps: recipe.steps as unknown as string[],
         cooking_methods: recipe.cooking_methods as unknown as string[] || [],
+        ustensiles: recipe.ustensiles as unknown as string[] || [],
       }))
 
       setRecipes(recipesData)
@@ -68,6 +69,7 @@ export function useRecipes(): UseRecipesReturn {
         ingredients: (data.ingredients as any) || [],
         steps: (data.steps as any) || [],
         cooking_methods: (data.cooking_methods as any) || [],
+        ustensiles: (data.ustensiles as any) || [],
       }
 
       return recipe
@@ -94,6 +96,7 @@ export function useRecipes(): UseRecipesReturn {
           ingredients: formData.ingredients as unknown as never,
           steps: formData.steps as unknown as never,
           cooking_methods: formData.cookingMethods,
+          ustensiles: formData.ustensiles,
           notes: formData.notes,
           image_url: formData.imageUrl || null,
           time_calculation_mode: formData.timeCalculationMode,
@@ -124,6 +127,7 @@ export function useRecipes(): UseRecipesReturn {
           ingredients: formData.ingredients as unknown as never,
           steps: formData.steps as unknown as never,
           cooking_methods: formData.cookingMethods,
+          ustensiles: formData.ustensiles,
           notes: formData.notes,
           image_url: formData.imageUrl || null,
           time_calculation_mode: formData.timeCalculationMode,

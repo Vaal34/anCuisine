@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 import type { Recipe, RecipeStep } from '@/types'
 import { RecipeTimer, type TimerState } from './RecipeTimer'
 import { RecipeIngredientsList } from './RecipeIngredientsList'
+import { RecipeUstensilesList } from './RecipeUstensilesList'
 
 interface RecipeStepByStepDesktopProps {
     recipe: Recipe
@@ -220,8 +221,8 @@ export function RecipeStepByStepDesktop({
                             </div>
                         </div>
 
-                        {/* Sidebar - droite - avec scroll interne */}
-                        <div className="flex-[2] flex flex-col min-w-0 min-h-0 gap-6">
+                        {/* Sidebar - droite */}
+                        <div className="flex-[2] flex flex-col min-w-0 min-h-0 gap-4">
                             {/* Timer - taille fixe */}
                             <div className="flex-shrink-0">
                                 <RecipeTimer
@@ -233,7 +234,7 @@ export function RecipeStepByStepDesktop({
                                 />
                             </div>
 
-                            {/* Ingrédients - avec scroll interne */}
+                            {/* Ingrédients - prend l'espace restant avec scroll interne */}
                             <div className="flex-1 min-h-0">
                                 <RecipeIngredientsList
                                     recipe={recipe}
@@ -241,17 +242,28 @@ export function RecipeStepByStepDesktop({
                                     checkedIngredients={checkedIngredients}
                                     onToggleIngredient={onToggleIngredient}
                                 />
-
-                                {/* Placeholder si pas de timer ni ingrédients */}
-                                {!hasTimer && (!stepObj?.ingredientIndices || stepObj.ingredientIndices.length === 0) && (
-                                    <Card>
-                                        <div className="text-center py-8 text-ios-label-tertiary">
-                                            <p className="text-sm">Pas d&apos;ingrédients spécifiques</p>
-                                            <p className="text-xs mt-1">pour cette étape</p>
-                                        </div>
-                                    </Card>
-                                )}
                             </div>
+
+                            {/* Ustensiles - taille fixe en bas */}
+                            <div className="flex-shrink-0">
+                                <RecipeUstensilesList
+                                    recipe={recipe}
+                                    stepObj={stepObj}
+                                    compact
+                                />
+                            </div>
+
+                            {/* Placeholder si pas de timer ni ingrédients ni ustensiles */}
+                            {!hasTimer &&
+                             (!stepObj?.ingredientIndices || stepObj.ingredientIndices.length === 0) &&
+                             (!stepObj?.ustensileIndices || stepObj.ustensileIndices.length === 0) && (
+                                <Card>
+                                    <div className="text-center py-8 text-ios-label-tertiary">
+                                        <p className="text-sm">Pas d&apos;ingrédients ni d&apos;ustensiles</p>
+                                        <p className="text-xs mt-1">pour cette étape</p>
+                                    </div>
+                                </Card>
+                            )}
                         </div>
                     </div>
                 </div>

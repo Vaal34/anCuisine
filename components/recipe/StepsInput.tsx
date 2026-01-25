@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { Plus, X, Tag, Timer, Check, Mic, MicOff } from 'lucide-react'
+import { Plus, X, Tag, Timer, Check, Mic, MicOff, Wrench } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { Input } from '@/components/ui/Input'
@@ -14,22 +14,27 @@ export interface StepsInputProps {
   onChange: (steps: RecipeStep[]) => void
   disabled?: boolean
   ingredients?: RecipeIngredient[]
+  ustensiles?: string[]
 }
 
-export function StepsInput({ steps, onChange, disabled, ingredients = [] }: StepsInputProps) {
+export function StepsInput({ steps, onChange, disabled, ingredients = [], ustensiles = [] }: StepsInputProps) {
   const [showIngredientPicker, setShowIngredientPicker] = useState<number | null>(null)
+  const [showUstensilePicker, setShowUstensilePicker] = useState<number | null>(null)
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 })
   const [showTimerInput, setShowTimerInput] = useState<number | null>(null)
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([])
+  const ustensileButtonRefs = useRef<(HTMLButtonElement | null)[]>([])
   const textareaRefs = useRef<(HTMLTextAreaElement | null)[]>([])
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const ustensileDropdownRef = useRef<HTMLDivElement>(null)
+  const [ustensileDropdownPosition, setUstensileDropdownPosition] = useState({ top: 0, left: 0 })
   const [activeVoiceIndex, setActiveVoiceIndex] = useState<number | null>(null)
 
   // Normaliser les steps en RecipeStep[] (déplacé avant le hook)
   const normalizedSteps: RecipeStep[] = steps.map(step =>
     typeof step === 'string'
-      ? { description: step, ingredientIndices: [] }
-      : step
+      ? { description: step, ingredientIndices: [], ustensileIndices: [] }
+      : { ...step, ustensileIndices: step.ustensileIndices || [] }
   )
 
   // Hook pour la reconnaissance vocale
@@ -107,6 +112,39 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
     }
   }, [showIngredientPicker])
 
+  // Calculer la position du dropdown ustensiles
+  useEffect(() => {
+    const updatePosition = () => {
+      if (showUstensilePicker !== null) {
+        const button = ustensileButtonRefs.current[showUstensilePicker]
+        if (button) {
+          const rect = button.getBoundingClientRect()
+          const isMobile = window.innerWidth < 640
+
+          if (isMobile) {
+            setUstensileDropdownPosition({
+              top: rect.bottom + window.scrollY + 4,
+              left: 16
+            })
+          } else {
+            setUstensileDropdownPosition({
+              top: rect.bottom + window.scrollY + 4,
+              left: rect.left + window.scrollX
+            })
+          }
+        }
+      }
+    }
+
+    updatePosition()
+    window.addEventListener('scroll', updatePosition, true)
+    window.addEventListener('resize', updatePosition)
+
+    return () => {
+      window.removeEventListener('scroll', updatePosition, true)
+      window.removeEventListener('resize', updatePosition)
+    }
+  }, [showUstensilePicker])
 
   // Fermer dropdown en cliquant à l'extérieur
   useEffect(() => {
@@ -122,13 +160,24 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
           setShowIngredientPicker(null)
         }
       }
+      if (showUstensilePicker !== null) {
+        const button = ustensileButtonRefs.current[showUstensilePicker]
+        const dropdown = ustensileDropdownRef.current
+
+        const clickedInsideButton = button && button.contains(e.target as Node)
+        const clickedInsideDropdown = dropdown && dropdown.contains(e.target as Node)
+
+        if (!clickedInsideButton && !clickedInsideDropdown) {
+          setShowUstensilePicker(null)
+        }
+      }
     }
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [showIngredientPicker])
+  }, [showIngredientPicker, showUstensilePicker])
 
   const addStep = () => {
-    onChange([...normalizedSteps, { description: '', ingredientIndices: [] }])
+    onChange([...normalizedSteps, { description: '', ingredientIndices: [], ustensileIndices: [] }])
   }
 
   const updateStepDescription = (index: number, description: string) => {
@@ -174,6 +223,35 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
     onChange(updated)
   }
 
+  const toggleUstensile = (stepIndex: number, ustensileIndex: number) => {
+    const updated = [...normalizedSteps]
+    const currentIndices = updated[stepIndex].ustensileIndices || []
+
+    if (currentIndices.includes(ustensileIndex)) {
+      updated[stepIndex] = {
+        ...updated[stepIndex],
+        ustensileIndices: currentIndices.filter(i => i !== ustensileIndex)
+      }
+    } else {
+      updated[stepIndex] = {
+        ...updated[stepIndex],
+        ustensileIndices: [...currentIndices, ustensileIndex]
+      }
+    }
+
+    onChange(updated)
+  }
+
+  const removeUstensileFromStep = (stepIndex: number, ustensileIndex: number) => {
+    const updated = [...normalizedSteps]
+    const currentIndices = updated[stepIndex].ustensileIndices || []
+    updated[stepIndex] = {
+      ...updated[stepIndex],
+      ustensileIndices: currentIndices.filter(i => i !== ustensileIndex)
+    }
+    onChange(updated)
+  }
+
   const updateTimer = (stepIndex: number, minutes?: number, label?: string, type?: 'prep' | 'cook') => {
     const updated = [...normalizedSteps]
     updated[stepIndex] = {
@@ -197,6 +275,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
       <div className="space-y-3 sm:space-y-4">
         {normalizedSteps.map((step, index) => {
           const selectedIngredientIndices = step.ingredientIndices || []
+          const selectedUstensileIndices = step.ustensileIndices || []
 
           return (
             <div key={index} className="space-y-2 pb-4 sm:pb-0 border-b sm:border-b-0 border-ios-separator last:border-b-0 last:pb-0">
@@ -249,7 +328,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                   className="w-full px-4 py-3 bg-ios-bg-tertiary rounded-3xl text-ios-label placeholder:text-ios-label-tertiary focus:bg-ios-bg-secondary focus:ring-2 focus:ring-accent transition-all duration-ios-fast outline-none resize-none"
                 />
 
-                {/* Boutons Ingrédients et Minuteur sur la même ligne */}
+                {/* Boutons Ingrédients, Ustensiles et Minuteur sur la même ligne */}
                 {!disabled && (
                   <div className="flex flex-wrap gap-2">
                     {ingredients.length > 0 && (
@@ -267,6 +346,26 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                         {selectedIngredientIndices.length > 0 && (
                           <span className="px-1.5 py-0.5 bg-white/20 rounded-full text-xs font-semibold flex-shrink-0">
                             {selectedIngredientIndices.length}
+                          </span>
+                        )}
+                      </button>
+                    )}
+
+                    {ustensiles.length > 0 && (
+                      <button
+                        ref={(el) => { ustensileButtonRefs.current[index] = el }}
+                        type="button"
+                        onClick={() => setShowUstensilePicker(showUstensilePicker === index ? null : index)}
+                        className={`flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm rounded-full transition-colors flex-shrink-0 ${selectedUstensileIndices.length > 0
+                            ? 'text-white bg-black'
+                            : 'text-ios-label-secondary bg-ios-bg-secondary hover:bg-ios-bg-tertiary'
+                          }`}
+                      >
+                        <Wrench className="w-4 h-4 flex-shrink-0" />
+                        <span className="whitespace-nowrap">Ustensiles</span>
+                        {selectedUstensileIndices.length > 0 && (
+                          <span className="px-1.5 py-0.5 bg-white/20 rounded-full text-xs font-semibold flex-shrink-0">
+                            {selectedUstensileIndices.length}
                           </span>
                         )}
                       </button>
@@ -310,6 +409,35 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                             <button
                               type="button"
                               onClick={() => removeIngredientFromStep(index, ingredientIdx)}
+                              className="hover:text-ios-red transition-colors"
+                            >
+                              <X className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+
+                {/* Badges des ustensiles sélectionnés */}
+                {selectedUstensileIndices.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {selectedUstensileIndices.map(ustensileIdx => {
+                      const ustensile = ustensiles[ustensileIdx]
+                      if (!ustensile) return null
+
+                      return (
+                        <div
+                          key={ustensileIdx}
+                          className="inline-flex items-center gap-1 px-3 py-1.5 bg-accent/10 text-accent border border-accent/30 rounded-full text-sm"
+                        >
+                          <Wrench className="w-3 h-3" />
+                          <span className="font-medium">{ustensile}</span>
+                          {!disabled && (
+                            <button
+                              type="button"
+                              onClick={() => removeUstensileFromStep(index, ustensileIdx)}
                               className="hover:text-ios-red transition-colors"
                             >
                               <X className="w-3.5 h-3.5" />
@@ -453,7 +581,7 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
 
                 {/* Boutons et badges regroupés */}
                 <div className="space-y-2">
-                  {/* Boutons Ingrédients et Minuteur sur la même ligne */}
+                  {/* Boutons Ingrédients, Ustensiles et Minuteur sur la même ligne */}
                   {!disabled && (
                     <div className="flex flex-wrap gap-2">
                       {ingredients.length > 0 && (
@@ -471,6 +599,26 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                           {selectedIngredientIndices.length > 0 && (
                             <span className="px-1.5 py-0.5 bg-white/20 rounded-full text-xs font-semibold flex-shrink-0">
                               {selectedIngredientIndices.length}
+                            </span>
+                          )}
+                        </button>
+                      )}
+
+                      {ustensiles.length > 0 && (
+                        <button
+                          ref={(el) => { ustensileButtonRefs.current[index] = el }}
+                          type="button"
+                          onClick={() => setShowUstensilePicker(showUstensilePicker === index ? null : index)}
+                          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-full transition-colors flex-shrink-0 ${selectedUstensileIndices.length > 0
+                              ? 'text-white bg-black'
+                              : 'text-ios-label-secondary bg-ios-bg-secondary hover:bg-ios-bg-tertiary'
+                            }`}
+                        >
+                          <Wrench className="w-4 h-4 flex-shrink-0" />
+                          <span className="whitespace-nowrap">Ustensiles</span>
+                          {selectedUstensileIndices.length > 0 && (
+                            <span className="px-1.5 py-0.5 bg-white/20 rounded-full text-xs font-semibold flex-shrink-0">
+                              {selectedUstensileIndices.length}
                             </span>
                           )}
                         </button>
@@ -514,6 +662,35 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                               <button
                                 type="button"
                                 onClick={() => removeIngredientFromStep(index, ingredientIdx)}
+                                className="hover:text-ios-red transition-colors"
+                              >
+                                <X className="w-3.5 h-3.5" />
+                              </button>
+                            )}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
+
+                  {/* Badges des ustensiles sélectionnés */}
+                  {selectedUstensileIndices.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {selectedUstensileIndices.map(ustensileIdx => {
+                        const ustensile = ustensiles[ustensileIdx]
+                        if (!ustensile) return null
+
+                        return (
+                          <div
+                            key={ustensileIdx}
+                            className="inline-flex items-center gap-1 px-3 py-1.5 bg-accent/10 text-accent border border-accent/30 rounded-full text-sm"
+                          >
+                            <Wrench className="w-3 h-3" />
+                            <span className="font-medium">{ustensile}</span>
+                            {!disabled && (
+                              <button
+                                type="button"
+                                onClick={() => removeUstensileFromStep(index, ustensileIdx)}
                                 className="hover:text-ios-red transition-colors"
                               >
                                 <X className="w-3.5 h-3.5" />
@@ -667,6 +844,58 @@ export function StepsInput({ steps, onChange, disabled, ingredients = [] }: Step
                           {ingredient.quantity} {ingredient.unit}
                         </div>
                       )}
+                    </div>
+                    {isSelected && (
+                      <Check className="flex-shrink-0 w-5 h-5 text-white" strokeWidth={3} />
+                    )}
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* Dropdown Portal pour sélectionner les ustensiles */}
+      {showUstensilePicker !== null && ustensiles.length > 0 && typeof window !== 'undefined' && createPortal(
+        <div
+          ref={ustensileDropdownRef}
+          style={{
+            position: 'absolute',
+            top: `${ustensileDropdownPosition.top}px`,
+            left: `${ustensileDropdownPosition.left}px`,
+            right: window.innerWidth < 640 ? '16px' : 'auto',
+            minWidth: window.innerWidth < 640 ? 'auto' : '280px',
+            maxWidth: window.innerWidth < 640 ? 'auto' : '400px',
+            zIndex: 9999
+          }}
+          className="bg-white rounded-3xl shadow-ios-xl border border-ios-separator overflow-hidden max-h-80 overflow-y-auto"
+        >
+          <div className="px-4 py-3 bg-ios-bg-secondary border-b border-ios-separator sticky top-0">
+            <p className="text-sm text-ios-label font-semibold">
+              Sélectionner les ustensiles
+            </p>
+          </div>
+          <div className="p-2">
+            {ustensiles.map((ustensile, idx) => {
+              const isSelected = normalizedSteps[showUstensilePicker]?.ustensileIndices?.includes(idx)
+
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => toggleUstensile(showUstensilePicker, idx)}
+                  className={`w-full text-left px-3 py-2.5 rounded-xl transition-all mb-1 last:mb-0 ${isSelected
+                      ? 'bg-accent text-white'
+                      : 'hover:bg-ios-bg-secondary text-ios-label'
+                    }`}
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className={`font-semibold truncate ${isSelected ? 'text-white' : 'text-ios-label'}`}>
+                        {ustensile}
+                      </div>
                     </div>
                     {isSelected && (
                       <Check className="flex-shrink-0 w-5 h-5 text-white" strokeWidth={3} />

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { IngredientsInput } from './IngredientsInput'
 import { StepsInput } from './StepsInput'
+import { UstensilesInput } from './UstensilesInput'
 import { UnsplashImagePicker } from './UnsplashImagePicker'
 import { useFormPersistence } from '@/hooks/useFormPersistence'
 import type { Recipe, RecipeFormData, RecipeStep } from '@/types'
@@ -24,6 +25,7 @@ interface PersistedFormData {
   ingredients: RecipeFormData['ingredients']
   steps: RecipeStep[]
   cookingMethods: string[]
+  ustensiles: string[]
   notes: string
   timeCalculationMode: 'manual' | 'auto-timers'
 }
@@ -63,6 +65,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
   const [ingredients, setIngredients] = useState<RecipeFormData['ingredients']>([])
   const [steps, setSteps] = useState<RecipeStep[]>([])
   const [cookingMethods, setCookingMethods] = useState<string[]>([])
+  const [ustensiles, setUstensiles] = useState<string[]>([])
   const [notes, setNotes] = useState('')
   const [timeCalculationMode, setTimeCalculationMode] = useState<'manual' | 'auto-timers'>('manual')
   const [showRestoredBanner, setShowRestoredBanner] = useState(false)
@@ -87,6 +90,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
       setIngredients(persistedData.ingredients)
       setSteps(persistedData.steps)
       setCookingMethods(persistedData.cookingMethods)
+      setUstensiles(persistedData.ustensiles || [])
       setNotes(persistedData.notes)
       setTimeCalculationMode(persistedData.timeCalculationMode)
       setShowRestoredBanner(true)
@@ -105,6 +109,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
       setIngredients(initialData.ingredients)
       setSteps(initialData.steps as RecipeStep[])
       setCookingMethods(initialData.cooking_methods || [])
+      setUstensiles(initialData.ustensiles || [])
       setNotes(initialData.notes || '')
       setTimeCalculationMode(initialData.time_calculation_mode || 'manual')
       setIsInitialized(true)
@@ -128,6 +133,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
       ingredients,
       steps,
       cookingMethods,
+      ustensiles,
       notes,
       timeCalculationMode,
     })
@@ -143,6 +149,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
     ingredients,
     steps,
     cookingMethods,
+    ustensiles,
     notes,
     timeCalculationMode,
   ])
@@ -168,6 +175,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
       setIngredients(initialData.ingredients)
       setSteps(initialData.steps as RecipeStep[])
       setCookingMethods(initialData.cooking_methods || [])
+      setUstensiles(initialData.ustensiles || [])
       setNotes(initialData.notes || '')
       setTimeCalculationMode(initialData.time_calculation_mode || 'manual')
     } else {
@@ -180,6 +188,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
       setIngredients([])
       setSteps([])
       setCookingMethods([])
+      setUstensiles([])
       setNotes('')
       setTimeCalculationMode('manual')
     }
@@ -230,6 +239,7 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
       ingredients,
       steps,
       cookingMethods,
+      ustensiles,
       notes,
       imageUrl,
       timeCalculationMode,
@@ -470,17 +480,22 @@ export function RecipeForm({ mode, initialData, onSubmit, onCancel, isLoading }:
         </div>
       </Card>
 
-      {/* Section 3: Ingrédients */}
+      {/* Section 3: Ustensiles */}
+      <Card header="Ustensiles (optionnel)">
+        <UstensilesInput ustensiles={ustensiles} onChange={setUstensiles} />
+      </Card>
+
+      {/* Section 4: Ingrédients */}
       <Card header="Ingrédients">
         <IngredientsInput ingredients={ingredients} onChange={setIngredients} />
       </Card>
 
-      {/* Section 4: Étapes */}
+      {/* Section 5: Étapes */}
       <Card header="Étapes de préparation">
-        <StepsInput steps={steps} onChange={setSteps} ingredients={ingredients} />
+        <StepsInput steps={steps} onChange={setSteps} ingredients={ingredients} ustensiles={ustensiles} />
       </Card>
 
-      {/* Section 5: Notes */}
+      {/* Section 6: Notes */}
       <Card header="Notes personnelles">
         <Textarea
           value={notes}

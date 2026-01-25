@@ -1,5 +1,5 @@
 import React from 'react'
-import { Clock, ChefHat, Users, Flame, Zap, Wind, CookingPot, Droplets, Sparkles } from 'lucide-react'
+import { Clock, ChefHat, Users, Flame, Zap, Wind, CookingPot, Droplets, Sparkles, Wrench } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 import type { Recipe } from '@/types'
 import { CATEGORIES, COOKING_METHODS } from '@/types'
@@ -105,6 +105,23 @@ export function RecipeInfo({ recipe, hideCategory = false }: RecipeInfoProps) {
               </div>
             )
           })}
+        </div>
+      )}
+
+      {/* Ustensiles */}
+      {recipe.ustensiles && recipe.ustensiles.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {recipe.ustensiles.map((ustensileName) => (
+            <div
+              key={ustensileName}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-ios-bg-tertiary rounded-full border border-ios-separator"
+            >
+              <Wrench className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-ios-label-secondary" />
+              <span className="text-xs sm:text-sm font-medium text-ios-label">
+                {ustensileName}
+              </span>
+            </div>
+          ))}
         </div>
       )}
     </div>

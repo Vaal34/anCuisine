@@ -79,7 +79,7 @@ export function Spinner({ size = 'md', className }: SpinnerProps) {
   const [animationData, setAnimationData] = useState<unknown>(null)
 
   useEffect(() => {
-    fetch('/loading.json')
+    fetch('/loading.lottie')
       .then((res) => res.json())
       .then((data) => {
         const colorized = colorizeAnimation(data, accentColorValue)

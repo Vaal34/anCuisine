@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import type { Recipe, RecipeStep } from '@/types'
 import { RecipeTimer, type TimerState } from './RecipeTimer'
 import { RecipeIngredientsList } from './RecipeIngredientsList'
+import { RecipeUstensilesList } from './RecipeUstensilesList'
 
 interface RecipeStepByStepMobileProps {
     recipe: Recipe
@@ -115,21 +116,26 @@ export function RecipeStepByStepMobile({
 
 
                 {/* Instructions */}
-                <div className="flex-1 flex flex-col justify-center min-h-[40vh]">
-                    <h2 className="text-xl md:text-2xl font-medium leading-relaxed text-ios-label tracking-tight">
+                <div className="flex-shrink-0 flex flex-col justify-center min-h-[30vh]">
+                    <p className="text-xl md:text-2xl font-medium leading-relaxed text-ios-label tracking-tight">
                         {typeof currentStepData === 'string'
                             ? currentStepData
                             : currentStepData.description}
-                    </h2>
+                    </p>
                 </div>
 
-                {/* Ingrédients - Section séparée en bas */}
-                <div className="mt-8 pt-8 border-t border-dash border-ios-separator">
+                {/* Ingrédients & Ustensiles - Section séparée en bas */}
+                <div className="mt-8 pt-8 border-t border-dashed border-ios-separator space-y-4">
                     <RecipeIngredientsList
                         recipe={recipe}
                         stepObj={stepObj}
                         checkedIngredients={checkedIngredients}
                         onToggleIngredient={onToggleIngredient}
+                        variant="mobile"
+                    />
+                    <RecipeUstensilesList
+                        recipe={recipe}
+                        stepObj={stepObj}
                         variant="mobile"
                     />
                 </div>
