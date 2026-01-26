@@ -58,9 +58,9 @@ export function RecipeUstensilesList({
             compact ? "p-4" : "p-5"
         )}>
             {/* Header */}
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-4">
                 <div className={cn(
-                    "flex items-center justify-center rounded-2xl bg-ios-label-secondary",
+                    "flex items-center justify-center rounded-full bg-ios-label-secondary",
                     compact ? "w-8 h-8" : "w-9 h-9"
                 )}>
                     <UtensilsCrossed className="w-4 h-4 text-white" />

@@ -15,7 +15,7 @@ interface RecipeTimerProps {
     onToggle: () => void
     onReset: () => void
     formatTime: (seconds: number) => string
-    compact?: boolean | 'mini'
+    compact?: boolean | 'mini' | 'sidebar'
 }
 
 export function RecipeTimer({
@@ -32,6 +32,84 @@ export function RecipeTimer({
     const isComplete = timer.remainingSeconds === 0
     const totalSeconds = (stepObj?.timerMinutes ?? 0) * 60
     const progress = totalSeconds > 0 ? ((totalSeconds - timer.remainingSeconds) / totalSeconds) * 100 : 0
+
+    // Variante Sidebar (Desktop)
+    if (compact === 'sidebar') {
+        return (
+            <div className="bg-white rounded-3xl shadow-ios-md p-5">
+                {/* Header */}
+                <div className="flex items-center gap-2 mb-4">
+                    <div className={cn(
+                        "flex items-center justify-center rounded-full w-9 h-9 flex-shrink-0",
+                        isComplete ? "bg-ios-green" : "bg-accent"
+                    )}>
+                        <Timer className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="font-semibold text-ios-label">
+                        {stepObj?.timerLabel || 'Minuteur'}
+                    </span>
+
+                    {/* Reset button in header */}
+                    {timer.hasStarted && !isComplete && (
+                        <button
+                            onClick={onReset}
+                            className="ml-auto p-2 rounded-xl hover:bg-ios-bg text-ios-label-secondary transition-colors"
+                            aria-label="Réinitialiser"
+                        >
+                            <RotateCcw className="w-4 h-4" />
+                        </button>
+                    )}
+                </div>
+
+                {/* Timer row */}
+                <div className="flex items-center gap-4">
+                    <div className={cn(
+                        "text-3xl font-bold tabular-nums flex-1",
+                        isComplete ? "text-ios-green" : "text-ios-label"
+                    )}>
+                        {formatTime(timer.remainingSeconds)}
+                    </div>
+
+                    {/* Contrôle */}
+                    {isComplete ? (
+                        <button
+                            onClick={onReset}
+                            className="p-3 rounded-xl bg-ios-green text-white"
+                            aria-label="Recommencer"
+                        >
+                            <RotateCcw className="w-5 h-5" />
+                        </button>
+                    ) : (
+                        <button
+                            onClick={onToggle}
+                            className={cn(
+                                "p-3 rounded-xl text-white transition-colors",
+                                timer.isRunning ? "bg-accent/70" : "bg-accent"
+                            )}
+                            aria-label={timer.isRunning ? "Pause" : "Démarrer"}
+                        >
+                            {timer.isRunning ? (
+                                <Pause className="w-5 h-5 fill-current" />
+                            ) : (
+                                <Play className="w-5 h-5 fill-current" />
+                            )}
+                        </button>
+                    )}
+                </div>
+
+                {/* Barre de progression */}
+                <div className="w-full h-1.5 bg-ios-bg rounded-full overflow-hidden mt-4">
+                    <div
+                        className={cn(
+                            "h-full rounded-full transition-all duration-1000",
+                            isComplete ? "bg-ios-green" : "bg-accent"
+                        )}
+                        style={{ width: `${progress}%` }}
+                    />
+                </div>
+            </div>
+        )
+    }
 
     // Variante Mini (Header Mobile)
     if (compact === 'mini') {

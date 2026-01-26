@@ -196,7 +196,7 @@ export function RecipeStepByStepDesktop({
                     <div className="max-w-4xl w-full h-full mx-auto flex gap-8 min-h-0">
                         {/* Main instruction - gauche */}
                         <div className="flex-[3] flex flex-col min-w-0 min-h-0">
-                            <div className="h-full bg-white rounded-2xl shadow-ios-md p-6 flex flex-col min-h-0">
+                            <div className="h-full bg-white rounded-3xl shadow-ios-md p-6 flex flex-col min-h-0">
                                 {/* Instruction - scrollable */}
                                 <div className="flex-1 overflow-y-auto min-h-0">
                                     <p className="text-lg text-ios-label leading-relaxed">
@@ -224,35 +224,41 @@ export function RecipeStepByStepDesktop({
                         {/* Sidebar - droite */}
                         <div className="flex-[2] flex flex-col min-w-0 min-h-0 gap-4">
                             {/* Timer - taille fixe */}
-                            <div className="flex-shrink-0">
-                                <RecipeTimer
-                                    timer={timer}
-                                    stepObj={stepObj}
-                                    onToggle={onToggleTimer}
-                                    onReset={onResetTimer}
-                                    formatTime={formatTime}
-                                    compact
-                                />
-                            </div>
+                            {hasTimer && (
+                                <div className="flex-shrink-0">
+                                    <RecipeTimer
+                                        timer={timer}
+                                        stepObj={stepObj}
+                                        onToggle={onToggleTimer}
+                                        onReset={onResetTimer}
+                                        formatTime={formatTime}
+                                        compact="sidebar"
+                                    />
+                                </div>
+                            )}
 
                             {/* Ingrédients - prend l'espace restant avec scroll interne */}
-                            <div className="flex-1 min-h-0">
-                                <RecipeIngredientsList
-                                    recipe={recipe}
-                                    stepObj={stepObj}
-                                    checkedIngredients={checkedIngredients}
-                                    onToggleIngredient={onToggleIngredient}
-                                />
-                            </div>
+                            {stepObj?.ingredientIndices && stepObj.ingredientIndices.length > 0 && (
+                                <div className="flex-1 min-h-0">
+                                    <RecipeIngredientsList
+                                        recipe={recipe}
+                                        stepObj={stepObj}
+                                        checkedIngredients={checkedIngredients}
+                                        onToggleIngredient={onToggleIngredient}
+                                    />
+                                </div>
+                            )}
 
                             {/* Ustensiles - taille fixe en bas */}
-                            <div className="flex-shrink-0">
-                                <RecipeUstensilesList
-                                    recipe={recipe}
-                                    stepObj={stepObj}
-                                    compact
-                                />
-                            </div>
+                            {stepObj?.ustensileIndices && stepObj.ustensileIndices.length > 0 && (
+                                <div className="flex-shrink-0">
+                                    <RecipeUstensilesList
+                                        recipe={recipe}
+                                        stepObj={stepObj}
+                                        compact
+                                    />
+                                </div>
+                            )}
 
                             {/* Placeholder si pas de timer ni ingrédients ni ustensiles */}
                             {!hasTimer &&

@@ -99,7 +99,7 @@ export function RecipeIngredientsList({
             {/* Header */}
             <div className="flex items-center gap-2 mb-4 flex-shrink-0">
                 <div className={cn(
-                    "flex items-center justify-center rounded-2xl bg-accent",
+                    "flex items-center justify-center rounded-full bg-accent",
                     compact ? "w-8 h-8" : "w-9 h-9"
                 )}>
                     <span className="text-white text-sm font-bold">
