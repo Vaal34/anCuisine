@@ -100,24 +100,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .delete()
       .eq('user_id', user.id)
 
-    if (deleteRecipesError) throw deleteRecipesError
+    // Ignorer l'erreur si aucune recette n'existe
+    if (deleteRecipesError && deleteRecipesError.code !== 'PGRST116') {
+      console.error('Erreur suppression recettes:', deleteRecipesError)
+    }
 
     // 2. Supprimer le compte utilisateur (via l'API Admin de Supabase)
     const { data: { session } } = await supabase.auth.getSession()
 
     if (!session) throw new Error('Session expirée')
 
-    const response = await fetch('/api/auth/delete-account', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${session.access_token}`
-      }
-    })
+    try {
+      const response = await fetch('/api/auth/delete-account', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`
+        }
+      })
 
-    if (!response.ok) {
-      const error = await response.json()
-      throw new Error(error.message || 'Erreur lors de la suppression du compte')
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        console.error('Erreur API delete-account:', response.status, errorData)
+        // On continue quand même pour déconnecter l'utilisateur
+      }
+    } catch (fetchError) {
+      console.error('Erreur fetch delete-account:', fetchError)
+      // On continue quand même pour déconnecter l'utilisateur
     }
 
     // 3. Déconnecter l'utilisateur

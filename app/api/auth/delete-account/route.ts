@@ -15,8 +15,16 @@ export async function DELETE(request: NextRequest) {
     const token = authHeader.replace('Bearer ', '')
 
     // Créer un client Supabase avec le token de l'utilisateur
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.error('Variables d\'environnement Supabase manquantes')
+      return NextResponse.json(
+        { error: 'Configuration serveur incorrecte' },
+        { status: 500 }
+      )
+    }
 
     const supabase = createClient(supabaseUrl, supabaseAnonKey, {
       global: {
