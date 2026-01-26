@@ -231,6 +231,7 @@ export function RecipeStepByStepDesktop({
                                     onToggle={onToggleTimer}
                                     onReset={onResetTimer}
                                     formatTime={formatTime}
+                                    compact
                                 />
                             </div>
 
