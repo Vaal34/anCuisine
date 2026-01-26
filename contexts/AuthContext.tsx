@@ -11,6 +11,8 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<void>
   signOut: () => Promise<void>
   deleteAccount: () => Promise<void>
+  resetPassword: (email: string) => Promise<void>
+  updatePassword: (newPassword: string) => Promise<void>
   isAuthenticated: boolean
 }
 
@@ -70,6 +72,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null)
   }
 
+  const resetPassword = async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/auth/reset-password`,
+    })
+    if (error) throw error
+  }
+
+  const updatePassword = async (newPassword: string) => {
+    const { error } = await supabase.auth.updateUser({
+      password: newPassword,
+    })
+    if (error) throw error
+  }
+
   const deleteAccount = async () => {
     if (!user) throw new Error('Aucun utilisateur connecté')
 
@@ -112,6 +128,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         signIn,
         signOut,
         deleteAccount,
+        resetPassword,
+        updatePassword,
         isAuthenticated: !!user,
       }}
     >

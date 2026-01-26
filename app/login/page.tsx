@@ -6,6 +6,7 @@ import { ChefHat, Eye, EyeOff } from 'lucide-react'
 import { Card } from '@/components/ui/Card'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
+import { Modal } from '@/components/ui/Modal'
 import { Footer } from '@/components/layout/Footer'
 import { useAuth } from '@/hooks/useAuth'
 
@@ -16,8 +17,13 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [showForgotPassword, setShowForgotPassword] = useState(false)
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState('')
+  const [forgotPasswordLoading, setForgotPasswordLoading] = useState(false)
+  const [forgotPasswordSuccess, setForgotPasswordSuccess] = useState(false)
+  const [forgotPasswordError, setForgotPasswordError] = useState('')
   const router = useRouter()
-  const { signIn, signUp, user } = useAuth()
+  const { signIn, signUp, resetPassword, user } = useAuth()
 
   useEffect(() => {
     if (user) {
@@ -46,6 +52,32 @@ export default function LoginPage() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setForgotPasswordError('')
+    setForgotPasswordLoading(true)
+
+    try {
+      await resetPassword(forgotPasswordEmail)
+      setForgotPasswordSuccess(true)
+    } catch (err) {
+      setForgotPasswordError(
+        err instanceof Error
+          ? err.message
+          : 'Une erreur est survenue. Veuillez réessayer.'
+      )
+    } finally {
+      setForgotPasswordLoading(false)
+    }
+  }
+
+  const closeForgotPasswordModal = () => {
+    setShowForgotPassword(false)
+    setForgotPasswordEmail('')
+    setForgotPasswordError('')
+    setForgotPasswordSuccess(false)
   }
 
   return (
@@ -100,7 +132,16 @@ export default function LoginPage() {
               {mode === 'login' ? 'Se connecter' : "S'inscrire"}
             </Button>
 
-            <div className="text-center">
+            <div className="text-center space-y-2">
+              {mode === 'login' && (
+                <button
+                  type="button"
+                  onClick={() => setShowForgotPassword(true)}
+                  className="text-ios-label-secondary text-sm hover:underline block w-full"
+                >
+                  Mot de passe oublié ?
+                </button>
+              )}
               <button
                 type="button"
                 onClick={() => {
@@ -121,6 +162,63 @@ export default function LoginPage() {
       <div className="mt-8">
         <Footer />
       </div>
+
+      {/* Modal Mot de passe oublié */}
+      <Modal
+        isOpen={showForgotPassword}
+        onClose={closeForgotPasswordModal}
+        title="Mot de passe oublié"
+        description="Entrez votre adresse email pour recevoir un lien de réinitialisation."
+        size="sm"
+      >
+        {forgotPasswordSuccess ? (
+          <div className="text-center py-4">
+            <div className="w-16 h-16 bg-ios-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-ios-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <p className="text-ios-label mb-2">Email envoyé !</p>
+            <p className="text-ios-label-secondary text-sm">
+              Vérifiez votre boîte de réception et suivez les instructions pour réinitialiser votre mot de passe.
+            </p>
+            <Button
+              variant="secondary"
+              fullWidth
+              className="mt-6"
+              onClick={closeForgotPasswordModal}
+            >
+              Fermer
+            </Button>
+          </div>
+        ) : (
+          <form onSubmit={handleForgotPassword} className="space-y-4">
+            <Input
+              type="email"
+              label="Email"
+              value={forgotPasswordEmail}
+              onChange={(e) => setForgotPasswordEmail(e.target.value)}
+              placeholder="votre@email.com"
+              required
+            />
+
+            {forgotPasswordError && (
+              <div className="bg-ios-red/10 border border-ios-red rounded-3xl px-4 py-3">
+                <p className="text-ios-red text-sm">{forgotPasswordError}</p>
+              </div>
+            )}
+
+            <Button
+              type="submit"
+              variant="primary"
+              fullWidth
+              isLoading={forgotPasswordLoading}
+            >
+              Envoyer le lien
+            </Button>
+          </form>
+        )}
+      </Modal>
     </div>
   )
 }
